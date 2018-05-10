@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/accept_book_edit"
+        android:icon = "@drawable/check_icon_white"
+        android:title = "Accept"
+        app:showAsAction="always">
+    </item>
+</menu>

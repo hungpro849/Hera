@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:searchViewStyle">@style/SearchViewStyle</item>
+
+    </style>
+    <style name="CustomRatingBar" parent="android:style/Widget.Material.RatingBar.Indicator">
+
+        <item name="colorControlNormal">#808080</item>
+        <item name="colorControlActivated">#FFD700</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/search_icon</item>
+        <item name="closeIcon">@drawable/back_button_white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name= "android:textColorHint">@color/white</item>
+    </style>
+
+</resources>

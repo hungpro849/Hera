@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".User.UserActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/InforBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="100dp"
+                    android:layout_height="133dp"
+                    android:background="@drawable/bookex"
+                    android:id="@+id/btnIdBook"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/cover"
+                        android:id="@+id/nameBook"
+                        android:textSize="15sp"
+                        android:textColor="#000000"
+                        />
+
+                    <TextView
+                        android:id="@+id/author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tensach"
+                        android:layout_marginTop="15dp"
+                        android:text="name"
+                        android:layout_toEndOf="@+id/cover"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tacgia"
+                        android:layout_marginTop="15dp"
+                        android:layout_toEndOf="@+id/cover"
+                        android:text="Năm Xuất Bản: 2018"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:id="@+id/LBnamxuatban" />
+
+                    <TextView
+                        android:id="@+id/remain"
+                        android:text="asdasd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/LBnamxuatban"
+                        android:layout_marginTop="15dp"
+                        android:layout_toEndOf="@+id/cover"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
+                android:isIndicator="false"
+                android:rating="4"
+                android:stepSize="1"
+                android:theme="@style/CustomRatingBar" />
+            <TextView
+                android:id="@+id/voters"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignStart="@+id/ratingBar"
+                android:layout_below="@+id/ratingBar"
+                android:text="Đánh giá: 4/5"
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="horizontal">
+
+                <Switch
+                    android:id="@+id/theodoi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/muonsach"
+                    android:layout_alignBottom="@+id/muonsach"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="5dp"
+                    android:checked="false"
+                    android:showText="true"
+                    android:text="Theo dõi   "
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/theodoi"
+                    android:layout_alignBottom="@+id/theodoi"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/radiusbutton"
+                    android:drawableRight="@drawable/download"
+                    android:text="Tải ebook"
+                    android:textAllCaps="false" />
+
+                <Button
+                    android:id="@+id/borrowBook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/textView"
+                    android:background="@drawable/radiusbutton"
+                    android:drawableRight="@drawable/cart"
+                    android:text="Mượn sách"
+                    android:textAllCaps="false" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="40dp"
+                android:text="asdasd"
+                android:layout_marginTop="15dp"
+                android:textSize="15sp"
+                />
+            <TextView
+                android:id="@+id/comments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:text=""
+                android:textColor="#3139D8"
+                />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

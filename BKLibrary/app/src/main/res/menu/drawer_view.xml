@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id = "@+id/drawer_section_account"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_user_info"
+            android:icon="@drawable/user_info_icon"
+            android:title="Thông tin tài khoản"/>
+
+    </group>
+
+    <group android:id = "@+id/drawer_section_book"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_book_genre"
+            android:icon="@drawable/book_genre"
+            android:title="Lĩnh vực"/>
+        <item
+            android:id="@+id/drawer_cart"
+            android:icon="@drawable/book_cart"
+            android:title="Giỏ hàng" />
+
+    </group>
+
+    <group android:id = "@+id/drawer_section_settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_update"
+            android:icon="@drawable/update_icon"
+            android:title="Cập nhật" />
+
+        <item
+           android:id="@+id/drawer_settings"
+            android:icon="@drawable/drawer_settings"
+            android:title="Tùy chọn" />
+    </group>
+
+    <group android:id = "@+id/drawer_section_signout"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_signout"
+            android:icon="@drawable/signout_icon"
+            android:title="Đăng xuất" />
+    </group>
+</menu>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id = "@+id/user_drawer_section_account"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/user_drawer_info"
+            android:icon="@drawable/user_info_icon"
+            android:title="Thông tin tài khoản"/>
+
+    </group>
+
+    <group android:id = "@+id/drawer_section_book"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/user_drawer_cart"
+            android:icon="@drawable/book_cart"
+            android:title="Giỏ sách" />
+        <item
+            android:id="@+id/user_drawer_return_book"
+            android:icon="@drawable/book_genre"
+            android:title="Trả sách"/>
+
+        <item
+            android:id="@+id/user_drawer_borrow_history"
+            android:icon="@drawable/book_genre"
+            android:title="Lịch sử mượn sách"/>
+
+    </group>
+
+    <group android:id = "@+id/user_drawer_section_settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/user_drawer_update"
+            android:icon="@drawable/update_icon"
+            android:title="Cập nhật" />
+
+        <item
+            android:id="@+id/user_drawer_settings"
+            android:icon="@drawable/drawer_settings"
+            android:title="Tùy chọn" />
+    </group>
+
+    <group android:id = "@+id/user_drawer_section_signout"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/user_drawer_signout"
+            android:icon="@drawable/signout_icon"
+            android:title="Đăng xuất" />
+    </group>
+</menu>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BKLibrary</string>
+    <string-array name = "Query_suggestion">
+        <item> Database</item>
+        <item> Cấu trúc rời r</item>
+        <item> Giải tích</item>
+        <item> Đồ họa máy tính</item>
+    </string-array>
+</resources>
