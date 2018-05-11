@@ -110,6 +110,8 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
 
 
                             Toast.makeText(this, "LOGIN THÀNH CÔNG", Toast.LENGTH_LONG).show();
+                            email.setText("");
+                            password.setText("");
 
                             if (founduser.get(0).getIsuser() == 0) {
                                 Intent adminIntent = new Intent(this,AdminActivity.class);
@@ -138,6 +140,11 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 }
 
 
