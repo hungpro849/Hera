@@ -1,7 +1,10 @@
 package com.example.nqh.thuvienbachkhoa;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,36 +13,35 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
+import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by NQH on 27/04/2018.
  */
 
 public class quenmatkhauActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = quenmatkhauActivity.class.getName();
     TextView dangnhap;
     Button khoiphuc;
     EditText email;
-    DBHelper db;
+    ProgressDialog mProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quenmatkhau);
-        db=new DBHelper(this);
         dangnhap=findViewById(R.id.twDangnhapfromquenmatkhau);
         khoiphuc=findViewById(R.id.btnKhoiphuc);
         email=findViewById(R.id.edtEmail);
         dangnhap.setOnClickListener(this);
         khoiphuc.setOnClickListener(this);
-
 
     }
 
@@ -51,59 +53,62 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
                 startActivity(modangnhap);
                 break;
             case R.id.btnKhoiphuc:
-                Boolean checkemail=Utils.isValidEmail(email.getText().toString());
-                if (!checkemail  )
+                Boolean checkemail = Utils.isValidEmail(email.getText().toString());
+                if (!checkemail)
                     Toast.makeText(this,"Vui lòng nhập đúng định dạng email !",Toast.LENGTH_LONG).show();
-                else
-                {
-                    Map<String, Object> condition = new HashMap<String, Object>();
-                    condition.put("email", email.getText().toString());
-                    List<GeneralUser> founduser = null;
-                    try {
-                        founduser = db.query(GeneralUser.class, condition);
+                else {
+                    mProgress = new ProgressDialog(this); // this = YourActivity
+                    mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    mProgress.setMessage(getString(R.string.waiting_message));
+                    mProgress.setIndeterminate(true);
+                    mProgress.setCanceledOnTouchOutside(false);
+                    mProgress.show();
+                    String mEmail = email.getText().toString();
+                    // Retrofit
+                    Retrofit retrofit = new Retrofit.Builder()
+                            .baseUrl(getString(R.string.api_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
+                    CallAPI service = retrofit.create(CallAPI.class);
 
-                    } catch (java.sql.SQLException e) {
+                    Call<JSONObject> jsonObjectCall = service.doResetPassword(mEmail,getText(R.string.api_url).toString());
+                    jsonObjectCall.enqueue(new Callback<JSONObject>() {
+                        @Override
+                        public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                            mProgress.dismiss();
+                            if (response.isSuccessful()) {
+                                AlertDialog.Builder builder1 = new AlertDialog.Builder(quenmatkhauActivity.this);
+                                builder1.setMessage("Mã code để đặt lại password đã được gửi tới thư điện tử của bạn");
+                                builder1.setCancelable(true);
 
-                    }
-                    if (founduser.size()==0)
-                        Toast.makeText(this, "Email này chưa đăng ký", Toast.LENGTH_SHORT).show();
-                    else
-                    {
+                                builder1.setPositiveButton(
+                                        "Đồng ý",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                                dialog.cancel();
+                                            }
+                                        });
 
-                        final String newpass= GenerateRandomString.randomString(7);
-                        String hashpassword = null;
-                        try {
-                            hashpassword=Utils.computeHash(newpass);
-                        } catch (NoSuchAlgorithmException e) {
-                            e.printStackTrace();
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                        founduser.get(0).setPassword(hashpassword);
-                        try {
-                            db.createOrUpdate(founduser.get(0));
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        new Thread(new Runnable() {
-
-                            @Override
-                            public void run() {
+                                AlertDialog alert11 = builder1.create();
+                                alert11.show();
+                            } else {
                                 try {
-                                    GMailSender sender = new GMailSender("bklibrarydemo@gmail.com",
-                                            "LamThanhHoang");
-                                    sender.sendMail("Reset your password", "Mật khẩu mới của bạn là : "+newpass,
-                                            "bklibrarydemo@gmail.com", email.getText().toString());
+                                    JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                    Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                                 } catch (Exception e) {
-                                    Log.e("SendMail", e.getMessage(), e);
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             }
+                        }
 
-                        }).start();
-                        Toast.makeText(this, "Đã reset password cho tài khoản của bạn ", Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailure(Call<JSONObject> call, Throwable t) {
+                            mProgress.dismiss();
+                            Log.d(TAG, "onFailure: " + t.getMessage());
+                            Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
                 break;
 

@@ -3,6 +3,8 @@ package com.example.nqh.thuvienbachkhoa.Interface;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -25,7 +27,16 @@ public interface CallAPI {
     // Update user data
     @FormUrlEncoded
     @PUT("user/me")
-    Call<User> doUpdate(@Header("Authorization") String authHeader, @Field("phone") String phone, @Field("address") String address, @Field("fullname") String fullname);
+    Call<User> doUpdate(@Header("Authorization") String authHeader, @Field("phone") String phone,
+                        @Field("address") String address, @Field("fullname") String fullname);
+
+    // Change password
+    @FormUrlEncoded
+    @PUT("user/me")
+    Call<User> doUpdate(@Header("Authorization") String authHeader, @Field("password") String password);
 
     // Forgot password
+    @FormUrlEncoded
+    @POST("auth/forgot-password")
+    Call<JSONObject> doResetPassword(@Field("email") String email, @Field("url") String url);
 }
