@@ -3,6 +3,24 @@
     <string name="api_url">https://tranquil-springs-55255.herokuapp.com</string>
     <string name="error_login_message">Có lỗi xảy ra, hãy chắc chắn bạn nhập đúng tài khoản và mật khẩu</string>
     <string name="login_message">Đang đăng nhập</string>
+    <string name="register_username_info">Tên đăng nhập:</string>
+    <string name="register_username_hint">Username</string>
+    <string name="register_email_info">Email:</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_password_info">Password:</string>
+    <string name="register_password_hint">Password</string>
+    <string name="register_fullname_info">Họ và tên:</string>
+    <string name="register_fullname_hint">Họ và tên:</string>
+    <string name="register_phone_info">Số điện thoại:</string>
+    <string name="register_phone_hint">Số điện thoại:</string>
+    <string name="register_address_info">Địa chỉ:</string>
+    <string name="register_address_hint">Địa chỉ</string>
+    <string name="register_btn">Đăng ký</string>
+    <string name="register_txt_login">Bạn đã là thành viên?</string>
+    <string name="register_button_login">Đăng nhập</string>
+    <string name="register_information">CHÀO MỪNG ĐẾN VỚI THƯ VIỆN BÁCH KHOA</string>
+    <string name="signup_message">Đang đăng ký</string>
+    <string name="connection_error">Lỗi kết nối</string>
     <string-array name = "Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>

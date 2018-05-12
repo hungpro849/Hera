@@ -117,7 +117,13 @@ public class User {
     }
 
     public boolean isAdmin() {
-        return getRole().getType().equals("root");
+        String role;
+        try {
+            role = getRole().getType();
+            return role.equals("root");
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
 }

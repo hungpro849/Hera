@@ -15,10 +15,12 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Admin.AdminActivity;
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Interface.LoginAPI;
+import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.User.UserActivity;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -35,7 +37,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
     Button dangnhap,khachvanglai;
     EditText email,password;
     DBHelper db;
-    LoginAPI loginService;
+    CallAPI loginService;
     SharedPreferences mPrefs;
     ProgressDialog mProgress;
     Gson gson;
@@ -66,7 +68,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        loginService = retrofit.create(LoginAPI.class);
+        loginService = retrofit.create(CallAPI.class);
 
         String json = mPrefs.getString("UserToken", null);
 
@@ -82,9 +84,6 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "Chào mừng trở lại " + tokenResponse.getUser().getUsername(), Toast.LENGTH_SHORT).show();
             finish();
         }
-
-
-
     }
 
     @Override
@@ -93,10 +92,12 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
             case R.id.twDangky:
                 Intent modangky=new Intent(this,dangkyActivity.class);
                 startActivity(modangky);
+                finish();
                 break;
             case R.id.twQuenmatkhau:
                 Intent moquenmatkhau=new Intent(this,quenmatkhauActivity.class);
                 startActivity(moquenmatkhau);
+                finish();
                 break;
             case R.id.btnDangnhap:
                 if (password.getText().length()==0 )
@@ -116,13 +117,9 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                     tokenResponseCall.enqueue(new Callback<TokenResponse>() {
                         @Override
                         public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                            int statusCode = response.code();
-                            if(statusCode == HttpsURLConnection.HTTP_OK) {
+                            if(response.isSuccessful()) {
                                 mProgress.dismiss();
                                 TokenResponse tokenResponse = response.body();
-                                Log.d(TAG, "onResponse: " + statusCode + " Username: " + tokenResponse.getUser().getUsername());
-
-
 
                                 // Save user data to SharedPreferences
                                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -140,10 +137,13 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                                 }
                                 finish();
 
-
-
                             } else {
-                                Toast.makeText(getApplicationContext(), R.string.error_login_message, Toast.LENGTH_LONG).show();
+                                try {
+                                    JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                    Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                } catch (Exception e) {
+                                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
                             }
 
                         }
@@ -152,6 +152,8 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                         public void onFailure(Call<TokenResponse> call, Throwable t) {
                             mProgress.dismiss();
                             Log.d(TAG, "onFailure: " + t.getMessage());
+
+                            Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
 
                         }
                     });

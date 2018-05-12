@@ -18,10 +18,7 @@
             android:id="@+id/bklogo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-
             android:src="@drawable/info"
-
-
             />
 
         <TextView
@@ -29,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="5dp"
-            android:text="CHÀO MỪNG ĐẾN VỚI         THƯ VIỆN BÁCH KHOA"
+            android:text="@string/register_information"
             android:textSize="20dp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -52,7 +49,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email:"
+            android:text="@string/register_username_info"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -60,7 +57,24 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/register_username_hint"
+            android:inputType="textEmailAddress"
+            android:id="@+id/edtUsername"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_email_info"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+
+        <EditText
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/register_email_hint"
             android:inputType="textEmailAddress"
             android:id="@+id/edtEmail"
 
@@ -68,7 +82,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password:"
+            android:text="@string/register_password_info"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -76,7 +90,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/register_password_hint"
             android:id="@+id/edtPassword"
             android:inputType="textPassword"
 
@@ -84,7 +98,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Họ và tên:"
+            android:text="@string/register_fullname_info"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -92,7 +106,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Họ và tên:"
+            android:hint="@string/register_fullname_hint"
             android:inputType="text"
             android:id="@+id/edtHoten"
 
@@ -100,7 +114,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Số điện thoại:"
+            android:text="@string/register_phone_info"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -108,7 +122,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Số điện thoại:"
+            android:hint="@string/register_phone_hint"
             android:inputType="phone"
             android:id="@+id/edtSodienthoai"
 
@@ -117,7 +131,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Địa chỉ:"
+            android:text="@string/register_address_info"
             android:textColor="#000000"
             android:textSize="15sp" />
 
@@ -125,7 +139,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Địa chỉ"
+            android:hint="@string/register_address_hint"
             android:id="@+id/edtDiachi"
             android:inputType="text"
 
@@ -135,7 +149,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:textAllCaps="false"
-            android:text="Đăng ký"
+            android:text="@string/register_btn"
             android:background="@drawable/custombutton"
             android:id="@+id/btnDangky"
             />
@@ -151,13 +165,13 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã là thành viên?"
+                android:text="@string/register_txt_login"
 
                 />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Đăng nhập"
+                android:text="@string/register_button_login"
                 android:id="@+id/twDangnhap"
                 android:textColor="#000080"
                 android:textStyle="italic"/>
