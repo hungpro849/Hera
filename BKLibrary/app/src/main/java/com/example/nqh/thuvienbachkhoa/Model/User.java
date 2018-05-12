@@ -116,4 +116,8 @@ public class User {
         this.phone = phone;
     }
 
+    public boolean isAdmin() {
+        return getRole().getType().equals("root");
+    }
+
 }

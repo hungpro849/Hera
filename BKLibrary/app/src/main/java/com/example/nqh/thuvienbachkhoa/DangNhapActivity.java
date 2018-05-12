@@ -1,5 +1,6 @@
 package com.example.nqh.thuvienbachkhoa;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,9 +13,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nqh.thuvienbachkhoa.Admin.AdminActivity;
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.LoginAPI;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
+import com.example.nqh.thuvienbachkhoa.User.UserActivity;
+import com.google.gson.Gson;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +36,8 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
     EditText email,password;
     DBHelper db;
     LoginAPI loginService;
-    SharedPreferences session;
+    SharedPreferences mPrefs;
+    ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +82,12 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 if (password.getText().length()==0 )
                     Toast.makeText(this,"Vui lòng nhập đủ dữ liệu và đúng định dạng email !",Toast.LENGTH_LONG).show();
                 else {
+                    mProgress = new ProgressDialog(this); // this = YourActivity
+                    mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    mProgress.setMessage(getString(R.string.login_message));
+                    mProgress.setIndeterminate(true);
+                    mProgress.setCanceledOnTouchOutside(false);
+                    mProgress.show();
                     String mIdentifier = email.getText().toString();
                     String mPassword = password.getText().toString();
 //                    if (founduser.size()>0) {
@@ -92,14 +105,41 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                         @Override
                         public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                             int statusCode = response.code();
+                            if(statusCode == HttpsURLConnection.HTTP_OK) {
+                                mProgress.dismiss();
+                                TokenResponse tokenResponse = response.body();
+                                Log.d(TAG, "onResponse: " + statusCode + " Username: " + tokenResponse.getUser().getUsername());
 
-                            TokenResponse tokenResponse = response.body();
 
-                            Log.d(TAG, "onResponse: " + statusCode + " Username: " + tokenResponse.getUser().getUsername());
+
+                                // Save user data to SharedPreferences
+                                mPrefs = getPreferences(MODE_PRIVATE);
+                                SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                                Gson gson = new Gson();
+                                String json = gson.toJson(tokenResponse);
+                                prefsEditor.putString("User", json);
+                                prefsEditor.apply();
+
+                                // Go to different activity based on role
+                                if(tokenResponse.getUser().isAdmin()) {
+                                    Intent adminIntent = new Intent(getApplicationContext(),AdminActivity.class);
+                                    startActivity(adminIntent);
+                                } else {
+                                    Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
+                                    startActivity(userIntent);
+                                }
+
+
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), R.string.error_login_message, Toast.LENGTH_LONG).show();
+                            }
+
                         }
 
                         @Override
                         public void onFailure(Call<TokenResponse> call, Throwable t) {
+                            mProgress.dismiss();
                             Log.d(TAG, "onFailure: " + t.getMessage());
 
                         }

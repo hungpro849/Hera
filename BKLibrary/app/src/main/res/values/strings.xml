@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BKLibrary</string>
     <string name="api_url">https://tranquil-springs-55255.herokuapp.com</string>
+    <string name="error_login_message">Có lỗi xảy ra, hãy chắc chắn bạn nhập đúng tài khoản và mật khẩu</string>
+    <string name="login_message">Đang đăng nhập</string>
     <string-array name = "Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>

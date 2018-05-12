@@ -95,6 +95,8 @@
             android:textSize="15sp"
             android:textStyle="italic"
             />
+
+
         <Button
             android:id="@+id/btnDangnhap"
             android:layout_marginTop="15dp"
@@ -103,6 +105,7 @@
             android:textAllCaps="false"
             android:text="Đăng nhập"
             android:background="@drawable/custombutton"/>
+
         <Button
             android:id="@+id/btnKhachvanglai"
             android:layout_marginTop="15dp"
