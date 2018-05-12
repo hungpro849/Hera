@@ -26,4 +26,13 @@
         android:padding="15dp"
         android:background="@drawable/focustextview"
         />
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Cập nhật"
+        android:background="@drawable/custombutton"
+        android:layout_below="@id/twDoimatkhau"/>
 </RelativeLayout>

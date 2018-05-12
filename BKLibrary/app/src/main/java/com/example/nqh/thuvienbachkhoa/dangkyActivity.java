@@ -119,8 +119,10 @@ public class dangkyActivity extends AppCompatActivity implements View.OnClickLis
 
                                 // Save user data to SharedPreferences
                                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                                String json = gson.toJson(response.body());
-                                prefsEditor.putString("UserToken", json);
+                                String userToken = gson.toJson(response.body().getJwt());
+                                String userData = gson.toJson(response.body().getUser());
+                                prefsEditor.putString("UserToken", userToken);
+                                prefsEditor.putString("UserData", userData);
                                 prefsEditor.apply();
 
                                 // Redirect to user dashboard

@@ -21,6 +21,7 @@
     <string name="register_information">CHÀO MỪNG ĐẾN VỚI THƯ VIỆN BÁCH KHOA</string>
     <string name="signup_message">Đang đăng ký</string>
     <string name="connection_error">Lỗi kết nối</string>
+    <string name="update_message">Đang cập nhật</string>
     <string-array name = "Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>

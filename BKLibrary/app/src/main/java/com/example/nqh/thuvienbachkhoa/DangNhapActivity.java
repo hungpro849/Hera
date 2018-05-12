@@ -14,15 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Admin.AdminActivity;
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
+import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.User.UserActivity;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,7 +34,6 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
     ListView listview;
     Button dangnhap,khachvanglai;
     EditText email,password;
-    DBHelper db;
     CallAPI loginService;
     SharedPreferences mPrefs;
     ProgressDialog mProgress;
@@ -54,7 +51,6 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
         email = findViewById(R.id.edtEmail);
         password = findViewById(R.id.edtPassword);
 
-        db=new DBHelper(this);
         dangky.setOnClickListener(this);
         quenmatkhau.setOnClickListener(this);
         dangnhap.setOnClickListener(this);
@@ -70,18 +66,19 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
 
         loginService = retrofit.create(CallAPI.class);
 
-        String json = mPrefs.getString("UserToken", null);
+        String dataToken = mPrefs.getString("UserToken", null);
+        String dataUser = mPrefs.getString("UserData", null);
 
-        if(json != null) {
-            TokenResponse tokenResponse = gson.fromJson(json, TokenResponse.class);
-            if(tokenResponse.getUser().isAdmin()) {
+        if(dataToken != null && dataUser != null) {
+            User user = gson.fromJson(dataUser, User.class);
+            if(user.isAdmin()) {
                 Intent adminIntent = new Intent(getApplicationContext(),AdminActivity.class);
                 startActivity(adminIntent);
             } else {
                 Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
                 startActivity(userIntent);
             }
-            Toast.makeText(this, "Chào mừng trở lại " + tokenResponse.getUser().getUsername(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Chào mừng trở lại " + user.getUsername(), Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -117,14 +114,17 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                     tokenResponseCall.enqueue(new Callback<TokenResponse>() {
                         @Override
                         public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                            mProgress.dismiss();
                             if(response.isSuccessful()) {
-                                mProgress.dismiss();
                                 TokenResponse tokenResponse = response.body();
 
                                 // Save user data to SharedPreferences
                                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                                String json = gson.toJson(tokenResponse);
-                                prefsEditor.putString("UserToken", json);
+                                String userToken = tokenResponse.getJwt();
+                                String userData = gson.toJson(tokenResponse.getUser());
+                                Log.d(TAG, "Saved token: " + userToken);
+                                prefsEditor.putString("UserToken", userToken);
+                                prefsEditor.putString("UserData", userData);
                                 prefsEditor.apply();
 
                                 // Go to different activity based on role

@@ -185,9 +185,11 @@ public class UserActivity extends AppCompatActivity {
                         SharedPreferences session = UserActivity.this.getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = session.edit();
                         editor.remove("UserToken");
+                        editor.remove("UserData");
                         editor.commit();
                         Intent signout = new Intent(UserActivity.this, DangNhapActivity.class);
                         startActivity(signout);
+                        finish();
                         break;
                 }
                 return false;
