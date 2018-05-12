@@ -170,12 +170,13 @@ public class UserActivity extends AppCompatActivity {
                     case R.id.drawer_settings:
                         break;
                     case R.id.user_drawer_signout:
+
+                        SharedPreferences session = UserActivity.this.getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = session.edit();
+                        editor.remove("UserToken");
+                        editor.commit();
                         Intent signout = new Intent(UserActivity.this, DangNhapActivity.class);
                         startActivity(signout);
-                        SharedPreferences session = UserActivity.this.getSharedPreferences("sessionUser", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = session.edit();
-                        editor.clear();
-                        editor.commit();
                         break;
                 }
                 return false;

@@ -38,6 +38,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
     LoginAPI loginService;
     SharedPreferences mPrefs;
     ProgressDialog mProgress;
+    Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,8 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
         quenmatkhau.setOnClickListener(this);
         dangnhap.setOnClickListener(this);
         khachvanglai.setOnClickListener(this);
+        mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
+        gson = new Gson();
 
         // Retrofit
         Retrofit retrofit = new Retrofit.Builder()
@@ -64,6 +67,23 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 .build();
 
         loginService = retrofit.create(LoginAPI.class);
+
+        String json = mPrefs.getString("UserToken", null);
+
+        if(json != null) {
+            TokenResponse tokenResponse = gson.fromJson(json, TokenResponse.class);
+            if(tokenResponse.getUser().isAdmin()) {
+                Intent adminIntent = new Intent(getApplicationContext(),AdminActivity.class);
+                startActivity(adminIntent);
+            } else {
+                Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
+                startActivity(userIntent);
+            }
+            Toast.makeText(this, "Chào mừng trở lại " + tokenResponse.getUser().getUsername(), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+
 
     }
 
@@ -90,14 +110,6 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                     mProgress.show();
                     String mIdentifier = email.getText().toString();
                     String mPassword = password.getText().toString();
-//                    if (founduser.size()>0) {
-//
-//                        String mypassword=null;
-//                        try {
-//                            mypassword=Utils.computeHash(password.getText().toString());
-//                        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-//                            e.printStackTrace();
-//                        }
 
                     Call<TokenResponse> tokenResponseCall = loginService.doLogin(mIdentifier, mPassword);
 
@@ -113,11 +125,9 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
 
 
                                 // Save user data to SharedPreferences
-                                mPrefs = getPreferences(MODE_PRIVATE);
                                 SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                                Gson gson = new Gson();
                                 String json = gson.toJson(tokenResponse);
-                                prefsEditor.putString("User", json);
+                                prefsEditor.putString("UserToken", json);
                                 prefsEditor.apply();
 
                                 // Go to different activity based on role
@@ -128,6 +138,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                                     Intent userIntent = new Intent(getApplicationContext(),UserActivity.class);
                                     startActivity(userIntent);
                                 }
+                                finish();
 
 
 
