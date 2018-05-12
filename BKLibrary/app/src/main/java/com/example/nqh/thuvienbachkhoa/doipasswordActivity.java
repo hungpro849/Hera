@@ -1,5 +1,6 @@
 package com.example.nqh.thuvienbachkhoa;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,9 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
+import com.example.nqh.thuvienbachkhoa.User.UserInfoActivity;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +21,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
 
@@ -53,13 +59,13 @@ public class doipasswordActivity extends AppCompatActivity implements View.OnCli
                 String newpassword=matkhaumoi.getText().toString();
                 String repassword=nhaplai.getText().toString();
                 if(oldpassword.length()==0 || newpassword.length() == 0 || repassword.length() == 0)
-                    Toast.makeText(this,"Vui lòng nhập đủ dữ liệu",Toast.LENGTH_LONG);
+                    TastyToast.makeText(this, "Vui lòng nhập đủ dữ liệu", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                 else
                 {
                     if (!newpassword.equals(repassword))
-                        Toast.makeText(this,"Mật khẫu mới và nhập lại mật khẩu mới không trùng khớp",Toast.LENGTH_LONG);
+                        TastyToast.makeText(this, "Mật khẫu mới và nhập lại mật khẩu mới không trùng khớp", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     else if(newpassword.length()<6 || newpassword.length()>15)
-                        Toast.makeText(this, "Mật khẩu mới phải có 6-15 kí tự", Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(this, "Mật khẩu mới phải có 6-15 kí tự", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                     else
                     {
                         db=new DBHelper(this);
@@ -84,7 +90,7 @@ public class doipasswordActivity extends AppCompatActivity implements View.OnCli
                             e.printStackTrace();
                         }
                         if (!hashpassword.equals(founduser.get(0).getPassword()))
-                            Toast.makeText(this, "Mật khẩu cũ không trùng khớp", Toast.LENGTH_LONG).show();
+                            TastyToast.makeText(this, "Mật khẩu cũ không trùng khớp", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                         else
                         {
                             try {
@@ -100,7 +106,21 @@ public class doipasswordActivity extends AppCompatActivity implements View.OnCli
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
-                            Toast.makeText(this, "Bạn đã đổi mật khẩu thành công !", Toast.LENGTH_LONG).show();
+                            final SweetAlertDialog alert=new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+                            alert.setTitleText("Congrat!")
+                                    .setContentText("Bạn đã đổi mật khẩu thành công !")
+                                    .show();
+                            alert.findViewById(R.id.confirm_button).setVisibility(View.GONE);
+                            final Timer t = new Timer();
+                            t.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    alert.dismiss();
+                                    t.cancel();
+                                    Intent modangnhap=new Intent(doipasswordActivity.this,UserInfoActivity.class);
+                                    startActivity(modangnhap);
+                                }
+                            }, 2000);
                         }
                     }
                 }

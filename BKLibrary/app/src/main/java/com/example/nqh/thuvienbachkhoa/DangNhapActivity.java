@@ -22,6 +22,8 @@ import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.Database.models.Notification;
 import com.example.nqh.thuvienbachkhoa.Database.models.Report;
 import com.example.nqh.thuvienbachkhoa.User.UserActivity;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +31,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
 import static com.example.nqh.thuvienbachkhoa.dangkyActivity.isValidEmail;
@@ -77,7 +81,8 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
 
 
                 if (!checkemail || password.getText().length()==0 )
-                    Toast.makeText(this,"Vui lòng nhập đủ dữ liệu và đúng định dạng email !",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this,"Vui lòng nhập đủ dữ liệu và đúng định dạng email !",Toast.LENGTH_SHORT).show();
+                    TastyToast.makeText(this, "Vui lòng nhập đủ dữ liệu và đúng định dạng email !", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
                 else
                 {
                     Map<String, Object> condition = new HashMap<String, Object>();
@@ -109,28 +114,47 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                             editor.commit();
 
 
-                            Toast.makeText(this, "LOGIN THÀNH CÔNG", Toast.LENGTH_LONG).show();
+
+                            final SweetAlertDialog alert =new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+
+                                    alert.setTitleText("Welcome!")
+                                    .setContentText("Bạn đã đăng nhập thành công")
+                                    .show();
+                            alert.findViewById(R.id.confirm_button).setVisibility(View.GONE);
+                            final Timer t = new Timer();
+                            final List<GeneralUser> finalFounduser = founduser;
+                            t.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    alert.dismiss();
+                                    t.cancel();
+                                    if (finalFounduser.get(0).getIsuser() == 0) {
+                                        Intent adminIntent = new Intent(DangNhapActivity.this,AdminActivity.class);
+                                        startActivity(adminIntent);
+                                    }
+                                    else
+                                    {
+                                        Intent testintent = new Intent(DangNhapActivity.this, UserActivity.class);
+                                        startActivity(testintent);
+                                    }
+                                }
+                            }, 2000);
                             email.setText("");
                             password.setText("");
 
-                            if (founduser.get(0).getIsuser() == 0) {
-                                Intent adminIntent = new Intent(this,AdminActivity.class);
-                                startActivity(adminIntent);
-                            }
-                            else
-                            {
-                                Intent testintent = new Intent(this, UserActivity.class);
-                                startActivity(testintent);
-                            }
+
+
+
+
 
                         }
                         else
-                            Toast.makeText(this,"Email hoặc mật khẩu không đúng ",Toast.LENGTH_LONG).show();
+                            TastyToast.makeText(this, "Email hoặc mật khẩu không đúng", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
 
                     }
                     else
 
-                        Toast.makeText(this,"Email hoặc mật khẩu không đúng ",Toast.LENGTH_LONG).show();
+                        TastyToast.makeText(this, "Email hoặc mật khẩu không đúng", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
 
 
                 }

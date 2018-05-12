@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
+import com.ontbee.legacyforks.cn.pedant.SweetAlert.SweetAlertDialog;
+import com.sdsmdg.tastytoast.TastyToast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +21,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
 import static com.example.nqh.thuvienbachkhoa.dangkyActivity.isValidEmail;
@@ -56,7 +60,7 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
             case R.id.btnKhoiphuc:
                 Boolean checkemail=isValidEmail(email.getText().toString());
                 if (!checkemail  )
-                    Toast.makeText(this,"Vui lòng nhập đúng định dạng email !",Toast.LENGTH_LONG).show();
+                    TastyToast.makeText(this,"Vui lòng nhập đúng định dạng email !",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                 else
                 {
                     Map<String, Object> condition = new HashMap<String, Object>();
@@ -69,7 +73,7 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
 
                     }
                     if (founduser.size()==0)
-                        Toast.makeText(this, "Email này chưa đăng ký", Toast.LENGTH_SHORT).show();
+                        TastyToast.makeText(this,"Email này chưa đăng ký",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
                     else
                     {
 
@@ -105,7 +109,21 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
                             }
 
                         }).start();
-                        Toast.makeText(this, "Đã reset password cho tài khoản của bạn ", Toast.LENGTH_SHORT).show();
+                        final SweetAlertDialog alert=new SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE);
+                        alert.setTitleText("Congrat!")
+                                .setContentText("Đã reset password cho tài khoản của bạn")
+                                .show();
+                        alert.findViewById(R.id.confirm_button).setVisibility(View.GONE);
+                        final Timer t = new Timer();
+                        t.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                alert.dismiss();
+                                t.cancel();
+                                Intent modangnhap=new Intent(quenmatkhauActivity.this,DangNhapActivity.class);
+                                startActivity(modangnhap);
+                            }
+                        }, 2000);
                     }
                 }
                 break;
