@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
-
 /**
  * Created by NQH on 27/04/2018.
  */
@@ -77,7 +75,7 @@ public class doipasswordActivity extends AppCompatActivity implements View.OnCli
                             e.printStackTrace();
                         }
                         try {
-                            hashpassword=computeHash(oldpassword);
+                            hashpassword=Utils.computeHash(oldpassword);
                         } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         } catch (UnsupportedEncodingException e) {
@@ -88,7 +86,7 @@ public class doipasswordActivity extends AppCompatActivity implements View.OnCli
                         else
                         {
                             try {
-                                newhashpassword=computeHash(newpassword);
+                                newhashpassword=Utils.computeHash(newpassword);
                             } catch (NoSuchAlgorithmException e) {
                                 e.printStackTrace();
                             } catch (UnsupportedEncodingException e) {

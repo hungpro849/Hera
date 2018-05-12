@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
-import static com.example.nqh.thuvienbachkhoa.dangkyActivity.isValidEmail;
-
 /**
  * Created by NQH on 27/04/2018.
  */
@@ -54,7 +51,7 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
                 startActivity(modangnhap);
                 break;
             case R.id.btnKhoiphuc:
-                Boolean checkemail=isValidEmail(email.getText().toString());
+                Boolean checkemail=Utils.isValidEmail(email.getText().toString());
                 if (!checkemail  )
                     Toast.makeText(this,"Vui lòng nhập đúng định dạng email !",Toast.LENGTH_LONG).show();
                 else
@@ -76,7 +73,7 @@ public class quenmatkhauActivity extends AppCompatActivity implements View.OnCli
                         final String newpass= GenerateRandomString.randomString(7);
                         String hashpassword = null;
                         try {
-                            hashpassword=computeHash(newpass);
+                            hashpassword=Utils.computeHash(newpass);
                         } catch (NoSuchAlgorithmException e) {
                             e.printStackTrace();
                         } catch (UnsupportedEncodingException e) {

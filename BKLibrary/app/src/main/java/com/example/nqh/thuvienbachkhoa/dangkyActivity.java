@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.Database.models.User;
+import com.example.nqh.thuvienbachkhoa.Utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -43,21 +44,6 @@ public class dangkyActivity extends AppCompatActivity implements View.OnClickLis
         dangky.setOnClickListener(this);
         db =new DBHelper(this);
     }
-    public  static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-    }
-    public static String computeHash(String input) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        digest.reset();
-
-        byte[] byteData = digest.digest(input.getBytes("UTF-8"));
-        StringBuffer sb = new StringBuffer();
-
-        for (int i = 0; i < byteData.length; i++){
-            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return sb.toString();
-    }
 
     @Override
     public void onClick(View view) {
@@ -73,19 +59,17 @@ public class dangkyActivity extends AppCompatActivity implements View.OnClickLis
                 hoten=findViewById(R.id.edtHoten);
                 diachi=findViewById(R.id.edtDiachi);
                 sodienthoai=findViewById(R.id.edtSodienthoai);
-                Boolean checkemail=isValidEmail(email.getText().toString());
+                Boolean checkemail = Utils.isValidEmail(email.getText().toString());
 
 
-                if (checkemail==false  || password.getText().length()==0 ||  hoten.getText().length()==0 ||
+                if (!checkemail  || password.getText().length()==0 ||  hoten.getText().length()==0 ||
                         diachi.getText().length()==0 || sodienthoai.getText().length()==0)
                     Toast.makeText(this,"Vui lòng nhập đủ dữ liệu và đúng định dạng email !",Toast.LENGTH_LONG).show();
-                else if(password.getText().length()>15 || password.getText().length()<6)
-                {
+                else if(password.getText().length()>15 || password.getText().length()<6) {
                     Toast.makeText(this, "Password phải từ 6-15 kí tự ", Toast.LENGTH_LONG).show();
                     password.requestFocus();
                 }
-                else if(!PhoneNumberUtils.isGlobalPhoneNumber(sodienthoai.getText().toString()))
-                {
+                else if(!PhoneNumberUtils.isGlobalPhoneNumber(sodienthoai.getText().toString())) {
                     Toast.makeText(this, "Số điện thoại không hợp lệ ", Toast.LENGTH_LONG).show();
                     sodienthoai.requestFocus();
                 }
@@ -95,7 +79,7 @@ public class dangkyActivity extends AppCompatActivity implements View.OnClickLis
                 {
                     String newpassword = null;
                     try {
-                        newpassword=computeHash(password.getText().toString());
+                        newpassword=Utils.computeHash(password.getText().toString());
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     } catch (UnsupportedEncodingException e) {

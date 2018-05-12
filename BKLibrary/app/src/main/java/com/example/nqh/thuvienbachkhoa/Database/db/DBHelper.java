@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.example.nqh.thuvienbachkhoa.Database.models.*;
 
+import com.example.nqh.thuvienbachkhoa.Utils;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -22,8 +23,6 @@ import java.lang.reflect.Field;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.*;
-
-import static com.example.nqh.thuvienbachkhoa.dangkyActivity.computeHash;
 
 /**
  * Created by hoang on 4/15/2018.
@@ -112,7 +111,7 @@ public class DBHelper  extends OrmLiteSqliteOpenHelper {
     public void createDemoData(DBHelper db) {
         String mypassword = null;
         try {
-             mypassword=computeHash("123456");
+             mypassword= Utils.computeHash("123456");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
