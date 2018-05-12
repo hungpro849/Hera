@@ -18,4 +18,6 @@ public interface CallAPI {
     @POST("auth/local/register")
     Call<TokenResponse> doRegister(@Field("email") String email, @Field("password") String password, @Field("username") String username,
                                    @Field("address") String address, @Field("fullname") String fullname, @Field("phone") String phone);
+
+    // Forgot password
 }

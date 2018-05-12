@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Admin.AdminActivity;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
@@ -41,6 +42,8 @@ public class UserActivity extends AppCompatActivity {
     ActionBar mActionBar;
     Toolbar mToolBar;
 
+    SharedPreferences mPrefs;
+
 
     public void setEmail(String email) {
         this.email = email;
@@ -53,6 +56,14 @@ public class UserActivity extends AppCompatActivity {
 
         setUpDrawer();
         setUpNavigationView();
+
+        // Check for illegal entrance
+        mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
+        String token = mPrefs.getString("UserToken", null);
+        if(token == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         lv = (ListView) findViewById(R.id.MU_lv);
         database = new DBHelper(this);

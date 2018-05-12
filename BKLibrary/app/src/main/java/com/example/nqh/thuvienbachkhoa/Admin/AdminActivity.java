@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 
@@ -52,6 +53,8 @@ public class AdminActivity extends AppCompatActivity {
 
     public static FragmentManager mFragmentManager;
 
+    SharedPreferences mPrefs;
+
     /*
      * setting up database
      */
@@ -72,6 +75,14 @@ public class AdminActivity extends AppCompatActivity {
 
         setUpDrawer();
         setUpNavigationView();
+
+        // Check for illegal entrance
+        mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
+        String token = mPrefs.getString("UserToken", null);
+        if(token == null) {
+            Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
+            finish();
+        }
 
         mBookMenuFragment = new BookMenuFragment();
         mBookListFragment = new BookListFragment();
