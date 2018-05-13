@@ -140,6 +140,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                             prefsEditor.putString("UserData", data);
                             prefsEditor.apply();
                             Toast.makeText(getApplicationContext(), "Cập nhật thành công", Toast.LENGTH_LONG ).show();
+                            finish();
 
                         } else {
                             mProgress.dismiss();

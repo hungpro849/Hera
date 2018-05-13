@@ -33,7 +33,7 @@ public interface CallAPI {
     // Change password
     @FormUrlEncoded
     @PUT("user/me")
-    Call<User> doUpdate(@Header("Authorization") String authHeader, @Field("password") String password);
+    Call<User> doUpdatePassword(@Header("Authorization") String authHeader, @Field("password") String password);
 
     // Forgot password
     @FormUrlEncoded
