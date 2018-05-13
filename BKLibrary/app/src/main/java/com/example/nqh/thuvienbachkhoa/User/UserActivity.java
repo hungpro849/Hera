@@ -16,15 +16,19 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.support.v7.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Admin.AdminActivity;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Database.models.Book;
+import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -33,14 +37,17 @@ public class UserActivity extends AppCompatActivity {
     ListView lv;
     mainUserAdapter adapter;
 
-    private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
+    DrawerLayout mDrawerLayout;
+    NavigationView mNavigationView;
 
     ArrayList<line_main_user_infor> arrayList = new ArrayList<line_main_user_infor>();
     DBHelper database;
     ArrayList<Book> mBookList = new ArrayList<Book>();
     ActionBar mActionBar;
     Toolbar mToolBar;
+    TextView mCurrentUsername;
+    Gson gson;
+    View headerView;
 
     SharedPreferences mPrefs;
 
@@ -60,12 +67,19 @@ public class UserActivity extends AppCompatActivity {
         // Check for illegal entrance
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
         String token = mPrefs.getString("UserToken", null);
-        if(token == null) {
+        String userData = mPrefs.getString("UserData", null);
+        if(token == null || userData == null) {
             Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
             finish();
         }
 
-        lv = (ListView) findViewById(R.id.MU_lv);
+        gson = new Gson();
+
+        User user = gson.fromJson(userData, User.class);
+
+        mCurrentUsername.setText(user.getUsername());
+
+        lv = findViewById(R.id.MU_lv);
         database = new DBHelper(this);
         //DBHelper.createDemoData(database);
         loadData();
@@ -93,6 +107,9 @@ public class UserActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        // Setup Textview inside navbar
+        headerView = mNavigationView.getHeaderView(0);
+        mCurrentUsername = headerView.findViewById(R.id.currentUsername);
 
         mToolBar = findViewById(R.id.user_drawer_toolbar);
         setSupportActionBar(mToolBar);
@@ -156,6 +173,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void setUpNavigationView() {
+        // Setup actions with navbar
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -181,9 +199,7 @@ public class UserActivity extends AppCompatActivity {
                     case R.id.drawer_settings:
                         break;
                     case R.id.user_drawer_signout:
-
-                        SharedPreferences session = UserActivity.this.getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = session.edit();
+                        SharedPreferences.Editor editor = mPrefs.edit();
                         editor.remove("UserToken");
                         editor.remove("UserData");
                         editor.commit();

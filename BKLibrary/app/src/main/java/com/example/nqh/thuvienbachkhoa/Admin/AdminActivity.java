@@ -17,13 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 
 import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
+import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.google.gson.Gson;
 
 
 import java.util.Collections;
@@ -53,6 +57,9 @@ public class AdminActivity extends AppCompatActivity {
 
     public static FragmentManager mFragmentManager;
 
+    View headerView;
+    TextView mCurrentUsername;
+    Gson gson;
     SharedPreferences mPrefs;
 
     /*
@@ -79,10 +86,17 @@ public class AdminActivity extends AppCompatActivity {
         // Check for illegal entrance
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
         String token = mPrefs.getString("UserToken", null);
-        if(token == null) {
+        String userData = mPrefs.getString("UserData", null);
+        if(token == null || userData == null) {
             Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
             finish();
         }
+
+        gson = new Gson();
+
+        User user = gson.fromJson(userData, User.class);
+
+        mCurrentUsername.setText(user.getUsername());
 
         mBookMenuFragment = new BookMenuFragment();
         mBookListFragment = new BookListFragment();
@@ -140,6 +154,9 @@ public class AdminActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+        // Setup Textview inside navbar
+        headerView = mNavigationView.getHeaderView(0);
+        mCurrentUsername = headerView.findViewById(R.id.currentUsername);
 
         mToolbar = findViewById(R.id.drawer_toolbar);
         setSupportActionBar(mToolbar);
@@ -188,8 +205,7 @@ public class AdminActivity extends AppCompatActivity {
                     case R.id.drawer_settings:
                         break;
                     case R.id.drawer_signout:
-                        SharedPreferences session  = AdminActivity.this.getSharedPreferences("mPrefs", Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = session.edit();
+                        SharedPreferences.Editor editor = mPrefs.edit();
                         editor.remove("UserToken");
                         editor.remove("UserData");
                         editor.commit();
