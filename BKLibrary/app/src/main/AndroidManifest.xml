@@ -22,8 +22,6 @@
         <activity android:name=".doipasswordActivity"></activity>
         <activity android:name=".quenmatkhauActivity"></activity>
         <activity android:name=".User.UserInfoActivity"></activity>
-        <activity android:name=".xemsach_guessActivity"></activity>
-        <activity android:name=".xemsachActivity"></activity>
         <activity android:name=".Admin.AdminActivity"></activity>
         <activity android:name=".DangNhapActivity"></activity>
         <activity android:name=".User.BorrowBookHistoryActivity" />

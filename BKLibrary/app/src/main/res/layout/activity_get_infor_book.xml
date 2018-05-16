@@ -9,43 +9,48 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:orientation="vertical">
+
     <ScrollView
         android:id="@+id/InforBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:scrollbars="none"
-        >
-        <LinearLayout
+        android:scrollbars="none">
 
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
                 android:orientation="horizontal">
+
                 <Button
-                    android:layout_marginLeft="30dp"
-                    android:layout_width="100dp"
-                    android:layout_height="133dp"
-                    android:background="@drawable/bookex"
-                    android:id="@+id/btnIdBook"/>
+                    android:id="@+id/btnIdBook"
+                    android:layout_width="120dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bookex" />
+
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_width="212dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
+
                     <TextView
+                        android:id="@+id/nameBook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/cover"
-                        android:id="@+id/nameBook"
-                        android:textSize="15sp"
+                        android:text="Tên sách"
                         android:textColor="#000000"
-                        />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/author"
@@ -53,13 +58,13 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tensach"
                         android:layout_marginTop="15dp"
-                        android:text="name"
                         android:layout_toEndOf="@+id/cover"
+                        android:text="Tác giả"
                         android:textColor="#000000"
-                        android:textSize="15sp"
-                        />
+                        android:textSize="15sp" />
 
                     <TextView
+                        android:id="@+id/LBnamxuatban"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tacgia"
@@ -67,109 +72,100 @@
                         android:layout_toEndOf="@+id/cover"
                         android:text="Năm Xuất Bản: 2018"
                         android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:id="@+id/LBnamxuatban" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/remain"
-                        android:text="asdasd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/LBnamxuatban"
                         android:layout_marginTop="15dp"
                         android:layout_toEndOf="@+id/cover"
+                        android:text="Số lượng: 10"
                         android:textColor="#000000"
                         android:textSize="15sp" />
                 </LinearLayout>
 
             </LinearLayout>
-            <RatingBar
-                android:id="@+id/ratingBar"
-                style="@style/Widget.AppCompat.RatingBar.Indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="10dp"
-                android:isIndicator="false"
-                android:rating="4"
-                android:stepSize="1"
-                android:theme="@style/CustomRatingBar" />
-            <TextView
-                android:id="@+id/voters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_alignStart="@+id/ratingBar"
-                android:layout_below="@+id/ratingBar"
-                android:text="Đánh giá: 4/5"
-                android:textColor="#000000"
-                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/voters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Đánh giá:"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:textSize="15sp" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:isIndicator="false"
+                    android:rating="4"
+                    android:stepSize="1"
+                    android:theme="@style/CustomRatingBar" />
+
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:padding="0dp">
 
-                <Switch
-                    android:id="@+id/theodoi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/muonsach"
-                    android:layout_alignBottom="@+id/muonsach"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="5dp"
-                    android:checked="false"
-                    android:showText="true"
-                    android:text="Theo dõi   "
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/download"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignBaseline="@+id/theodoi"
                     android:layout_alignBottom="@+id/theodoi"
-                    android:layout_centerHorizontal="true"
-                    android:background="@drawable/radiusbutton"
+                    android:layout_marginRight="10dp"
                     android:drawableRight="@drawable/download"
+                    android:paddingRight="20dp"
                     android:text="Tải ebook"
                     android:textAllCaps="false" />
 
                 <Button
                     android:id="@+id/borrowBook"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/textView"
-                    android:background="@drawable/radiusbutton"
                     android:drawableRight="@drawable/cart"
+                    android:paddingLeft="20dp"
                     android:text="Mượn sách"
                     android:textAllCaps="false" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="40dp"
-                android:text="asdasd"
-                android:layout_marginTop="15dp"
-                android:textSize="15sp"
-                />
+                android:layout_margin="10dp"
+                android:text="@string/sample_book_info"
+                android:textSize="15sp" />
+
             <TextView
                 android:id="@+id/comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_margin="10dp"
                 android:text=""
-                android:textColor="#3139D8"
-                />
+                android:textColor="#3139D8" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

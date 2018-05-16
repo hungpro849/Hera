@@ -11,8 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
 
@@ -44,9 +42,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_margin="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -114,28 +110,27 @@
             android:textAllCaps="false"
             android:text="Khách vãng lai"
             android:background="@drawable/custombutton"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="40dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-            >
             <TextView
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bạn chưa là thành viên?"
-
                 />
+
             <TextView
+                android:id="@+id/twDangky"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Đăng ký "
-                android:id="@+id/twDangky"
+                android:text=" Đăng ký"
                 android:textColor="#000080"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
         </LinearLayout>
 

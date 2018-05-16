@@ -5,16 +5,11 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:background="#ffffff"
-
-    >
+    android:background="#ffffff">
     <ListView
         android:layout_width="match_parent"
         android:id="@+id/lwThongtincanhan"
-        android:layout_height="wrap_content">
-
-
-    </ListView>
+        android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
+        android:layout_below="@id/lwThongtincanhan"
         android:text="Cập nhật"
         android:background="@drawable/custombutton"
         android:layout_below="@id/twDoimatkhau"/>

@@ -23,6 +23,12 @@
     <string name="connection_error">Lỗi kết nối</string>
     <string name="update_message">Đang cập nhật</string>
     <string name="waiting_message">Vui lòng chờ</string>
+    <string name="sample_book_info">Introduction to Algorithms is a book by Thomas H. Cormen, Charles E. Leiserson,
+        Ronald L. Rivest, and Clifford Stein. The first edition of the book was widely used as the textbook for
+        algorithms courses at many universities[1] and is commonly cited as a reference for algorithms in published
+        papers, with over 10000 citations documented on CiteSeerX.[2] The book sold half a
+        million copies during its first 20 years.[3] Its fame has led to the common use of the abbreviation
+        "CLRS" (Cormen, Leiserson, Rivest, Stein), or, in the first edition, "CLR" (Cormen, Leiserson, Rivest).[4]</string>
     <string-array name = "Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>

@@ -19,6 +19,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
 
@@ -38,6 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
 
@@ -57,11 +59,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:paddingBottom="10dp"
         android:paddingTop="10dp">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Ngày mượn:" />
@@ -77,6 +80,7 @@
         android:id="@+id/borrowed_books_recycle_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:scrollbars="vertical" />
 
 </LinearLayout>
