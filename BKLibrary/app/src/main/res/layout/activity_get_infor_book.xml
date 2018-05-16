@@ -158,14 +158,6 @@
                 android:layout_margin="10dp"
                 android:text="@string/sample_book_info"
                 android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/comments"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text=""
-                android:textColor="#3139D8" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

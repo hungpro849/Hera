@@ -34,7 +34,6 @@ public class getBookInFoActivity extends Activity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mt("Create Activity2");
         setContentView(R.layout.activity_get_infor_book);
         database = new DBHelper(this);
         nameBook = (TextView) findViewById(R.id.nameBook);
