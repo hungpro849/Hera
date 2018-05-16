@@ -20,7 +20,6 @@ import com.example.nqh.thuvienbachkhoa.AccountView;
 import com.example.nqh.thuvienbachkhoa.Adapter.CustomAdapterInfoView;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.example.nqh.thuvienbachkhoa.doipasswordActivity;
@@ -81,7 +80,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         }
 
         String[] infolist={username,email,"Sinh viên",fullname,phone,address};
-        setContentView(R.layout.thongtincanhan);
+        setContentView(R.layout.user_info);
         listview=findViewById(R.id.lwThongtincanhan);
         doimatkhau=findViewById(R.id.twDoimatkhau);
         mUpdateButton = findViewById(R.id.btnUpdate);
@@ -96,7 +95,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
             accountview.setInfo(infolist[i]);
             danhsachthongtin.add(accountview);
         }
-        adapterinfo = new CustomAdapterInfoView(this, R.layout.customlistview_thongtincanhan,
+        adapterinfo = new CustomAdapterInfoView(this, R.layout.user_info_in_listview,
                 danhsachthongtin);
         adapterinfo.notifyDataSetChanged();
         listview.setAdapter(adapterinfo);
