@@ -30,5 +30,5 @@
         android:layout_below="@id/lwThongtincanhan"
         android:text="Cập nhật"
         android:background="@drawable/custombutton"
-        android:layout_below="@id/twDoimatkhau"/>
+        />
 </RelativeLayout>

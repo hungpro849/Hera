@@ -15,8 +15,8 @@ public class User extends GeneralUser {
     * Fields:
     * userCart: Cart
     * locked : boolean
-    * borrowedBookList : List<Book> - list of borrowed book of each user
-    * wantedBookList : List<Book> - list of books in cart of the user
+    * borrowedBookList : List<BookResponse> - list of borrowed book of each user
+    * wantedBookList : List<BookResponse> - list of books in cart of the user
     * extendTimes : int - times the user want to borrowed books longer
     * */
 

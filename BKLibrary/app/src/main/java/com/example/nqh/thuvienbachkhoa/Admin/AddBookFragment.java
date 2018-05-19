@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.R;
 
 public class AddBookFragment extends Fragment {
@@ -71,10 +70,10 @@ public class AddBookFragment extends Fragment {
 
                 if (!checkAddBookCondition(bName,bAuthor,bSubject,bDescription,bRemain)) {
                     try {
-                        Book newBook = new Book(bName, bAuthor, bSubject, bDescription, 0.0f, null, 0, Integer.parseInt(bRemain));
+                        /*Book newBook = new Book(bName, bAuthor, bSubject, bDescription, 0.0f, null, 0, Integer.parseInt(bRemain));
                         database.fillObject(Book.class, newBook);
                         Toast.makeText(getActivity(), "Thêm sách thành công", Toast.LENGTH_SHORT).show();
-                        getActivity().onBackPressed();
+                        getActivity().onBackPressed();*/
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Thêm sách thất bại", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();

@@ -83,18 +83,18 @@ public class MainActivity extends AppCompatActivity {
             db.deleteAll(Report.class);
             db.deleteAll(GeneralUser.class);
 
-            // create data for table ``Book``
-            Book trituenhantao = new Book("Tri tue nhan tao", "Cao Hoang Tru", "KHMT",
+            // create data for table ``BookResponse``
+            Book trituenhantao = new Book("Tri tue nhan tao","Tri tue nhan tao", "Cao Hoang Tru", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/ttnt.img", 10, 5);
-            Book giaithuat = new Book("PT & TK giai thuat", "Duong Tuan Anh", "KHMT",
+            Book giaithuat = new Book("PT & TK giai thuat","PT & TK giai thuat", "Duong Tuan Anh", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/pttkgt.img", 10, 5);
-            Book songsong = new Book("Tinh toan song song", "Thoai Nam", "KHMT",
+            Book songsong = new Book("Tinh toan song song","Tinh toan song song", "Thoai Nam", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/ttss.img", 10, 5);
 
-            Book matma = new Book("Mat ma va an ninh mang", "Thay Khuong", "KHMT",
+            Book matma = new Book("Mat ma va an ninh mang","Mat ma va an ninh mang", "Thay Khuong", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/mmanm.img", 10, 5);
 
-            Book dohoa = new Book("Do hoa may tinh", "Thay Son", "KHMT",
+            Book dohoa = new Book("Do hoa may tinh","Do hoa may tinh", "Thay Son", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/dhmt.img", 10, 5);
 
             db.fillObject(Book.class, trituenhantao);
@@ -165,23 +165,23 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             // test the function create a new book
-//            db.fillObject(Book.class, new Book("Machine Learning", "AndrewNg", "ML/AI",
+//            db.fillObject(BookResponse.class, new BookResponse("Machine Learning", "AndrewNg", "ML/AI",
 //                    "Material for ML", 4.6f, "C:/User/image/ml.img", 10, 5));
-//            db.fillObject(Book.class, new Book("Machine Learning", "AndrewNg", "ML/AI",
+//            db.fillObject(BookResponse.class, new BookResponse("Machine Learning", "AndrewNg", "ML/AI",
 //                    "Material for ML", 4.6f, "C:/User/image/ml.img", 10, 5));
-//            db.fillObject(Book.class, new Book("ABC", "Fuck you", "ML/AI",
+//            db.fillObject(BookResponse.class, new BookResponse("ABC", "Fuck you", "ML/AI",
 //                    "Material for ML", 4.6f, "C:/User/image/m2.img", 10, 5));
 //
 //            // delete a book
-//            Book deletedBook = new Book("Deleted Book", "Fuck you", "ML/AI",
+//            BookResponse deletedBook = new BookResponse("Deleted BookResponse", "Fuck you", "ML/AI",
 //                    "Material for ML", 4.6f, "C:/User/image/m2.img", 10, 5);
-//            db.fillObject(Book.class, deletedBook);
-//            db.deleteById(Book.class, deletedBook.getId());
+//            db.fillObject(BookResponse.class, deletedBook);
+//            db.deleteById(BookResponse.class, deletedBook.getId());
 //
 //            // update an existed book
-//            Book updatedBook = new Book("Updated Book", "Fuck you", "ML/AI",
+//            BookResponse updatedBook = new BookResponse("Updated BookResponse", "Fuck you", "ML/AI",
 //                    "Material for ML", 4.6f, "C:/User/image/m2.img", 10, 5);
-//            db.fillObject(Book.class, updatedBook);
+//            db.fillObject(BookResponse.class, updatedBook);
 //            updatedBook.setName("After updated book");
 //            db.createOrUpdate(updatedBook);
 //            Log.d("Id of a book: ", Integer.toString(updatedBook.getId()));
@@ -189,15 +189,15 @@ public class MainActivity extends AppCompatActivity {
             // search a book
 //            Map<String, Object> condition = new HashMap<String, Object>();
 //            condition.put("name", "Machine Learning");
-//            List<Book> foundBook = db.query(Book.class, condition);
-//            for (Book b: foundBook) {
+//            List<BookResponse> foundBook = db.query(BookResponse.class, condition);
+//            for (BookResponse b: foundBook) {
 //                Log.d("Found: ", b.getName());
 //            }
 
             // get all books
             List<Book> all_books = db.getAll(Book.class);
             for (Book b: all_books) {
-                Log.d("Book :", b.getName());
+                Log.d("BookResponse :", b.getName());
             }
             // query like %name%
             List<Book> books = db.queryLike(Book.class, "name", "hoa");
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             foundBook = db.query(Book.class, condition);
         } catch (Exception e) {
-            Log.e("Book Query Exception", e.getMessage());
+            Log.e("BookResponse Query Exception", e.getMessage());
         }
         return foundBook;
     }

@@ -1,13 +1,17 @@
 package com.example.nqh.thuvienbachkhoa.Interface;
 
+import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -39,4 +43,9 @@ public interface CallAPI {
     @FormUrlEncoded
     @POST("auth/forgot-password")
     Call<JSONObject> doResetPassword(@Field("email") String email, @Field("url") String url);
+
+    // Login
+
+    @GET("book")
+    Call<List<BookResponse>> getBooks();
 }

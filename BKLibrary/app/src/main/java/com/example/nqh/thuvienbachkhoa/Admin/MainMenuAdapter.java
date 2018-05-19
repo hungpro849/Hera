@@ -1,7 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.content.ClipData;
-import android.content.res.Resources;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,12 +23,17 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
         // each data item is just a string in this case
         public TextView mTitle;
         public ImageView mImage;
+        public LinearLayout mLayout;
         private ItemClickListener itemClickListener;
 
         public ViewHolder(View v) {
             super(v);
             mTitle = (TextView) v.findViewById(R.id.task_name);
             mImage = (ImageView) v.findViewById(R.id.task_icon);
+            mLayout = (LinearLayout) v.findViewById(R.id.task_layout);
+            mImage.setOnClickListener(this);
+            mLayout.setOnClickListener(this);
+            mTitle.setOnClickListener(this);
             v.setOnClickListener(this);
         }
 
@@ -78,7 +81,7 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
                 switch (position) {
                     case 0:
                         fragmentTransaction.replace(R.id.main_view, AdminActivity.mBookListFragment)
-                                .addToBackStack("Book list fragment").commit();
+                                .addToBackStack("BookResponse list fragment").commit();
                         break;
                     case 1:
                         fragmentTransaction.replace(R.id.main_view, AdminActivity.mUserListFragment)

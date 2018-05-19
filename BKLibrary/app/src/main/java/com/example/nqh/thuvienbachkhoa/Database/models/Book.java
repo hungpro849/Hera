@@ -1,7 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Database.models;
-import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -28,8 +26,8 @@ public class Book {
     * FIELDS
     * ==================================
     * */
-    @DatabaseField(columnName = "id", generatedId = true, unique = true)
-    private int id;
+    @DatabaseField(columnName = "id",  unique = true)
+    private String id;
 
     @DatabaseField(columnName = "name", index = true, canBeNull = false, unique = true)
     private String name;
@@ -65,8 +63,9 @@ public class Book {
 
     }
 
-    public Book(String name, String author, String subject, String description,
+    public Book(String id,String name, String author, String subject, String description,
                 float score, String image_link, int voters, int remain) {
+        this.id=id;
         this.name = name;
         this.author = author;
         this.subject = subject;
@@ -78,11 +77,11 @@ public class Book {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

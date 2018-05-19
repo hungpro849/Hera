@@ -1,11 +1,9 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.widget.ImageView;
-
 import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 
 public class BookInfoInList {
-    int mBookId;
+    String mBookId;
     String mTitle;
     String mAuthor;
 

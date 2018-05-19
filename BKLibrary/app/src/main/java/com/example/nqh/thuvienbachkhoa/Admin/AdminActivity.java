@@ -186,7 +186,7 @@ public class AdminActivity extends AppCompatActivity {
         try {
             foundBook = db.query(Book.class, condition);
         } catch (Exception e) {
-            Log.e("Book Query Exception", e.getMessage());
+            Log.e("BookResponse Query Exception", e.getMessage());
         }
         return foundBook;
     }

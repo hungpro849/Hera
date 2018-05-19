@@ -1,6 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -108,7 +107,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         try {
             foundBook = database.query(Book.class, condition);
         } catch (Exception e) {
-            Log.e("Book Query Exception", e.getMessage());
+            Log.e("BookResponse Query Exception", e.getMessage());
         }
         return foundBook.get(0);
     }

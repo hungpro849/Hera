@@ -2,15 +2,17 @@ package com.example.nqh.thuvienbachkhoa.Database.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.nqh.thuvienbachkhoa.Database.models.*;
-
+import com.example.nqh.thuvienbachkhoa.Database.models.Book;
+import com.example.nqh.thuvienbachkhoa.Database.models.Feedback;
+import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
+import com.example.nqh.thuvienbachkhoa.Database.models.Notification;
+import com.example.nqh.thuvienbachkhoa.Database.models.Report;
+import com.example.nqh.thuvienbachkhoa.Database.models.UserBook;
 import com.example.nqh.thuvienbachkhoa.Utils;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
@@ -19,10 +21,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
-import java.util.*;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hoang on 4/15/2018.
@@ -127,18 +131,18 @@ public class DBHelper  extends OrmLiteSqliteOpenHelper {
             db.deleteAll(Report.class);
             db.deleteAll(GeneralUser.class);
 
-            // create data for table ``Book``
-            Book trituenhantao = new Book("Tri tue nhan tao", "Cao Hoang Tru", "KHMT",
+            // create data for table ``BookResponse``
+            Book trituenhantao = new Book("Tri tue nhan tao","Tri tue nhan tao", "Cao Hoang Tru", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/ttnt.img", 10, 5);
-            Book giaithuat = new Book("PT & TK giai thuat", "Duong Tuan Anh", "KHMT",
+            Book giaithuat = new Book("PT & TK giai thuat","PT & TK giai thuat", "Duong Tuan Anh", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/pttkgt.img", 10, 5);
-            Book songsong = new Book("Tinh toan song song", "Thoai Nam", "KHMT",
+            Book songsong = new Book("Tinh toan song song","Tinh toan song song", "Thoai Nam", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/ttss.img", 10, 5);
 
-            Book matma = new Book("Mat ma va an ninh mang", "Thay Khuong", "KHMT",
+            Book matma = new Book("Mat ma va an ninh mang","Mat ma va an ninh mang", "Thay Khuong", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/mmanm.img", 10, 5);
 
-            Book dohoa = new Book("Do hoa may tinh", "Thay Son", "KHMT",
+            Book dohoa = new Book("Do hoa may tinh","Do hoa may tinh", "Thay Son", "KHMT",
                     "Mon chuyen nghanh KHMT", 4.6f, "C:/User/image/dhmt.img", 10, 5);
 
             db.fillObject(Book.class, trituenhantao);

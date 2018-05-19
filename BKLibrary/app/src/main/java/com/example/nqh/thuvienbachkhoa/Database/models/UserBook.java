@@ -17,7 +17,7 @@ public class UserBook {
     * Fields:
     * id : int
     * user: GeneralUser
-    * book_id: Book
+    * book_id: BookResponse
     * borrowed_date: long
     * pay_date: long
     * This class create many2many relation between user and book
