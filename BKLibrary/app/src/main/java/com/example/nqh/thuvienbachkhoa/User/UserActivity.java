@@ -40,7 +40,7 @@ import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
     String email;
-    private List<BookInfoView> booksList = new ArrayList<>();
+    private List<BookInfoView> booksList;
     private RecyclerView mRecyclerView;
     private BooksAdapter mBooksAdapter;
 
@@ -83,7 +83,7 @@ public class UserActivity extends AppCompatActivity {
         gson = new Gson();
 
         User user = gson.fromJson(userData, User.class);
-
+        booksList = getBookList();
         mCurrentUsername.setText(user.getUsername());
         mBooksAdapter = new BooksAdapter(booksList);
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
@@ -107,12 +107,12 @@ public class UserActivity extends AppCompatActivity {
 
             }
         }));
-        mRecyclerView.setAdapter(mBooksAdapter);
 
 
         database = new DBHelper(this);
-        loadData();
         setEmail(getCurrentUserEmail());
+        mRecyclerView.setAdapter(mBooksAdapter);
+
     }
 
     private void setUpDrawer() {
@@ -146,17 +146,13 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
-    public void loadData() {
-        try {
-            mBookList = (ArrayList<Book>) database.getAllOrdered(Book.class, "name", true);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ArrayList<BookInfoView> getBookList() {
+        ArrayList<BookInfoView> books = new ArrayList<>();
+        for(int i = 0; i < 10; i++) {
+            BookInfoView newBook = new BookInfoView("Do Hoa May Tinh", "", "" ,"Luis Vuiton", "2015");
+            books.add(newBook);
         }
-        for (Book b : mBookList) {
-            BookInfoView newBook = new BookInfoView(b.getName(), b.getImage_link(), b.getId() + "");
-            booksList.add(newBook);
-        }
-
+        return  books;
     }
 
     @Override
