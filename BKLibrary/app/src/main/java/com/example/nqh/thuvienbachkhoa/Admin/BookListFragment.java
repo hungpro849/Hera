@@ -32,6 +32,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,14 +43,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.Context.MODE_PRIVATE;
 
 public class BookListFragment extends Fragment {
-    private static final String TAG = BookListFragment.class.getName();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private Activity mCurrentActivity;
     private BookListAdapter mBookListAdapter;
-    private DBHelper database;
     private Toolbar mToolbar;
+    ProgressDialog mProgress;
     private SearchView mSearchView;
     private FloatingActionButton mAddBookBtn;
     public List<BookInfoInList> mDataset = new Vector<BookInfoInList>();
@@ -57,7 +57,7 @@ public class BookListFragment extends Fragment {
     CallAPI getBooks;
     Gson gson;
     SharedPreferences mPrefs;
-    ProgressDialog mProgress;
+    String token;
 
     public void setCurrentActivity(Activity activity) {
         this.mCurrentActivity = activity;
@@ -65,7 +65,7 @@ public class BookListFragment extends Fragment {
 
 
     public void setDatabase(DBHelper db) {
-        this.database = db;
+        //this.database = db;
     }
 
     public void setDataset(List<Book> bookList) {
@@ -81,9 +81,9 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
-        mRecyclerView = view.findViewById(R.id.book_list_recycle_view);
-        mToolbar = view.findViewById(R.id.book_list_tool_bar);
-        mAddBookBtn = view.findViewById(R.id.add_book_btn);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.book_list_recycle_view);
+        mToolbar = (Toolbar) view.findViewById(R.id.book_list_tool_bar);
+        mAddBookBtn = (FloatingActionButton) view.findViewById(R.id.add_book_btn);
         mDataset.clear();
         mBookList.clear();
 
@@ -95,7 +95,7 @@ public class BookListFragment extends Fragment {
         getBooks = retrofit.create(CallAPI.class);
         gson = new Gson();
         mPrefs = this.getActivity().getSharedPreferences("mPrefs",MODE_PRIVATE);
-
+        token = mPrefs.getString("UserToken", null);
         setUpRecyclerView();
         setupToolbar();
         setupSearchView();
@@ -111,23 +111,28 @@ public class BookListFragment extends Fragment {
 
     public void setUpRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
+        mAdapter = new BookListAdapter(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mLayoutManager = new LinearLayoutManager(mCurrentActivity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         loadData();
+
+
     }
 
     public void loadData() {
-        mProgress = new ProgressDialog(getActivity());
+        Call<List<Book>> tokenResponseCall = getBooks.getBooks();
+        mProgress = new ProgressDialog(getActivity()); // this = YourActivity
         mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgress.setMessage(getString(R.string.waiting_message));
+        mProgress.setMessage("Getting data ...");
         mProgress.setIndeterminate(true);
         mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
 
-        Call<List<Book>> tokenResponseCall = getBooks.getBooks();
-
         tokenResponseCall.enqueue(new Callback<List<Book>>() {
             @Override
             public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
-                //mProgress.dismiss();
+                mProgress.dismiss();
                 if (response.isSuccessful()) {
                     // Save user data to SharedPreferences
                     SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -136,16 +141,23 @@ public class BookListFragment extends Fragment {
                     prefsEditor.putString("AllBooks", books);
                     prefsEditor.apply();
                     loadbooks(response.body());
+                    ((BookListAdapter)mAdapter).set_mDataset(mDataset);
+                    ((BookListAdapter)mAdapter).set_mBooklist(mBookList);
+                    mAdapter.notifyDataSetChanged();
+
                 } else {
                     try {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(getActivity().getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                         String pastBooks = mPrefs.getString("AllBooks", null);
-                        if(pastBooks != null) {
+                        if(!pastBooks.equals(null)) {
                             List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                             }.getType());
                             loadbooks(books);
                         }
+                        ((BookListAdapter)mAdapter).set_mDataset(mDataset);
+                        ((BookListAdapter)mAdapter).set_mBooklist(mBookList);
+                        mAdapter.notifyDataSetChanged();
 
                     } catch (Exception e) {
                         Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -156,34 +168,34 @@ public class BookListFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Book>> call, Throwable t) {
+                mProgress.dismiss();
                 /*mProgress.dismiss();
                 Log.d(TAG, "onFailure: " + t.getMessage());*/
                 Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
                 String pastBooks = mPrefs.getString("AllBooks", null);
-                if(pastBooks != null) {
+                if(pastBooks!=null) {
                     List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                     }.getType());
                     loadbooks(books);
                 }
+                ((BookListAdapter)mAdapter).set_mDataset(mDataset);
+                ((BookListAdapter)mAdapter).set_mBooklist(mBookList);
+                mAdapter.notifyDataSetChanged();
+
             }
         });
     }
 
-    public void loadbooks(List<Book> response) {
+    public void loadbooks(List<Book> response)
+    {
         for (Book book_rep : response) {
             mBookList.add(book_rep);
-            //String userData = gson.toJson(book_rep.getBook());
         }
         for (Book b : mBookList) {
             BookInfoInList newBook = new BookInfoInList(b);
             mDataset.add(newBook);
         }
-        mAdapter = new BookListAdapter(mDataset, database);
-        mRecyclerView.setAdapter(mAdapter);
-        mProgress.dismiss();
 
-        mLayoutManager = new LinearLayoutManager(mCurrentActivity);
-        mRecyclerView.setLayoutManager(mLayoutManager);
     }
     public void setupToolbar() {
         mToolbar.setNavigationIcon(R.drawable.back_button_white);
@@ -244,11 +256,15 @@ public class BookListFragment extends Fragment {
     }
 
     public List<Book> bookQuery(String query) {
-        List<Book> foundBook = Collections.emptyList();
-        try {
-            foundBook = database.queryLike(Book.class, "name", query);
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+        List<Book> foundBook = new Vector<Book>();
+
+        String patt = "\\b"+query+".*?\\b";
+        Pattern regex = Pattern.compile(patt,Pattern.CASE_INSENSITIVE);
+        for (Book b : mBookList) {
+            if(regex.matcher(b.getName()).find()){
+                foundBook.add(b);
+            }
+
         }
         return foundBook;
     }
@@ -268,7 +284,7 @@ public class BookListFragment extends Fragment {
             public void onClick(View v) {
                 android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.main_view, AdminActivity.mAddBookFragment)
-                        .addToBackStack(null).commit();
+                        .addToBackStack("Add book fragment").commit();
             }
         });
     }

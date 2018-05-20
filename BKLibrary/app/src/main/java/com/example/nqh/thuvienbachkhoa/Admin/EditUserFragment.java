@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.Book;
+import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 
@@ -29,32 +29,30 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class EditBookFragment extends Fragment {
+public class EditUserFragment extends Fragment {
     public Toolbar mToolbar;
-    EditText mBookName;
-    EditText mBookAuthor;
-    EditText mBookSubject;
-    EditText mBookDescription;
-    EditText mBookLink;
-    EditText mBookRemain;
+    EditText mUserName;
+    EditText mUserEmail;
+    EditText mUserAddress;
+    EditText mUserPhone;
+    EditText mUserFName;
     int mRemain;
 
-    CallAPI editBook;
+    CallAPI editUser;
     Gson gson;
     SharedPreferences mPrefs;
     String token;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_edit_book, container, false);
+        View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
         mToolbar = (Toolbar) view.findViewById(R.id.edit_book_tool_bar);
 
-        mBookName = (EditText) view.findViewById(R.id.edit_book_name);
-        mBookAuthor = (EditText) view.findViewById(R.id.edit_book_author);
-        mBookSubject = (EditText) view.findViewById(R.id.edit_book_subject);
-        mBookDescription = (EditText) view.findViewById(R.id.edit_book_description);
-        mBookLink = (EditText) view.findViewById(R.id.edit_book_link);
-        mBookRemain = (EditText) view.findViewById(R.id.edit_book_remain);
+        mUserName = (EditText) view.findViewById(R.id.edit_user_name);
+        mUserEmail = (EditText) view.findViewById(R.id.edit_user_email);
+        mUserAddress = (EditText) view.findViewById(R.id.edit_user_address);
+        mUserPhone = (EditText) view.findViewById(R.id.edit_user_phone);
+        mUserFName = (EditText) view.findViewById(R.id.edit_user_fname);
 
 
         mToolbar.setTitle(null);
@@ -64,7 +62,7 @@ public class EditBookFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        editBook = retrofit.create(CallAPI.class);
+        editUser = retrofit.create(CallAPI.class);
         gson = new Gson();
         mPrefs = this.getActivity().getSharedPreferences("mPrefs",MODE_PRIVATE);
         token = mPrefs.getString("UserToken", null);
@@ -82,12 +80,11 @@ public class EditBookFragment extends Fragment {
     }
     public void setupView()
     {
-        mBookName.setText(BookListAdapter.currentBook.getName());
-        mBookAuthor.setText(BookListAdapter.currentBook.getAuthor());
-        mBookSubject.setText(BookListAdapter.currentBook.getSubject());
-        mBookDescription.setText(BookListAdapter.currentBook.getDescription());
-        mBookLink.setText(BookListAdapter.currentBook.getImageLink());
-        mBookRemain.setText(Integer.toString(BookListAdapter.currentBook.getStock()));
+        mUserName.setText(UserListAdapter.currentUser.getUsername());
+        mUserEmail.setText(UserListAdapter.currentUser.getEmail());
+        mUserAddress.setText(UserListAdapter.currentUser.getAddress());
+        mUserPhone.setText(UserListAdapter.currentUser.getPhone());
+        mUserFName.setText(UserListAdapter.currentUser.getFullname());
     }
 
     public void setupToolbar() {
@@ -104,23 +101,22 @@ public class EditBookFragment extends Fragment {
         mToolbar.getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                String bId=BookListAdapter.currentBook.getId();
-                String bName = mBookName.getText().toString().trim();
-                String bAuthor = mBookAuthor.getText().toString().trim();
-                String bSubject = mBookSubject.getText().toString().trim();
-                String bDescription = mBookDescription.getText().toString().trim();
-                String bLink=mBookLink.getText().toString().trim();
-                String bRemain = mBookRemain.getText().toString().trim();
+                String uId=UserListAdapter.currentUser.getId();
+                String uUserName = mUserName.getText().toString().trim();
+                String uEmail = mUserEmail.getText().toString().trim();
+                String uAddress = mUserAddress.getText().toString().trim();
+                String uPhone = mUserPhone.getText().toString().trim();
+                String uFName=mUserFName.getText().toString().trim();
 
-                if (!checkEditBookCondition(bName,bAuthor,bSubject,bDescription,bLink,bRemain)) {
+                if (!checkEditUserCondition(uUserName,uEmail,uAddress,uPhone,uFName)) {
                     try {
-                        Call<Book> tokenResponseCall = editBook.editBook("Bearer " + token,bId,bName,bAuthor,bSubject,bDescription,bLink,bRemain);
-                        tokenResponseCall.enqueue(new Callback<Book>() {
+                        Call<User> tokenResponseCall = editUser.editUser("Bearer " + token,uId,uUserName,uEmail,uAddress,uPhone,uFName);
+                        tokenResponseCall.enqueue(new Callback<User>() {
                             @Override
-                            public void onResponse(Call<Book> call, Response<Book> response) {
+                            public void onResponse(Call<User> call, Response<User> response) {
                                 //mProgress.dismiss();
                                 if (response.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Chỉnh sửa sách thành công", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Chỉnh sửa user thành công", Toast.LENGTH_SHORT).show();
                                     getActivity().onBackPressed();
 
                                 } else {
@@ -134,14 +130,14 @@ public class EditBookFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<Book> call, Throwable t) {
+                            public void onFailure(Call<User> call, Throwable t) {
                                 //mProgress.dismiss();
                                 Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
                             }
                         });
 
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Chỉnh sửa sách thất bại", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Chỉnh sửa user thất bại", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 } else {
@@ -152,16 +148,13 @@ public class EditBookFragment extends Fragment {
         });
     }
 
-    public boolean checkEditBookCondition(String bName, String bAuthor, String bSubject, String bDescription, String bLink,String bRemain) {
+    public boolean checkEditUserCondition(String uUserName, String uEmail, String uAddress, String uPhone, String uFName) {
         //return true if strings are empty or null
-        boolean conditionName = TextUtils.isEmpty(bName);
-        boolean conditionAuthor = TextUtils.isEmpty(bAuthor);
-        boolean conditionSubject = TextUtils.isEmpty(bSubject);
-        boolean conditionDescription = TextUtils.isEmpty(bDescription);
-        boolean conditionLink = TextUtils.isEmpty(bLink);
-        boolean conditionRemain = TextUtils.isEmpty(bRemain);
-        return conditionName || conditionAuthor || conditionSubject || conditionDescription ||conditionLink|| conditionRemain;
+        boolean conditionName = TextUtils.isEmpty(uUserName);
+        boolean conditionEmail = TextUtils.isEmpty(uEmail);
+        boolean conditionAddress = TextUtils.isEmpty(uAddress);
+        boolean conditionPhone = TextUtils.isEmpty(uPhone);
+        boolean conditionFName = TextUtils.isEmpty(uFName);
+        return conditionName || conditionEmail || conditionAddress || conditionPhone ||conditionFName;
     }
-
-
 }

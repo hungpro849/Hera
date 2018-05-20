@@ -20,18 +20,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
+import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.example.nqh.thuvienbachkhoa.Utils;
 import com.google.gson.Gson;
 
-
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AdminActivity extends AppCompatActivity {
     Bitmap download;
@@ -50,6 +47,7 @@ public class AdminActivity extends AppCompatActivity {
     public static NotificationFragment mNotificationFragment;
     public static AddBookFragment mAddBookFragment;
     public static EditBookFragment mEditBookFragment;
+    public static EditUserFragment mEditUserFragment;
     public static BorrowerListFragment mBorrowerListFragment;
     public static BorrowerInfoFragment mBorrowerInfoFragment;
 
@@ -104,6 +102,8 @@ public class AdminActivity extends AppCompatActivity {
 
         mUserListFragment = new UserListFragment();
         mUserListFragment.setDatabase(db);
+
+        mEditUserFragment = new EditUserFragment();
 
         mReportFragment = new ReportFragment();
         mReportFragment.setCurrentActivity(AdminActivity.this);
@@ -213,5 +213,7 @@ public class AdminActivity extends AppCompatActivity {
         } else {
             finish();
         }
+        // Close all keyboard
+        Utils.hideKeyboard(this);
     }
 }

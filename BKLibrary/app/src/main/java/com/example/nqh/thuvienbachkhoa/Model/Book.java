@@ -26,6 +26,7 @@ public class Book {
     @SerializedName("stock")
     @Expose
     private Integer stock;
+
     public String getId() {
         return id;
     }

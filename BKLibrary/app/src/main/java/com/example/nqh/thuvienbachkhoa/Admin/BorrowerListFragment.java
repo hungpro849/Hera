@@ -137,8 +137,8 @@ public class BorrowerListFragment extends Fragment {
     public void loadAllBorrowers() {
         getAllCurrentBorrowers();
         for (UserBook borrower: mBorrowerList) {
-            UserInfoInList newBorrower = new UserInfoInList(borrower.getUser());
-            mDataset.add(newBorrower);
+            /*UserInfoInList newBorrower = new UserInfoInList(borrower.getUser());
+            mDataset.add(newBorrower);*/
         }
     }
 
@@ -159,7 +159,7 @@ public class BorrowerListFragment extends Fragment {
                 List<UserBook> currentBorrowers = database.queryEqualDistinct(UserBook.class,
                         "user_id","user_id", currentUser);
                 for (UserBook b: currentBorrowers) {
-                    mDataset.add(new UserInfoInList(b.getUser()));
+                    //mDataset.add(new UserInfoInList(b.getUser()));
                 }
             } catch (Exception e) {
                 Log.e("UserBook exception", e.getMessage());
