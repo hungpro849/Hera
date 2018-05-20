@@ -9,12 +9,14 @@ import org.json.JSONObject;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface CallAPI {
     // Login
@@ -55,5 +57,18 @@ public interface CallAPI {
                           @Field("author") String author, @Field("subject") String subject,
                           @Field("description") String description, @Field("image_link") String image_link,
                           @Field("stock") int stock);
+
+
+    // Create a new book
+    @FormUrlEncoded
+    @POST("book")
+    Call<Book> createBook(@Header("Authorization") String authHeader,@Field("name") String name, @Field("author") String author, @Field("subject") String subject,
+                                   @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
+    @FormUrlEncoded
+    @PUT("book/{id}")
+    Call<Book> editBook(@Header("Authorization") String authHeader, @Path("id") String id, @Field("name") String name, @Field("author") String author, @Field("subject") String subject,
+                                @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
+    @DELETE("book/{id}")
+    Call<Book> delBook(@Header("Authorization") String authHeader, @Path("id") String id);
 
 }

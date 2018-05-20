@@ -167,20 +167,22 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="Số lượng"
-                    android:textSize="18sp" />
+                    android:text="Hình ảnh:"
+                    android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/add_book_remain"
+                    android:id="@+id/add_book_link"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="3"
                     android:background="#FFFFFF"
-                    android:hint="Nhập số lượng"
-                    android:text="0"
-                    android:inputType="number" />
+                    android:hint="Nhập link hình ảnh"
+                    android:inputType="textMultiLine" />
+
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -198,19 +200,19 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="Hình ảnh"
+                    android:text="Số lượng"
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/add_book_image"
+                    android:id="@+id/add_book_remain"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="3"
                     android:background="#FFFFFF"
-                    android:hint="Nhập địa chỉ tới ảnh"
-                    android:inputType="text" />
-
+                    android:hint="Nhập số lượng"
+                    android:text="0"
+                    android:inputType="number" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
