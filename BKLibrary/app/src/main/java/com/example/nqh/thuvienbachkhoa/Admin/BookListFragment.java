@@ -48,7 +48,6 @@ public class BookListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private Activity mCurrentActivity;
     private BookListAdapter mBookListAdapter;
-    private DBHelper database;
     private Toolbar mToolbar;
     ProgressDialog mProgress;
     private SearchView mSearchView;
@@ -56,7 +55,6 @@ public class BookListFragment extends Fragment {
     public List<BookInfoInList> mDataset = new Vector<BookInfoInList>();
     public List<Book> mBookList = new Vector<Book>();
     CallAPI getBooks;
-    CallAPI delBook;
     Gson gson;
     SharedPreferences mPrefs;
     String token;
@@ -67,7 +65,7 @@ public class BookListFragment extends Fragment {
 
 
     public void setDatabase(DBHelper db) {
-        this.database = db;
+        //this.database = db;
     }
 
     public void setDataset(List<Book> bookList) {
@@ -95,7 +93,6 @@ public class BookListFragment extends Fragment {
                 .build();
 
         getBooks = retrofit.create(CallAPI.class);
-        delBook= retrofit.create(CallAPI.class);
         gson = new Gson();
         mPrefs = this.getActivity().getSharedPreferences("mPrefs",MODE_PRIVATE);
         token = mPrefs.getString("UserToken", null);
@@ -290,9 +287,5 @@ public class BookListFragment extends Fragment {
                         .addToBackStack("Add book fragment").commit();
             }
         });
-    }
-    public void delBook()
-    {
-
     }
 }

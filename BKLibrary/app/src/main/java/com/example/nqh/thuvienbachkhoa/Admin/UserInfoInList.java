@@ -1,10 +1,10 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
-import com.example.nqh.thuvienbachkhoa.Database.models.User;
+
+import com.example.nqh.thuvienbachkhoa.Model.User;
 
 public class UserInfoInList {
-    int mUserId;
+    String mUserId;
     String mUsername;
     String mUserEmail;
 
@@ -13,9 +13,9 @@ public class UserInfoInList {
         mUserEmail = userEmail;
     }
 
-    UserInfoInList(GeneralUser user) {
+    UserInfoInList(User user) {
         this.mUserId = user.getId();
         this.mUserEmail = user.getEmail();
-        this.mUsername = user.getName();
+        this.mUsername = user.getUsername();
     }
 }

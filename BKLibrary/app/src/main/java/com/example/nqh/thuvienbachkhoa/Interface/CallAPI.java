@@ -50,15 +50,6 @@ public interface CallAPI {
     @GET("book")
     Call<List<Book>> getBooks();
 
-    // Create Book
-    @FormUrlEncoded
-    @POST("book")
-    Call<Book> createBook(@Header("Authorization") String authHeader, @Field("name") String title,
-                          @Field("author") String author, @Field("subject") String subject,
-                          @Field("description") String description, @Field("image_link") String image_link,
-                          @Field("stock") int stock);
-
-
     // Create a new book
     @FormUrlEncoded
     @POST("book")
@@ -70,5 +61,17 @@ public interface CallAPI {
                                 @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
     @DELETE("book/{id}")
     Call<Book> delBook(@Header("Authorization") String authHeader, @Path("id") String id);
+
+    // Get Book
+    @GET("user")
+    Call<List<User>> getUsers(@Header("Authorization") String authHeader);
+
+    @FormUrlEncoded
+    @PUT("user/{id}")
+    Call<User> editUser(@Header("Authorization") String authHeader, @Path("id") String id, @Field("username") String username, @Field("email") String email, @Field("address") String address,
+                        @Field("phone") String phone, @Field("fullname") String fullname);
+
+    @DELETE("user/{id}")
+    Call<User> delUser(@Header("Authorization") String authHeader, @Path("id") String id);
 
 }
