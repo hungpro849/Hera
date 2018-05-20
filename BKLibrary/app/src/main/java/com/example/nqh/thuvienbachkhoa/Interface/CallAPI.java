@@ -1,6 +1,6 @@
 package com.example.nqh.thuvienbachkhoa.Interface;
 
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 
@@ -47,5 +47,5 @@ public interface CallAPI {
     // Login
 
     @GET("book")
-    Call<List<BookResponse>> getBooks();
+    Call<List<Book>> getBooks();
 }

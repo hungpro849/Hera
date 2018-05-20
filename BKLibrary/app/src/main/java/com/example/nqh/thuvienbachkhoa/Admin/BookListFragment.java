@@ -20,9 +20,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.Context.MODE_PRIVATE;
 
 public class BookListFragment extends Fragment {
+    private static final String TAG = BookListFragment.class.getName();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -79,9 +79,9 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.book_list_recycle_view);
-        mToolbar = (Toolbar) view.findViewById(R.id.book_list_tool_bar);
-        mAddBookBtn = (FloatingActionButton) view.findViewById(R.id.add_book_btn);
+        mRecyclerView = view.findViewById(R.id.book_list_recycle_view);
+        mToolbar = view.findViewById(R.id.book_list_tool_bar);
+        mAddBookBtn = view.findViewById(R.id.add_book_btn);
         mDataset.clear();
         mBookList.clear();
 
@@ -109,18 +109,15 @@ public class BookListFragment extends Fragment {
 
     public void setUpRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
-
         loadData();
-
-
     }
 
     public void loadData() {
-        Call<List<BookResponse>> tokenResponseCall = getBooks.getBooks();
+        Call<List<Book>> tokenResponseCall = getBooks.getBooks();
 
-        tokenResponseCall.enqueue(new Callback<List<BookResponse>>() {
+        tokenResponseCall.enqueue(new Callback<List<Book>>() {
             @Override
-            public void onResponse(Call<List<BookResponse>> call, Response<List<BookResponse>> response) {
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 //mProgress.dismiss();
                 if (response.isSuccessful()) {
                     // Save user data to SharedPreferences
@@ -135,8 +132,8 @@ public class BookListFragment extends Fragment {
                         JSONObject jObjError = new JSONObject(response.errorBody().string());
                         Toast.makeText(getActivity().getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                         String pastBooks = mPrefs.getString("AllBooks", null);
-                        if(!pastBooks.equals(null)) {
-                            List<BookResponse> books = gson.fromJson(pastBooks, new TypeToken<List<BookResponse>>() {
+                        if(pastBooks != null) {
+                            List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                             }.getType());
                             loadbooks(books);
                         }
@@ -149,25 +146,23 @@ public class BookListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<BookResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Book>> call, Throwable t) {
                 /*mProgress.dismiss();
                 Log.d(TAG, "onFailure: " + t.getMessage());*/
                 Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
                 String pastBooks = mPrefs.getString("AllBooks", null);
-                if(!pastBooks.equals(null)) {
-                    List<BookResponse> books = gson.fromJson(pastBooks, new TypeToken<List<BookResponse>>() {
+                if(pastBooks != null) {
+                    List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                     }.getType());
                     loadbooks(books);
                 }
-
             }
         });
     }
 
-    public void loadbooks(List<BookResponse> response)
-    {
-        for (BookResponse book_rep : response) {
-            mBookList.add(book_rep.getBook());
+    public void loadbooks(List<Book> response) {
+        for (Book book_rep : response) {
+            mBookList.add(book_rep);
             //String userData = gson.toJson(book_rep.getBook());
         }
         for (Book b : mBookList) {
@@ -243,7 +238,7 @@ public class BookListFragment extends Fragment {
         try {
             foundBook = database.queryLike(Book.class, "name", query);
         } catch (Exception e) {
-            Log.e("BookResponse Query Exception", e.getMessage());
+            Log.e(TAG, e.getMessage());
         }
         return foundBook;
     }
