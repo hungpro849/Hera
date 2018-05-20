@@ -7,13 +7,21 @@ public class BookInfoView {
     String id;
     String author;
     String subject;
+    String description;
+    String ebook_url;
+    Integer stock;
 
-    public BookInfoView(String name, String image, String id, String author, String subject) {
+
+
+    public BookInfoView(String name, String image, String id, String author, String subject, String description, String ebook_url, Integer stock) {
         this.name = name;
         this.image = image;
         this.id = id;
         this.author = author;
         this.subject = subject;
+        this.description = description;
+        this.ebook_url = ebook_url;
+        this.stock = stock;
     }
 
     public String getName() {
@@ -53,5 +61,29 @@ public class BookInfoView {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getEbook_url() {
+        return ebook_url;
+    }
+
+    public void setEbook_url(String ebook_url) {
+        this.ebook_url = ebook_url;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
     }
 }

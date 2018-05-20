@@ -30,12 +30,12 @@
                 android:layout_height="182dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnIdBook"
+                <ImageView
+                    android:id="@+id/image_book"
                     android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:background="@drawable/bookex" />
+                    android:src="@drawable/bookex" />
 
                 <LinearLayout
                     android:layout_width="212dp"
@@ -44,33 +44,31 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nameBook"
+                        android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/cover"
                         android:text="Tên sách"
                         android:textColor="#000000"
+                        android:textStyle="bold"
                         android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/author"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tensach"
                         android:layout_marginTop="15dp"
-                        android:layout_toEndOf="@+id/cover"
                         android:text="Tác giả"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/LBnamxuatban"
+                        android:id="@+id/subject"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tacgia"
                         android:layout_marginTop="15dp"
                         android:layout_toEndOf="@+id/cover"
-                        android:text="Năm Xuất Bản: 2018"
+                        android:text="The Loai"
                         android:textColor="#000000"
                         android:textSize="15sp" />
 

@@ -16,7 +16,6 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +37,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +50,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserActivity extends AppCompatActivity {
     String email;
     private List<BookInfoView> mDataset = new ArrayList<>();
+    private List<BookInfoView> mDatasetBackup = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private BooksAdapter mBooksAdapter;
     CallAPI getBooks;
@@ -93,7 +95,6 @@ public class UserActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getBooks = retrofit.create(CallAPI.class);
-        //mBooksAdapter = new BooksAdapter(mDataset);
 
         User user = gson.fromJson(userData, User.class);
         mCurrentUsername.setText(user.getUsername());
@@ -114,9 +115,14 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 BookInfoView book = mDataset.get(position);
-                TextView nameBook=(TextView) view.findViewById(R.id.main_name_book);
                 Intent bookInfoIntent = new Intent(getApplicationContext(), getBookInFoActivity.class);
-                bookInfoIntent.putExtra("nameBook", nameBook.getText());
+                bookInfoIntent.putExtra("title", book.getName());
+                bookInfoIntent.putExtra("image_url", book.getImage());
+                bookInfoIntent.putExtra("author", book.getAuthor());
+                bookInfoIntent.putExtra("id", book.getId());
+                bookInfoIntent.putExtra("description", book.getDescription());
+                bookInfoIntent.putExtra("subject", book.getSubject());
+                bookInfoIntent.putExtra("remain", book.getStock());
                 bookInfoIntent.putExtra("email",email);
                 getApplicationContext().startActivity(bookInfoIntent);
             }
@@ -179,12 +185,20 @@ public class UserActivity extends AppCompatActivity {
     public void loadbooks(List<Book> response) {
         for (Book book_rep : response) {
             mBookList.add(book_rep);
-            //String userData = gson.toJson(book_rep.getBook());
         }
         for (Book b : mBookList) {
-            BookInfoView newBook = new BookInfoView(b.getName(), b.getImageLink(), b.getId(), b.getAuthor(), b.getSubject() +"");
+            BookInfoView newBook = new BookInfoView(
+                    b.getName(),
+                    b.getImageLink(),
+                    b.getId(),
+                    b.getAuthor(),
+                    b.getSubject(),
+                    b.getDescription(),
+                    "",
+                    b.getStock());
             mDataset.add(newBook);
         }
+        mDatasetBackup.addAll(mDataset);
         mBooksAdapter = new BooksAdapter(getApplicationContext(),mDataset);
         mRecyclerView.setAdapter(mBooksAdapter);
     }
@@ -220,28 +234,27 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_user,menu);
-        MenuItem myActionMenuItem =menu.findItem(R.id.action_search_user);
+        MenuItem myActionMenuItem = menu.findItem(R.id.action_search_user);
         SearchView searchView = (SearchView) myActionMenuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                loadDataAfterQuery(bookQuery(s));
                 return false;
             }
 
             public boolean onQueryTextChange(String s) {
-                if (TextUtils.isEmpty(s)) {
-//                    mBooksAdapter.getFilter().filter(s.toString());
-//                    mBooksAdapter.getFilter().filter("");
-                    //mRecyclerView.clearTextFilter();
-                } else {
-//                    mBooksAdapter.getFilter().filter(s.toString());
-//                    mRecyclerView.setAdapter(mBooksAdapter);
-
+                if(s.equals(""))
+                {
+                    mDataset.clear();
+                    mDataset.addAll(mDatasetBackup);
+                    mBooksAdapter.notifyDataSetChanged();
                 }
-                return true;
+                return false;
             }
         });
 
@@ -260,7 +273,26 @@ public class UserActivity extends AppCompatActivity {
         });
         return true;
     }
+    public void loadDataAfterQuery(List<BookInfoView> bookList) {
+        mDataset.clear();
+        mDataset.addAll(bookList);
+        mBooksAdapter.notifyDataSetChanged();
+    }
 
+    public List<BookInfoView> bookQuery(String query) {
+        List<BookInfoView> foundBook = new Vector<BookInfoView>();
+
+        String pattern = "\\b"+query+".*?\\b";
+        Pattern regex = Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+
+        for (BookInfoView b : mDatasetBackup) {
+            if(regex.matcher(b.getName()).find()){
+                foundBook.add(b);
+            }
+
+        }
+        return foundBook;
+    }
     public void setUpNavigationView() {
         // Setup actions with navbar
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
