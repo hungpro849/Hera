@@ -268,7 +268,7 @@ public class BookListFragment extends Fragment {
             public void onClick(View v) {
                 android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.main_view, AdminActivity.mAddBookFragment)
-                        .addToBackStack("Add book fragment").commit();
+                        .addToBackStack(null).commit();
             }
         });
     }

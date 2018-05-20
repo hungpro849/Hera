@@ -119,6 +119,7 @@ public class AddBookFragment extends Fragment {
                                                     dialog.cancel();
                                                     Utils.hideKeyboard(getActivity());
                                                     android.support.v4.app.FragmentManager fragmentManager = getFragmentManager();
+                                                    fragmentManager.popBackStack();
                                                     fragmentManager.beginTransaction()
                                                             .replace(R.id.main_view, AdminActivity.mBookListFragment)
                                                             .commit();
