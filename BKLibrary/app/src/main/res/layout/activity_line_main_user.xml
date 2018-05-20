@@ -28,14 +28,14 @@
             android:textSize="16dp"
             android:textStyle="bold" />
         <TextView
-            android:id="@+id/author"
+            android:id="@+id/main_author_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nguyen Phuong Bang"
             android:layout_below="@id/title" />
         <TextView
-            android:id="@+id/year"
-            android:layout_width="54dp"
+            android:id="@+id/main_subject_book"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="2015" />
