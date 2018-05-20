@@ -132,8 +132,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 tokenResponseCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
+                        mProgress.dismiss();
                         if(response.isSuccessful()) {
-                            mProgress.dismiss();
                             User user = response.body();
 
                             // Save user data to SharedPreferences
@@ -145,7 +145,6 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                             finish();
 
                         } else {
-                            mProgress.dismiss();
                             try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
