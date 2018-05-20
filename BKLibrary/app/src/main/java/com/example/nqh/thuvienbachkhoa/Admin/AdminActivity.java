@@ -1,6 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -117,7 +115,6 @@ public class AdminActivity extends AppCompatActivity {
         mNotificationListFragment.setDatabase(db);
 
         mAddBookFragment = new AddBookFragment();
-        mAddBookFragment.setDatabase(db);
 
         mEditBookFragment = new EditBookFragment();
         mEditBookFragment.setDatabase(db);
@@ -177,18 +174,6 @@ public class AdminActivity extends AppCompatActivity {
 //                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public List<Book> bookQuery(String query) {
-        Map<String, Object> condition = new HashMap<String, Object>();
-        condition.put("name", query);
-        List<Book> foundBook = Collections.emptyList();
-        try {
-            foundBook = db.query(Book.class, condition);
-        } catch (Exception e) {
-            Log.e("BookResponse Query Exception", e.getMessage());
-        }
-        return foundBook;
     }
 
     public void setUpNavigationView() {

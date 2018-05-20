@@ -1,13 +1,16 @@
 package com.example.nqh.thuvienbachkhoa.User;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -107,7 +110,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.twDoimatkhau:
-                Intent modoimatkhau=new Intent(this,doipasswordActivity.class);
+                Intent modoimatkhau = new Intent(this,doipasswordActivity.class);
                 startActivity(modoimatkhau);
                 break;
             case R.id.btnUpdate:
@@ -129,8 +132,8 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 tokenResponseCall.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
+                        mProgress.dismiss();
                         if(response.isSuccessful()) {
-                            mProgress.dismiss();
                             User user = response.body();
 
                             // Save user data to SharedPreferences
@@ -142,7 +145,6 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                             finish();
 
                         } else {
-                            mProgress.dismiss();
                             try {
                                 JSONObject jObjError = new JSONObject(response.errorBody().string());
                                 Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
@@ -165,6 +167,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view,  int i, long l) {
         if(i>2) {
@@ -173,15 +176,22 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
 
             customdialog.setCancelable(false);
             customdialog.setContentView(R.layout.customdialog_thongtincanhan);
-            final EditText textdieuchinh = customdialog.findViewById(R.id.edtThongtin);
+            final EditText textdieuchinh = customdialog.findViewById(R.id.editThongtin);
+            final TextView infoTextView = customdialog.findViewById(R.id.infoTextView);
             if (i==4) {
                 textdieuchinh.setInputType(InputType.TYPE_CLASS_PHONE);
                 textdieuchinh.setText(phone);
+                infoTextView.setText("Nhập số diện thoại:");
             }
-            else if(i==3)
+            else if(i==3){
                 textdieuchinh.setText(fullname);
-            else if(i==5)
+                infoTextView.setText("Nhập họ và tên");
+            }
+            else if(i==5){
                 textdieuchinh.setText(address);
+                infoTextView.setText("Nhập địa chỉ");
+            }
+
             Button huy=customdialog.findViewById(R.id.btnHuy);
             Button hoanthanh=customdialog.findViewById(R.id.btnDieuchinh);
             hoanthanh.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.Database.models.UserBook;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -25,76 +27,73 @@ import java.util.Vector;
 public class getBookInFoActivity extends Activity {
 
     Button bookBorrow;
-    String email,nb;
-    TextView nameBook, author, numberBook, subject, description, imageLink, voters, remain;
-    public List<Book> mBookList = new Vector<Book>();
-    ArrayList<line_main_user_infor> mang_sach = new ArrayList<line_main_user_infor>();
-    DBHelper database;
+    String email;
+    TextView title, author, numberBook, subject, description, voters, remain;
+    ImageView image_book;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mt("Create Activity2");
         setContentView(R.layout.activity_get_infor_book);
-        database = new DBHelper(this);
-        nameBook = (TextView) findViewById(R.id.nameBook);
+        title = (TextView) findViewById(R.id.title);
         author = (TextView) findViewById(R.id.author);
         description = (TextView) findViewById(R.id.description);
         voters = (TextView) findViewById(R.id.voters);
         remain = (TextView) findViewById(R.id.remain);
+        image_book = (ImageView) findViewById(R.id.image_book) ;
+        subject = (TextView) findViewById(R.id.subject);
+
+        loadBookInfomation();
+
+//        bookBorrow = (Button)findViewById(R.id.borrowBook);
+//        bookBorrow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //muonSach();
+//                Toast.makeText(getBookInFoActivity.this,"Đã thêm s",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+    }
+    public  void loadBookInfomation() {
         Intent intent = getIntent();
-        Bundle bundel = intent.getExtras();
-        nb = bundel.getString("nameBook");
-        email=bundel.getString("email");
-        nameBook.setText(nb.toString());
+        Bundle bundle = intent.getExtras();
+        email = bundle.getString("email");
+        title.setText(bundle.getString("title"));
+        author.setText(bundle.getString("author"));
+        description.setText(bundle.getString("description"));
+        remain.setText(bundle.getString("remain"));
+        Picasso.with(getApplicationContext())
+                .load(bundle.getString("image_url"))
+                .resize(160, 240)
+                .into(image_book);
+        subject.setText(bundle.getString("subject"));
 
-        try {
-            mBookList = database.getAllOrdered(Book.class, "name", true);
-            nameBook.getText();
-            nameBook = (TextView) findViewById(R.id.nameBook);
-            author = (TextView) findViewById(R.id.author);
-            description = (TextView) findViewById(R.id.description);
-            voters = (TextView) findViewById(R.id.voters);
-            remain = (TextView) findViewById(R.id.remain);
-            for (Book b : mBookList) {
-                if (b.getName().equals(nameBook.getText())) {
-                    author.setText(b.getAuthor());
-                    remain.setText("Số Lượng Sách: " + b.getRemain());
-                    voters.setText("Đánh Giá: " + b.getVoters());
-                    description.setText(b.getDescription());
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(image_book.getDrawable() == null) {
+            image_book.setImageResource(R.drawable.bookex);
         }
-        bookBorrow=(Button)findViewById(R.id.borrowBook);
-        bookBorrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                muonSach();
-                Toast.makeText(getBookInFoActivity.this,"Đã thêm s",Toast.LENGTH_SHORT).show();
 
-            }
-        });
+
     }
 
-    public void muonSach(){
-        GeneralUser user=new GeneralUser();
-        Book book=new Book();
-        try {
-            Map<String, Object> condition1 = new HashMap<String, Object>();
-            condition1.put("email", email);
-            user = database.queryFirst(GeneralUser.class, condition1);
-
-            Map<String,Object> condition2=new HashMap<String,Object>();
-            condition2.put("name",nb);
-            book=database.queryFirst(Book.class,condition2);
-            UserBook adđB=new UserBook(user,book);
-            database.fillObject(UserBook.class,adđB);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    public void muonSach(){
+//        GeneralUser user=new GeneralUser();
+//        Book book=new Book();
+//        try {
+//            Map<String, Object> condition1 = new HashMap<String, Object>();
+//            condition1.put("email", email);
+//            user = database.queryFirst(GeneralUser.class, condition1);
+//
+//            Map<String,Object> condition2=new HashMap<String,Object>();
+//            condition2.put("name",nb);
+//            book=database.queryFirst(Book.class,condition2);
+//            UserBook adđB=new UserBook(user,book);
+//            database.fillObject(UserBook.class,adđB);
+//        }
+//        catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
 }

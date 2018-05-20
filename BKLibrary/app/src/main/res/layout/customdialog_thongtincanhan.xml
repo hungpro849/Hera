@@ -1,37 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:padding="15dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:layout_width="329dp"
+    android:layout_height="wrap_content">
 
-    >
+    <TextView
+        android:id="@+id/infoTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Info View"
+        android:layout_margin="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
     <EditText
+        android:id="@+id/editThongtin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edtThongtin"
-
-        />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
     <LinearLayout
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/btnHuy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hủy"
-            android:layout_margin="20dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:id="@+id/btnDieuchinh"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="right"
+    android:orientation="horizontal">
 
-            android:text="Điều chỉnh"/>
+    <Button
+    android:id="@+id/btnHuy"
+    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:text="Hủy" />
+
+    <Button
+    android:id="@+id/btnDieuchinh"
+    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:elevation="0dp"
+    android:text="OK" />
 
     </LinearLayout>
-
 </LinearLayout>

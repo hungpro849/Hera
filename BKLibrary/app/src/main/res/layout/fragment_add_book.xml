@@ -211,11 +211,40 @@
                     android:layout_weight="3"
                     android:background="#FFFFFF"
                     android:hint="Nhập số lượng"
+                    android:text="0"
                     android:inputType="number" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#b3b3b3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Hình ảnh"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/add_book_image"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="3"
+                    android:background="#FFFFFF"
+                    android:hint="Nhập địa chỉ tới ảnh"
+                    android:inputType="text" />
 
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>

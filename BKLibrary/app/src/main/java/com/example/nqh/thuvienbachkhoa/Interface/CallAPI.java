@@ -1,6 +1,6 @@
 package com.example.nqh.thuvienbachkhoa.Interface;
 
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 
@@ -46,10 +46,18 @@ public interface CallAPI {
     @POST("auth/forgot-password")
     Call<JSONObject> doResetPassword(@Field("email") String email, @Field("url") String url);
 
-    // Login
-
+    // Get Book
     @GET("book")
-    Call<List<BookResponse>> getBooks();
+    Call<List<Book>> getBooks();
+
+    // Create Book
+    @FormUrlEncoded
+    @POST("book")
+    Call<Book> createBook(@Header("Authorization") String authHeader, @Field("name") String title,
+                          @Field("author") String author, @Field("subject") String subject,
+                          @Field("description") String description, @Field("image_link") String image_link,
+                          @Field("stock") int stock);
+
 
     // Create a new book
     @FormUrlEncoded

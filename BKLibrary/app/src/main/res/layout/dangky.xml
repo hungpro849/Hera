@@ -3,23 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
-
-
 
         <ImageView
             android:id="@+id/bklogo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/info"
-            />
+            android:src="@drawable/info" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,20 +26,18 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:text="@string/register_information"
-            android:textSize="20dp"
-            android:textStyle="bold"
             android:textColor="#000000"
-            />
-
-
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical">
 
         <TextView
@@ -51,14 +48,11 @@
             android:textSize="15sp" />
 
         <EditText
-
+            android:id="@+id/edtUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_username_hint"
-            android:inputType="textEmailAddress"
-            android:id="@+id/edtUsername"
-
-            />
+            android:inputType="textEmailAddress"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -69,13 +63,14 @@
 
         <EditText
 
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_email_hint"
             android:inputType="textEmailAddress"
-            android:id="@+id/edtEmail"
 
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,13 +80,14 @@
 
         <EditText
 
+            android:id="@+id/edtPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_password_hint"
-            android:id="@+id/edtPassword"
             android:inputType="textPassword"
 
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -101,13 +97,14 @@
 
         <EditText
 
+            android:id="@+id/edtHoten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_fullname_hint"
             android:inputType="text"
-            android:id="@+id/edtHoten"
 
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -117,14 +114,15 @@
 
         <EditText
 
+            android:id="@+id/edtSodienthoai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_phone_hint"
             android:inputType="phone"
-            android:id="@+id/edtSodienthoai"
 
 
             />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,30 +132,29 @@
 
         <EditText
 
+            android:id="@+id/edtDiachi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/register_address_hint"
-            android:id="@+id/edtDiachi"
             android:inputType="text"
 
             />
+
         <Button
-            android:layout_marginTop="10dp"
+            android:id="@+id/btnDangky"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:textAllCaps="false"
-            android:text="@string/register_btn"
+            android:layout_marginTop="10dp"
             android:background="@drawable/custombutton"
-            android:id="@+id/btnDangky"
-            />
+            android:text="@string/register_btn"
+            android:textAllCaps="false" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="40dp"
-            android:orientation="horizontal"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-            >
             <TextView
 
                 android:layout_width="wrap_content"
@@ -165,13 +162,14 @@
                 android:text="@string/register_txt_login"
 
                 />
+
             <TextView
+                android:id="@+id/twDangnhap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register_button_login"
-                android:id="@+id/twDangnhap"
                 android:textColor="#000080"
-                android:textStyle="italic"/>
+                android:textStyle="italic" />
 
         </LinearLayout>
 

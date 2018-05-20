@@ -7,10 +7,11 @@
 
     android:orientation="vertical"
   >
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginTop="150dp"
         android:orientation="horizontal">
 
@@ -19,31 +20,25 @@
             android:id="@+id/bklogo"
             android:layout_width="60dp"
             android:layout_height="60dp"
-
-
-            android:src="@drawable/key"
-
-            />
+            android:src="@drawable/key" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="QUÊN MẬT KHẨU"
-            android:textSize="20dp"
             android:padding="5dp"
-            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:text="QUÊN MẬT KHẨU"
             android:textColor="#000000"
-
-
-
-            />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="239dp"
         android:layout_gravity="center"
 
         android:layout_marginTop="30dp"
@@ -55,34 +50,36 @@
             android:text="Vui lòng nhập Email mà bạn đã đăng ký "
             android:textColor="#000000"
             android:textSize="18sp" />
+
         <EditText
-            android:layout_marginTop="25dp"
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:id="@+id/edtEmail"
 
             />
+
         <TextView
 
+            android:id="@+id/twDangnhapfromquenmatkhau"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="Đăng nhập"
-            android:id="@+id/twDangnhapfromquenmatkhau"
             android:textColor="#000080"
             android:textSize="15sp"
-            android:textStyle="italic"
-            />
+            android:textStyle="italic" />
+
         <Button
             android:id="@+id/btnKhoiphuc"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/custombutton"
             android:text="Khôi phục"
-            android:background="@drawable/custombutton"/>
+            android:textAllCaps="false" />
     </LinearLayout>
 
     </LinearLayout>

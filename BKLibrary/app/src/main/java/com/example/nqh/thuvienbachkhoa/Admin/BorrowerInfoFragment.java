@@ -93,7 +93,7 @@ public class BorrowerInfoFragment extends Fragment {
         try {
             List<UserBook> allBorrowedBooks = database.queryEqual(UserBook.class, "user_id", currentBorrower);
             for (UserBook b: allBorrowedBooks) {
-                mDataset.add(new BookInfoInList(b.getBook()));
+                //mDataset.add(new BookInfoInList(b.getBook()));
             }
         } catch (Exception e) {
             Log.e("UserBook Exception",e.getMessage());
