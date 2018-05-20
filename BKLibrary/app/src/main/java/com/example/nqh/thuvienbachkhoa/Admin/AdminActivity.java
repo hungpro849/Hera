@@ -25,6 +25,7 @@ import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.example.nqh.thuvienbachkhoa.Utils;
 import com.google.gson.Gson;
 
 
@@ -213,5 +214,7 @@ public class AdminActivity extends AppCompatActivity {
         } else {
             finish();
         }
+        // Close all keyboard
+        Utils.hideKeyboard(this);
     }
 }
