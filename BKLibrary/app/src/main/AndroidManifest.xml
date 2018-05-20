@@ -25,7 +25,7 @@
         <activity android:name=".Admin.AdminActivity"></activity>
         <activity android:name=".DangNhapActivity"></activity>
         <activity android:name=".User.BorrowBookHistoryActivity" />
-        <activity android:name=".User.getBookInFoActivity"></activity>
+        <activity android:name=".User.GetBookInfoActivity"></activity>
         <activity android:name=".User.UserActivity"></activity>
     </application>
 

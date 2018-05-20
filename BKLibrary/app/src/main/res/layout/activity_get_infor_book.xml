@@ -72,16 +72,32 @@
                         android:textColor="#000000"
                         android:textSize="15sp" />
 
-                    <TextView
-                        android:id="@+id/remain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/LBnamxuatban"
-                        android:layout_marginTop="15dp"
-                        android:layout_toEndOf="@+id/cover"
-                        android:text="Số lượng: 10"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="6dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:text="Còn lại: "
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/remain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:text="0"
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
