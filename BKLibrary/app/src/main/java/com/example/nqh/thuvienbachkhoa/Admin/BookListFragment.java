@@ -1,6 +1,7 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -56,6 +57,7 @@ public class BookListFragment extends Fragment {
     CallAPI getBooks;
     Gson gson;
     SharedPreferences mPrefs;
+    ProgressDialog mProgress;
 
     public void setCurrentActivity(Activity activity) {
         this.mCurrentActivity = activity;
@@ -113,6 +115,13 @@ public class BookListFragment extends Fragment {
     }
 
     public void loadData() {
+        mProgress = new ProgressDialog(getActivity());
+        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgress.setMessage(getString(R.string.waiting_message));
+        mProgress.setIndeterminate(true);
+        mProgress.setCanceledOnTouchOutside(false);
+        mProgress.show();
+
         Call<List<Book>> tokenResponseCall = getBooks.getBooks();
 
         tokenResponseCall.enqueue(new Callback<List<Book>>() {
@@ -171,6 +180,7 @@ public class BookListFragment extends Fragment {
         }
         mAdapter = new BookListAdapter(mDataset, database);
         mRecyclerView.setAdapter(mAdapter);
+        mProgress.dismiss();
 
         mLayoutManager = new LinearLayoutManager(mCurrentActivity);
         mRecyclerView.setLayoutManager(mLayoutManager);
