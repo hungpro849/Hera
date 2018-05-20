@@ -44,8 +44,16 @@ public interface CallAPI {
     @POST("auth/forgot-password")
     Call<JSONObject> doResetPassword(@Field("email") String email, @Field("url") String url);
 
-    // Login
-
+    // Get Book
     @GET("book")
     Call<List<Book>> getBooks();
+
+    // Create Book
+    @FormUrlEncoded
+    @POST("book")
+    Call<Book> createBook(@Header("Authorization") String authHeader, @Field("name") String title,
+                          @Field("author") String author, @Field("subject") String subject,
+                          @Field("description") String description, @Field("image_link") String image_link,
+                          @Field("stock") int stock);
+
 }

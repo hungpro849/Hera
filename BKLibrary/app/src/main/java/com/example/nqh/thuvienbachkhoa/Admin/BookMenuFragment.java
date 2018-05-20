@@ -34,9 +34,9 @@ public class BookMenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_menu, container, false);
-        mMostPopularRecyclerView = (RecyclerView) view.findViewById(R.id.most_popular_book_recycler_view);
-        mMostBorrowedRecyclerView = (RecyclerView) view.findViewById((R.id.most_borrowed_book_recycler_view));
-        mNewBookRecyclerView = (RecyclerView) view.findViewById(R.id.new_book_recycler_view);
+        mMostPopularRecyclerView = view.findViewById(R.id.most_popular_book_recycler_view);
+        mMostBorrowedRecyclerView = view.findViewById((R.id.most_borrowed_book_recycler_view));
+        mNewBookRecyclerView = view.findViewById(R.id.new_book_recycler_view);
         setUpRecyclerView();
         return view;
     }
