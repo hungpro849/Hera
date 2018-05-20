@@ -160,7 +160,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:text="Link hình ảnh:"
+                    android:text="Hình ảnh:"
                     android:textSize="14sp" />
 
                 <EditText

@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 
@@ -102,10 +102,10 @@ public class AddBookFragment extends Fragment {
 
                 if (!checkAddBookCondition(bName,bAuthor,bSubject,bDescription,bLink,bRemain)) {
                     try {
-                        Call<BookResponse> tokenResponseCall = createBook.createBook("Bearer " + token,bName,bAuthor,bSubject,bDescription,bLink,bRemain);
-                        tokenResponseCall.enqueue(new Callback<BookResponse>() {
+                        Call<Book> tokenResponseCall = createBook.createBook("Bearer " + token,bName,bAuthor,bSubject,bDescription,bLink,bRemain);
+                        tokenResponseCall.enqueue(new Callback<Book>() {
                             @Override
-                            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+                            public void onResponse(Call<Book> call, Response<Book> response) {
                                 //mProgress.dismiss();
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Thêm sách thành công", Toast.LENGTH_SHORT).show();
@@ -123,7 +123,7 @@ public class AddBookFragment extends Fragment {
                             }
 
                             @Override
-                            public void onFailure(Call<BookResponse> call, Throwable t) {
+                            public void onFailure(Call<Book> call, Throwable t) {
                                 //mProgress.dismiss();
                                 Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
                             }

@@ -12,9 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
+
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 
@@ -105,10 +105,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
                 //notifyDataSetChanged();
                 try {
                     final String bId=mDataset.get(position).mBookId;
-                    Call<BookResponse> tokenResponseCall = delBook.delBook("Bearer " + token,bId);
-                    tokenResponseCall.enqueue(new Callback<BookResponse>() {
+                    Call<Book> tokenResponseCall = delBook.delBook("Bearer " + token,bId);
+                    tokenResponseCall.enqueue(new Callback<Book>() {
                         @Override
-                        public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+                        public void onResponse(Call<Book> call, Response<Book> response) {
                             //mProgress.dismiss();
                             if (response.isSuccessful()) {
                                 Toast.makeText(context, "Xoá sách thành công", Toast.LENGTH_SHORT).show();
@@ -134,7 +134,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
                         }
 
                         @Override
-                        public void onFailure(Call<BookResponse> call, Throwable t) {
+                        public void onFailure(Call<Book> call, Throwable t) {
                             //mProgress.dismiss();
                             Toast.makeText(context, R.string.connection_error, Toast.LENGTH_LONG).show();
                         }

@@ -62,13 +62,13 @@ public interface CallAPI {
     // Create a new book
     @FormUrlEncoded
     @POST("book")
-    Call<BookResponse> createBook(@Header("Authorization") String authHeader,@Field("name") String name, @Field("author") String author, @Field("subject") String subject,
+    Call<Book> createBook(@Header("Authorization") String authHeader,@Field("name") String name, @Field("author") String author, @Field("subject") String subject,
                                    @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
     @FormUrlEncoded
     @PUT("book/{id}")
-    Call<BookResponse> editBook(@Header("Authorization") String authHeader, @Path("id") String id, @Field("name") String name, @Field("author") String author, @Field("subject") String subject,
+    Call<Book> editBook(@Header("Authorization") String authHeader, @Path("id") String id, @Field("name") String name, @Field("author") String author, @Field("subject") String subject,
                                 @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
     @DELETE("book/{id}")
-    Call<BookResponse> delBook(@Header("Authorization") String authHeader, @Path("id") String id);
+    Call<Book> delBook(@Header("Authorization") String authHeader, @Path("id") String id);
 
 }

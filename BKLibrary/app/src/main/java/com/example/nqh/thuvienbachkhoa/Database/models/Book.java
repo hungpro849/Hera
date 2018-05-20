@@ -53,7 +53,6 @@ public class Book {
     @DatabaseField(columnName = "remain")
     private int remain;
 
-
     /*==================================
     * GETTERS AND SETTERS
     * ==================================
@@ -75,7 +74,6 @@ public class Book {
         this.voters = voters;
         this.remain = remain;
     }
-
 
     public String getId() {
         return id;

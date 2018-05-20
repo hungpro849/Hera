@@ -21,9 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
-import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -125,7 +124,7 @@ public class BookListFragment extends Fragment {
     }
 
     public void loadData() {
-        Call<List<BookResponse>> tokenResponseCall = getBooks.getBooks();
+        Call<List<Book>> tokenResponseCall = getBooks.getBooks();
         mProgress = new ProgressDialog(getActivity()); // this = YourActivity
         mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgress.setMessage("Getting data ...");
@@ -133,9 +132,9 @@ public class BookListFragment extends Fragment {
         mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
 
-        tokenResponseCall.enqueue(new Callback<List<BookResponse>>() {
+        tokenResponseCall.enqueue(new Callback<List<Book>>() {
             @Override
-            public void onResponse(Call<List<BookResponse>> call, Response<List<BookResponse>> response) {
+            public void onResponse(Call<List<Book>> call, Response<List<Book>> response) {
                 mProgress.dismiss();
                 if (response.isSuccessful()) {
                     // Save user data to SharedPreferences
@@ -155,7 +154,7 @@ public class BookListFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
                         String pastBooks = mPrefs.getString("AllBooks", null);
                         if(!pastBooks.equals(null)) {
-                            List<BookResponse> books = gson.fromJson(pastBooks, new TypeToken<List<BookResponse>>() {
+                            List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                             }.getType());
                             loadbooks(books);
                         }
@@ -171,14 +170,14 @@ public class BookListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<BookResponse>> call, Throwable t) {
+            public void onFailure(Call<List<Book>> call, Throwable t) {
                 mProgress.dismiss();
                 /*mProgress.dismiss();
                 Log.d(TAG, "onFailure: " + t.getMessage());*/
                 Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
                 String pastBooks = mPrefs.getString("AllBooks", null);
                 if(pastBooks!=null) {
-                    List<BookResponse> books = gson.fromJson(pastBooks, new TypeToken<List<BookResponse>>() {
+                    List<Book> books = gson.fromJson(pastBooks, new TypeToken<List<Book>>() {
                     }.getType());
                     loadbooks(books);
                 }
@@ -190,10 +189,10 @@ public class BookListFragment extends Fragment {
         });
     }
 
-    public void loadbooks(List<BookResponse> response)
+    public void loadbooks(List<Book> response)
     {
-        for (BookResponse book_rep : response) {
-            mBookList.add(book_rep.getBook());
+        for (Book book_rep : response) {
+            mBookList.add(book_rep);
         }
         for (Book b : mBookList) {
             BookInfoInList newBook = new BookInfoInList(b);
