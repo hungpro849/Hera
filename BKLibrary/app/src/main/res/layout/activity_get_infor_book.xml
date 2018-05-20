@@ -134,9 +134,10 @@
                     android:layout_alignBaseline="@+id/theodoi"
                     android:layout_alignBottom="@+id/theodoi"
                     android:layout_marginRight="10dp"
-                    android:drawableRight="@drawable/download"
-                    android:paddingRight="20dp"
+                    android:drawableLeft="@drawable/sharp_cloud_download_24"
+                    android:drawablePadding="10dp"
                     android:text="Tải ebook"
+                    android:textAlignment="textStart"
                     android:textAllCaps="false" />
 
                 <Button
@@ -145,7 +146,8 @@
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/textView"
-                    android:drawableRight="@drawable/cart"
+                    android:drawableLeft="@drawable/cart"
+                    android:drawablePadding="10dp"
                     android:paddingLeft="20dp"
                     android:text="Mượn sách"
                     android:textAllCaps="false" />

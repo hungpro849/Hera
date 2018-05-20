@@ -11,11 +11,9 @@ public class msBookInfor {
 
     public msBookInfor(String name, int icon,int id) {
         this.name = name;
-        this.icon=icon;
-        this.idOfUserBook=id;
-
+        this.icon = icon;
+        this.idOfUserBook = id;
     }
-
     public String getName() {
         return this.name;
     }
