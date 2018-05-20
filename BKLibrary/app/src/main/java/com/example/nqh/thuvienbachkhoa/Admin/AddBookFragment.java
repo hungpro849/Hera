@@ -1,5 +1,6 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +14,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
+import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
+import com.example.nqh.thuvienbachkhoa.Model.BookResponse;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AddBookFragment extends Fragment {
     Toolbar mToolbar;
@@ -22,7 +36,13 @@ public class AddBookFragment extends Fragment {
     EditText mAuthor;
     EditText mSubject;
     EditText mDescription;
+    EditText mLink;
     EditText mRemain;
+
+    CallAPI createBook;
+    Gson gson;
+    SharedPreferences mPrefs;
+    String token;
 
 
 
@@ -35,9 +55,20 @@ public class AddBookFragment extends Fragment {
         mAuthor = (EditText) view.findViewById(R.id.add_book_author);
         mSubject = (EditText) view.findViewById(R.id.add_book_subject);
         mDescription = (EditText) view.findViewById(R.id.add_book_description);
+        mLink = (EditText) view.findViewById(R.id.add_book_link);
         mRemain = (EditText) view.findViewById(R.id.add_book_remain);
 
         mToolbar.setTitle(null);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        createBook = retrofit.create(CallAPI.class);
+        gson = new Gson();
+        mPrefs = this.getActivity().getSharedPreferences("mPrefs",MODE_PRIVATE);
+        token = mPrefs.getString("UserToken", null);
         setupToolbar();
         setupAcceptButton();
         return view;
@@ -66,14 +97,38 @@ public class AddBookFragment extends Fragment {
                 String bAuthor = mAuthor.getText().toString().trim();
                 String bSubject = mSubject.getText().toString().trim();
                 String bDescription = mDescription.getText().toString().trim();
+                String bLink = mLink.getText().toString().trim();
                 String bRemain = mRemain.getText().toString().trim();
 
-                if (!checkAddBookCondition(bName,bAuthor,bSubject,bDescription,bRemain)) {
+                if (!checkAddBookCondition(bName,bAuthor,bSubject,bDescription,bLink,bRemain)) {
                     try {
-                        /*Book newBook = new Book(bName, bAuthor, bSubject, bDescription, 0.0f, null, 0, Integer.parseInt(bRemain));
-                        database.fillObject(Book.class, newBook);
-                        Toast.makeText(getActivity(), "Thêm sách thành công", Toast.LENGTH_SHORT).show();
-                        getActivity().onBackPressed();*/
+                        Call<BookResponse> tokenResponseCall = createBook.createBook("Bearer " + token,bName,bAuthor,bSubject,bDescription,bLink,bRemain);
+                        tokenResponseCall.enqueue(new Callback<BookResponse>() {
+                            @Override
+                            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+                                //mProgress.dismiss();
+                                if (response.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "Thêm sách thành công", Toast.LENGTH_SHORT).show();
+                                    clear_all();
+                                    getActivity().onBackPressed();
+
+                                } else {
+                                    try {
+                                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                        Toast.makeText(getActivity().getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                    } catch (Exception e) {
+                                        Toast.makeText(getActivity().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<BookResponse> call, Throwable t) {
+                                //mProgress.dismiss();
+                                Toast.makeText(getActivity().getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+                            }
+                        });
+
                     } catch (Exception e) {
                         Toast.makeText(getActivity(), "Thêm sách thất bại", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
@@ -85,15 +140,24 @@ public class AddBookFragment extends Fragment {
             }
         });
     }
-
-    public boolean checkAddBookCondition(String bName, String bAuthor, String bSubject, String bDescription, String bRemain) {
+    public void clear_all()
+    {
+        mBookName.setText("");
+        mAuthor.setText("");
+        mSubject.setText("");
+        mDescription.setText("");
+        mLink.setText("");
+        mRemain.setText("");
+    }
+    public boolean checkAddBookCondition(String bName, String bAuthor, String bSubject, String bDescription,String bLink, String bRemain) {
         //return true if strings are empty or null
         boolean conditionName = TextUtils.isEmpty(bName);
         boolean conditionAuthor = TextUtils.isEmpty(bAuthor);
         boolean conditionSubject = TextUtils.isEmpty(bSubject);
         boolean conditionDescription = TextUtils.isEmpty(bDescription);
+        boolean conditionLink = TextUtils.isEmpty(bLink);
         boolean conditionRemain = TextUtils.isEmpty(bRemain);
-        return conditionName || conditionAuthor || conditionSubject || conditionDescription || conditionRemain;
+        return conditionName || conditionAuthor || conditionSubject || conditionDescription ||conditionLink|| conditionRemain;
     }
 
 }
