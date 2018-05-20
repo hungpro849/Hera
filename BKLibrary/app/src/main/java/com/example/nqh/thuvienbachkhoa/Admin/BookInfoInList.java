@@ -1,6 +1,6 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import com.example.nqh.thuvienbachkhoa.Database.models.Book;
+import com.example.nqh.thuvienbachkhoa.Model.Book;
 
 public class BookInfoInList {
     String mBookId;
