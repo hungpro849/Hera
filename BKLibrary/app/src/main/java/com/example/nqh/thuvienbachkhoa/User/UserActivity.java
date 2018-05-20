@@ -11,6 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -32,11 +36,13 @@ import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
     String email;
-    ListView lv;
-    mainUserAdapter adapter;
+    private List<BookInfoView> booksList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private BooksAdapter mBooksAdapter;
 
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
@@ -79,16 +85,34 @@ public class UserActivity extends AppCompatActivity {
         User user = gson.fromJson(userData, User.class);
 
         mCurrentUsername.setText(user.getUsername());
+        mBooksAdapter = new BooksAdapter(booksList);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                BookInfoView book = booksList.get(position);
+                TextView nameBook=(TextView) view.findViewById(R.id.main_name_book);
+                Intent bookInfoIntent = new Intent(getApplicationContext(), getBookInFoActivity.class);
+                bookInfoIntent.putExtra("nameBook", nameBook.getText());
+                bookInfoIntent.putExtra("email",email);
+                getApplicationContext().startActivity(bookInfoIntent);
+            }
 
-        lv = findViewById(R.id.MU_lv);
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        mRecyclerView.setAdapter(mBooksAdapter);
+
+
         database = new DBHelper(this);
-        //DBHelper.createDemoData(database);
         loadData();
         setEmail(getCurrentUserEmail());
-
-        //pass rasult adapter to the list view
-        adapter = new mainUserAdapter(this, arrayList, email);
-        lv.setAdapter(adapter);
     }
 
     private void setUpDrawer() {
@@ -129,8 +153,8 @@ public class UserActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         for (Book b : mBookList) {
-            line_main_user_infor newBook = new line_main_user_infor(b.getName(), R.drawable.bookex);
-            arrayList.add(newBook);
+            BookInfoView newBook = new BookInfoView(b.getName(), b.getImage_link(), b.getId() + "");
+            booksList.add(newBook);
         }
 
     }
@@ -148,10 +172,13 @@ public class UserActivity extends AppCompatActivity {
 
             public boolean onQueryTextChange(String s) {
                 if (TextUtils.isEmpty(s)) {
-                    adapter.filter("");
-                    lv.clearTextFilter();
+//                    mBooksAdapter.getFilter().filter(s.toString());
+//                    mBooksAdapter.getFilter().filter("");
+                    //mRecyclerView.clearTextFilter();
                 } else {
-                    adapter.filter(s);
+//                    mBooksAdapter.getFilter().filter(s.toString());
+//                    mRecyclerView.setAdapter(mBooksAdapter);
+
                 }
                 return true;
             }

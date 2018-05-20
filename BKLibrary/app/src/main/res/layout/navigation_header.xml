@@ -6,12 +6,18 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="bottom">
-
+    android:gravity="center">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userIcon"
+        android:gravity="center"
+        android:src="@drawable/ic_account_circle_black_24dp" />
     <TextView
         android:id="@+id/currentUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
