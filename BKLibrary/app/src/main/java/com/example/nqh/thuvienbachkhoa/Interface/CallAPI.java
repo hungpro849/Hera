@@ -1,6 +1,7 @@
 package com.example.nqh.thuvienbachkhoa.Interface;
 
 import com.example.nqh.thuvienbachkhoa.Model.Book;
+import com.example.nqh.thuvienbachkhoa.Model.BorrowTransaction;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 
@@ -55,10 +56,14 @@ public interface CallAPI {
     @POST("book")
     Call<Book> createBook(@Header("Authorization") String authHeader,@Field("name") String name, @Field("author") String author, @Field("subject") String subject,
                                    @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
+
+    // Update book
     @FormUrlEncoded
     @PUT("book/{id}")
     Call<Book> editBook(@Header("Authorization") String authHeader, @Path("id") String id, @Field("name") String name, @Field("author") String author, @Field("subject") String subject,
                                 @Field("description") String description, @Field("image_link") String image_link, @Field("stock") String stock);
+
+    // Delete book
     @DELETE("book/{id}")
     Call<Book> delBook(@Header("Authorization") String authHeader, @Path("id") String id);
 
@@ -73,5 +78,14 @@ public interface CallAPI {
 
     @DELETE("user/{id}")
     Call<User> delUser(@Header("Authorization") String authHeader, @Path("id") String id);
+
+    // Borrow a book
+    @FormUrlEncoded
+    @POST("transaction/me")
+    Call<JSONObject> borrowBook(@Header("Authorization") String authHeader, @Field("book") String bookID);
+
+    // Get borrow history
+    @GET("transaction/me")
+    Call<BorrowTransaction> getBorrowHistory(@Header("Authorization") String authHeader);
 
 }
