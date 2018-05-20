@@ -29,7 +29,6 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MyViewHolder
     private List<BookInfoView> booksList;
     private Context context;
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public  TextView author;

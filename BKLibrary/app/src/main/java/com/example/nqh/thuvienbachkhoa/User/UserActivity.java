@@ -64,6 +64,7 @@ public class UserActivity extends AppCompatActivity {
     TextView mCurrentUsername;
     Gson gson;
     View headerView;
+    String token;
 
     SharedPreferences mPrefs;
 
@@ -82,7 +83,7 @@ public class UserActivity extends AppCompatActivity {
 
         // Check for illegal entrance
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
-        String token = mPrefs.getString("UserToken", null);
+        token = mPrefs.getString("UserToken", null);
         String userData = mPrefs.getString("UserData", null);
         if(token == null || userData == null) {
             Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
@@ -124,6 +125,7 @@ public class UserActivity extends AppCompatActivity {
                 bookInfoIntent.putExtra("subject", book.getSubject());
                 bookInfoIntent.putExtra("remain", book.getStock());
                 bookInfoIntent.putExtra("email",email);
+                bookInfoIntent.putExtra("token", token);
                 getApplicationContext().startActivity(bookInfoIntent);
             }
 
@@ -199,7 +201,7 @@ public class UserActivity extends AppCompatActivity {
             mDataset.add(newBook);
         }
         mDatasetBackup.addAll(mDataset);
-        mBooksAdapter = new BooksAdapter(getApplicationContext(),mDataset);
+        mBooksAdapter = new BooksAdapter(getApplicationContext(), mDataset);
         mRecyclerView.setAdapter(mBooksAdapter);
     }
 
@@ -304,12 +306,12 @@ public class UserActivity extends AppCompatActivity {
                         startActivity(userInfo);
                         break;
                     case R.id.user_drawer_cart:
-                        Intent bookBorrow = new Intent(UserActivity.this,BookBorrowActivity.class);
-                        startActivity(bookBorrow);
+//                        Intent bookBorrow = new Intent(UserActivity.this,BookBorrowActivity.class);
+//                        startActivity(bookBorrow);
                         break;
                     case R.id.user_drawer_return_book:
-                        Intent returnBook = new Intent(UserActivity.this,BookReturnActivity.class);
-                        startActivity(returnBook);
+//                        Intent returnBook = new Intent(UserActivity.this,BookReturnActivity.class);
+//                        startActivity(returnBook);
                         break;
                     case R.id.user_drawer_borrow_history:
                         Intent borrowHistory = new Intent(UserActivity.this,BorrowBookHistoryActivity.class);
