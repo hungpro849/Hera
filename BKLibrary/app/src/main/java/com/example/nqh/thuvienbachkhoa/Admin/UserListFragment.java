@@ -183,7 +183,8 @@ public class UserListFragment extends Fragment {
     public void loadusers(List<User> response)
     {
         for (User user_rep : response) {
-            mUserList.add(user_rep);
+            if(!user_rep.isAdmin())
+                mUserList.add(user_rep);
         }
         for (User u : mUserList) {
             UserInfoInList newUser = new UserInfoInList(u);
