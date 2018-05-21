@@ -29,6 +29,11 @@
         papers, with over 10000 citations documented on CiteSeerX.[2] The book sold half a
         million copies during its first 20 years.[3] Its fame has led to the common use of the abbreviation
         "CLRS" (Cormen, Leiserson, Rivest, Stein), or, in the first edition, "CLR" (Cormen, Leiserson, Rivest).[4]</string>
+    <string name="loading_book_info">Đang tải thông tin sách</string>
+    <string name="borrowed_success">Mượn sách thành công</string>
+    <string name="borrowed_failure">Không thể mượn sách</string>
+    <string name="sending_request_borrow">Đang gửi yêu cầu...</string>
+    <string name="not_enough_book">Không còn sách loại này!</string>
     <string-array name = "Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>

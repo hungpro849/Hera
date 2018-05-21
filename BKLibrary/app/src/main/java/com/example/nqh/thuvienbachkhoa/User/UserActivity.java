@@ -1,5 +1,6 @@
 package com.example.nqh.thuvienbachkhoa.User;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -54,6 +55,8 @@ public class UserActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private BooksAdapter mBooksAdapter;
     CallAPI getBooks;
+    CallAPI getRemainService;
+    ProgressDialog mProgress;
 
 
     DrawerLayout mDrawerLayout;
@@ -96,6 +99,7 @@ public class UserActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         getBooks = retrofit.create(CallAPI.class);
+        getRemainService = retrofit.create(CallAPI.class);
 
         User user = gson.fromJson(userData, User.class);
         mCurrentUsername.setText(user.getUsername());
@@ -112,21 +116,31 @@ public class UserActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        mProgress = new ProgressDialog(getApplicationContext()); // this = YourActivity
+        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgress.setMessage("Đang kiểm tra thông tin sách");
+        mProgress.setIndeterminate(true);
+        mProgress.setCanceledOnTouchOutside(false);
+
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+
+
                 BookInfoView book = mDataset.get(position);
-                Intent bookInfoIntent = new Intent(getApplicationContext(), getBookInFoActivity.class);
+                Intent bookInfoIntent = new Intent(getApplicationContext(), BookInfoActivity.class);
                 bookInfoIntent.putExtra("title", book.getName());
                 bookInfoIntent.putExtra("image_url", book.getImage());
                 bookInfoIntent.putExtra("author", book.getAuthor());
                 bookInfoIntent.putExtra("id", book.getId());
                 bookInfoIntent.putExtra("description", book.getDescription());
                 bookInfoIntent.putExtra("subject", book.getSubject());
-                bookInfoIntent.putExtra("remain", book.getStock());
                 bookInfoIntent.putExtra("email",email);
                 bookInfoIntent.putExtra("token", token);
                 getApplicationContext().startActivity(bookInfoIntent);
+
+
             }
 
             @Override

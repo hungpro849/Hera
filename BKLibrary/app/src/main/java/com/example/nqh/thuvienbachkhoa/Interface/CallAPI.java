@@ -4,7 +4,9 @@ import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.BorrowTransaction;
 import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -87,5 +89,8 @@ public interface CallAPI {
     // Get borrow history
     @GET("transaction/me")
     Call<BorrowTransaction> getBorrowHistory(@Header("Authorization") String authHeader);
+
+    @GET("book/{id}/stock")
+    Call<JsonObject> getRemain(@Path("id") String id);
 
 }
