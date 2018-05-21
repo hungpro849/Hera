@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "141565446518",
+    "firebase_url": "https://thanoschat-c0c6c.firebaseio.com",
+    "project_id": "thanoschat-c0c6c",
+    "storage_bucket": "thanoschat-c0c6c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141565446518:android:98b289f3e3ea2c18",
+        "android_client_info": {
+          "package_name": "com.example.nqh.thuvienbachkhoa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "141565446518-1imeip5c31rrt7ba3h6jespcvp5kpklb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzRIgrgq5f8F1yRP01_mKkZBVXs-YhFAs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
