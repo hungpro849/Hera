@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-
 import com.example.nqh.thuvienbachkhoa.R;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ReportFragment extends Fragment{
-    Button startDateBtn, endDateBtn;
+    Button startDateBtn, endDateBtn,createReportBtn;
     TextView startDateTextView, endDateTextView;
     Spinner mReportTypeSpinner;
     android.support.v7.widget.Toolbar mToolbar;
@@ -49,7 +48,7 @@ public class ReportFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_report, container, false);
         startDateBtn = view.findViewById(R.id.report_start_date_btn);
         endDateBtn = view.findViewById(R.id.report_end_date_btn);
-
+        createReportBtn=view.findViewById(R.id.create_report);
         startDateTextView = view.findViewById(R.id.report_start_date_text);
         endDateTextView = view.findViewById(R.id.report_end_date_text);
         mToolbar = (android.support.v7.widget.Toolbar) view.findViewById(R.id.report_tool_bar);
@@ -110,6 +109,13 @@ public class ReportFragment extends Fragment{
                         mEndDateListener,
                         year,month,day);
                 datePickerDialog.show();
+            }
+        });
+
+        createReportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
             }
         });
     }
