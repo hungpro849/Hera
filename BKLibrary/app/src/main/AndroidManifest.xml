@@ -25,12 +25,6 @@
         <activity android:name=".Admin.AdminActivity"></activity>
         <activity android:name=".DangNhapActivity"></activity>
         <activity android:name=".User.BorrowBookHistoryActivity" />
-        <activity android:name=".User.BookReturnActivity" />
-        <activity android:name=".User.line_lich_su_muon_sach" />
-        <activity android:name=".User.lineSachDangMuon" />
-        <activity android:name=".User.line_main_user" />
-        <activity android:name=".User.BookBorrowActivity" />
-        <activity android:name=".User.line_muon_sach" />
         <activity android:name=".User.getBookInFoActivity"></activity>
         <activity android:name=".User.UserActivity"></activity>
     </application>

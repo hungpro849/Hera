@@ -14,6 +14,7 @@ import com.example.nqh.thuvienbachkhoa.Database.models.Book;
 import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.Database.models.UserBook;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 
@@ -23,13 +24,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class getBookInFoActivity extends Activity {
 
     Button bookBorrow;
     String email;
-    TextView title, author, numberBook, subject, description, voters, remain;
+    TextView title, author, subject, description, voters, remain;
     ImageView image_book;
+    Intent mIntent;
+    Bundle mBundle;
+    Gson gson;
 
 
 
@@ -43,32 +50,37 @@ public class getBookInFoActivity extends Activity {
         remain = (TextView) findViewById(R.id.remain);
         image_book = (ImageView) findViewById(R.id.image_book) ;
         subject = (TextView) findViewById(R.id.subject);
-
+        mIntent = getIntent();
+        mBundle = mIntent.getExtras();
         loadBookInfomation();
 
-//        bookBorrow = (Button)findViewById(R.id.borrowBook);
-//        bookBorrow.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //muonSach();
-//                Toast.makeText(getBookInFoActivity.this,"Đã thêm s",Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+        bookBorrow = (Button)findViewById(R.id.borrowBook);
+        bookBorrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //muonSach();
+                Toast.makeText(getBookInFoActivity.this,"Đang mượn sách",Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
     public  void loadBookInfomation() {
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        email = bundle.getString("email");
-        title.setText(bundle.getString("title"));
-        author.setText(bundle.getString("author"));
-        description.setText(bundle.getString("description"));
-        remain.setText(bundle.getString("remain"));
+
+        email = mBundle.getString("email");
+        title.setText(mBundle.getString("title"));
+        author.setText(mBundle.getString("author"));
+        description.setText(mBundle.getString("description"));
+        remain.setText(mBundle.getString("remain"));
         Picasso.with(getApplicationContext())
-                .load(bundle.getString("image_url"))
+                .load(mBundle.getString("image_url"))
                 .resize(160, 240)
                 .into(image_book);
-        subject.setText(bundle.getString("subject"));
+        subject.setText(mBundle.getString("subject"));
 
         if(image_book.getDrawable() == null) {
             image_book.setImageResource(R.drawable.bookex);
@@ -77,23 +89,8 @@ public class getBookInFoActivity extends Activity {
 
     }
 
-//    public void muonSach(){
-//        GeneralUser user=new GeneralUser();
-//        Book book=new Book();
-//        try {
-//            Map<String, Object> condition1 = new HashMap<String, Object>();
-//            condition1.put("email", email);
-//            user = database.queryFirst(GeneralUser.class, condition1);
-//
-//            Map<String,Object> condition2=new HashMap<String,Object>();
-//            condition2.put("name",nb);
-//            book=database.queryFirst(Book.class,condition2);
-//            UserBook adđB=new UserBook(user,book);
-//            database.fillObject(UserBook.class,adđB);
-//        }
-//        catch (Exception e){
-//            e.printStackTrace();
-//        }
-//    }
+    public void muonSach(){
+
+    }
 
 }
