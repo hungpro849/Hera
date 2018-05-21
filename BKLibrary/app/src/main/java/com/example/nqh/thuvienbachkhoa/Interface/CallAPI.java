@@ -6,7 +6,6 @@ import com.example.nqh.thuvienbachkhoa.Model.TokenResponse;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -75,7 +74,7 @@ public interface CallAPI {
 
     @FormUrlEncoded
     @PUT("user/{id}")
-    Call<User> editUser(@Header("Authorization") String authHeader, @Path("id") String id, @Field("username") String username, @Field("email") String email, @Field("address") String address,
+    Call<User> editUser(@Header("Authorization") String authHeader, @Path("id") String id, @Field("password") String password,@Field("address") String address,
                         @Field("phone") String phone, @Field("fullname") String fullname);
 
     @DELETE("user/{id}")

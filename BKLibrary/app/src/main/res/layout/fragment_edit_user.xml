@@ -37,16 +37,16 @@
                     android:text="Username:"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id = "@+id/edit_user_name"
+                <TextView
+                    android:id="@+id/edit_user_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="3"
                     android:background="#FFFFFF"
-                    android:hint="Nhập username"
-                    android:inputType="textMultiLine" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -70,15 +70,46 @@
                     android:text="Email"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id = "@+id/edit_user_email"
+                <TextView
+                    android:id="@+id/edit_user_email"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="3"
                     android:background="#FFFFFF"
-                    android:hint="Nhập email"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:background="#b3b3b3" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Password:"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id = "@+id/edit_user_pass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="3"
+                    android:background="#FFFFFF"
+                    android:hint="Nhập password"
                     android:inputType="textMultiLine" />
 
             </LinearLayout>
