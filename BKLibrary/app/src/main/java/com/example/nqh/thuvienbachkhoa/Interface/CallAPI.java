@@ -93,4 +93,11 @@ public interface CallAPI {
     @GET("book/{id}/stock")
     Call<JsonObject> getRemain(@Path("id") String id);
 
+    @GET("book/{id}/rating")
+    Call<JsonObject> getScore(@Path("id") String id);
+
+    // Rate a book
+    @FormUrlEncoded
+    @POST("rating/me")
+    Call<JsonObject> rateBook(@Header("Authorization") String authHeader, @Field("book") String bookID, @Field("score") Float score, @Field("comment") String comment);
 }
