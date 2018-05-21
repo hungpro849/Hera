@@ -1,65 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chauthai.swipereveallayout.SwipeRevealLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
-    tools:context=".User.line_lich_su_muon_sach">
+    android:layout_height="wrap_content"
+    app:dragEdge="right"
+    android:gravity="center"
+    app:mode="same_level">
 
-    <TextView
-        android:id="@+id/ms_name"
-        android:layout_width="216dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="12dp"
-        android:text="Nguyên lí ngôn ngữ lập trình"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/ms_img"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tVm"
-        android:layout_width="80dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="14dp"
-        android:text="Ngày mượn:"
-        app:layout_constraintStart_toEndOf="@+id/ms_img"
-        app:layout_constraintTop_toBottomOf="@+id/ms_name" />
-
-    <TextView
-        android:id="@+id/tVt"
-        android:layout_width="80dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="14dp"
-        android:text="Ngày trả:"
-        app:layout_constraintStart_toEndOf="@+id/ms_img"
-        app:layout_constraintTop_toBottomOf="@+id/tVm" />
-
-    <TextView
-        android:id="@+id/LSMS_tv_ngaymuon"
-        android:layout_width="180dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:text="20/3/2018"
-        app:layout_constraintStart_toEndOf="@+id/tVm"
-        app:layout_constraintTop_toBottomOf="@+id/ms_name" />
-
-    <TextView
-        android:id="@+id/LSMS_tv_ngaytra"
-        android:layout_width="180dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:text="20/4/2018"
-        app:layout_constraintStart_toEndOf="@+id/tVt"
-        app:layout_constraintTop_toBottomOf="@+id/LSMS_tv_ngaymuon" />
-
-    <ImageView
-        android:id="@+id/ms_img"
+    <LinearLayout
+        android:id="@+id/reveal_layout"
         android:layout_width="70dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bookex" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#ffcc0000">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:textColor="@android:color/white"
+            android:text="Trả sách"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/front_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
+
+        <ImageView
+            android:id="@+id/main_line_img"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_launcher_background" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/main_name_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="Name of Book"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/main_author_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/title"
+                android:text="Nguyen Phuong Bang" />
+
+            <TextView
+                android:id="@+id/main_subject_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="2015" />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.chauthai.swipereveallayout.SwipeRevealLayout>

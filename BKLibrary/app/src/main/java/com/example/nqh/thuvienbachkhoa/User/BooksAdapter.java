@@ -32,13 +32,13 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MyViewHolder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
         public  TextView author;
-        public ImageView imgage;
+        public ImageView image;
         public TextView subject;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.main_name_book);
-            imgage = (ImageView) view.findViewById(R.id.main_line_img);
+            image = (ImageView) view.findViewById(R.id.main_line_img);
             author = (TextView) view.findViewById(R.id.main_author_book);
             subject = (TextView) view.findViewById(R.id.main_subject_book);
         }
@@ -61,9 +61,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         BookInfoView book = booksList.get(position);
         holder.title.setText(book.getName());
-        Picasso.with(context).load(book.getImage()).resize(120, 160).into(holder.imgage);
-        if(holder.imgage.getDrawable() == null) {
-            holder.imgage.setImageResource(R.drawable.bookex);
+        Picasso.with(context).load(book.getImage()).resize(120, 160).into(holder.image);
+        if(holder.image.getDrawable() == null) {
+            holder.image.setImageResource(R.drawable.bookex);
         }
         holder.author.setText(book.getAuthor());
         holder.subject.setText(book.getSubject());

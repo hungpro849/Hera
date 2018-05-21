@@ -88,7 +88,7 @@ public interface CallAPI {
 
     // Get borrow history
     @GET("transaction/me")
-    Call<BorrowTransaction> getBorrowHistory(@Header("Authorization") String authHeader);
+    Call<List<BorrowTransaction>> getBorrowHistory(@Header("Authorization") String authHeader);
 
     @GET("book/{id}/stock")
     Call<JsonObject> getRemain(@Path("id") String id);
