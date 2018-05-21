@@ -18,8 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.User;
@@ -60,11 +58,6 @@ public class UserListFragment extends Fragment {
     Gson gson;
     SharedPreferences mPrefs;
     String token;
-
-
-    public void setDatabase(DBHelper db) {
-        //this.database = db;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

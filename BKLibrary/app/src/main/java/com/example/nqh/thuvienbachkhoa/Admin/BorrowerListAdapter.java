@@ -5,12 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
 import com.example.nqh.thuvienbachkhoa.R;
 
 import java.util.Collections;
@@ -18,7 +15,6 @@ import java.util.List;
 
 public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapter.ViewHolder>{
     private List<UserInfoInList> mDataset = Collections.emptyList();
-    protected DBHelper database;
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
@@ -43,12 +39,6 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
         }
     }
 
-    public BorrowerListAdapter(List<UserInfoInList> myDataset, DBHelper db) {
-        mDataset = myDataset;
-        database = db;
-    }
-
-
     @Override
     public BorrowerListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                              int viewType) {
@@ -66,26 +56,11 @@ public class BorrowerListAdapter extends RecyclerView.Adapter<BorrowerListAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         //holder.mTextView.setText(mDataset.get(position));
-        holder.mUsername.setText(mDataset.get(position).mUsername);
-        holder.mEmail.setText(mDataset.get(position).mUserEmail);
-        holder.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                try {
-                    GeneralUser currentBorrower = database.queryEqual(GeneralUser.class, "email", mDataset.get(position).mUserEmail).get(0);
-                    AdminActivity.mBorrowerInfoFragment.setCurrentBorrower(currentBorrower);
-                    AdminActivity.mFragmentManager.beginTransaction()
-                            .addToBackStack("Borrower info fragment").replace(R.id.main_view, AdminActivity.mBorrowerInfoFragment).commit();
-                } catch (Exception e) {
-                    Log.e("User exception", e.getMessage());
-                }
-            }
-        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return 0;
     }
 }

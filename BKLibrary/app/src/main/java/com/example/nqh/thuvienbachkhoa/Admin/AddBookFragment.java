@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -31,7 +30,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AddBookFragment extends Fragment {
     Toolbar mToolbar;
-    DBHelper database;
     EditText mBookName;
     EditText mAuthor;
     EditText mSubject;
@@ -49,14 +47,14 @@ public class AddBookFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_book, container, false);
-        mToolbar = (Toolbar) view.findViewById(R.id.add_book_tool_bar);
+        mToolbar = view.findViewById(R.id.add_book_tool_bar);
 
-        mBookName = (EditText) view.findViewById(R.id.add_book_name);
-        mAuthor = (EditText) view.findViewById(R.id.add_book_author);
-        mSubject = (EditText) view.findViewById(R.id.add_book_subject);
-        mDescription = (EditText) view.findViewById(R.id.add_book_description);
-        mLink = (EditText) view.findViewById(R.id.add_book_link);
-        mRemain = (EditText) view.findViewById(R.id.add_book_remain);
+        mBookName = view.findViewById(R.id.add_book_name);
+        mAuthor = view.findViewById(R.id.add_book_author);
+        mSubject = view.findViewById(R.id.add_book_subject);
+        mDescription = view.findViewById(R.id.add_book_description);
+        mLink = view.findViewById(R.id.add_book_link);
+        mRemain = view.findViewById(R.id.add_book_remain);
 
         mToolbar.setTitle(null);
 
@@ -73,11 +71,6 @@ public class AddBookFragment extends Fragment {
         setupAcceptButton();
         return view;
     }
-
-    public void setDatabase(DBHelper db) {
-        this.database = db;
-    }
-
 
     public void setupToolbar() {
         mToolbar.setNavigationIcon(R.drawable.back_button_white);
