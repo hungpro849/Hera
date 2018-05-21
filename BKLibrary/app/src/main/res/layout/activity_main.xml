@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:layout_marginTop="30dp"
     android:orientation="vertical"
     >
 
     <LinearLayout
+        android:layout_marginLeft="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -100,15 +101,6 @@
             android:layout_height="wrap_content"
             android:textAllCaps="false"
             android:text="Đăng nhập"
-            android:background="@drawable/custombutton"/>
-
-        <Button
-            android:id="@+id/btnKhachvanglai"
-            android:layout_marginTop="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="Khách vãng lai"
             android:background="@drawable/custombutton"/>
 
         <LinearLayout

@@ -32,7 +32,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = DangNhapActivity.class.getName();
     TextView dangky,quenmatkhau;
     ListView listview;
-    Button dangnhap,khachvanglai;
+    Button dangnhap;
     EditText email,password;
     CallAPI loginService;
     SharedPreferences mPrefs;
@@ -47,14 +47,14 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
         dangky = findViewById(R.id.twDangky);
         quenmatkhau = findViewById(R.id.twQuenmatkhau);
         dangnhap = findViewById(R.id.btnDangnhap);
-        khachvanglai = findViewById(R.id.btnKhachvanglai);
+
         email = findViewById(R.id.edtEmail);
         password = findViewById(R.id.edtPassword);
 
         dangky.setOnClickListener(this);
         quenmatkhau.setOnClickListener(this);
         dangnhap.setOnClickListener(this);
-        khachvanglai.setOnClickListener(this);
+
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
         gson = new Gson();
 
@@ -160,7 +160,7 @@ public class DangNhapActivity extends AppCompatActivity implements View.OnClickL
                 }
 
                 break;
-            case R.id.btnKhachvanglai:
+
         }
     }
     @Override

@@ -34,10 +34,13 @@
     <string name="borrowed_failure">Không thể mượn sách</string>
     <string name="sending_request_borrow">Đang gửi yêu cầu...</string>
     <string name="not_enough_book">Không còn sách loại này!</string>
-    <string-array name = "Query_suggestion">
+    <string name="loading_history_transaction">Đang tải lịch sử mượn sách!</string>
+    <string-array name="Query_suggestion">
         <item> Database</item>
         <item> Cấu trúc rời r</item>
         <item> Giải tích</item>
         <item> Đồ họa máy tính</item>
     </string-array>
+    <string name="notifications_admin_channel_name">Global channel</string>
+    <string name="notifications_admin_channel_description">Notifications sent from the app admin</string>
 </resources>
