@@ -129,7 +129,7 @@ public class UserActivity extends AppCompatActivity {
 
 
                 BookInfoView book = mDataset.get(position);
-                Intent bookInfoIntent = new Intent(getApplicationContext(), GetBookInfoActivity.class);
+                Intent bookInfoIntent = new Intent(getApplicationContext(), BookInfoActivity.class);
                 bookInfoIntent.putExtra("title", book.getName());
                 bookInfoIntent.putExtra("image_url", book.getImage());
                 bookInfoIntent.putExtra("author", book.getAuthor());

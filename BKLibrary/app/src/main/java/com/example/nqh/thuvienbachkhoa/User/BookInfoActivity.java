@@ -31,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class GetBookInfoActivity extends Activity {
+public class BookInfoActivity extends Activity {
 
     Button bookBorrowBtn;
     String email;
