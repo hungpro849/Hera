@@ -12,10 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
-import com.example.nqh.thuvienbachkhoa.Database.models.UserBook;
 import com.example.nqh.thuvienbachkhoa.R;
 
 import java.util.List;
@@ -25,26 +21,16 @@ public class BorrowerInfoFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DBHelper database;
     private Toolbar mToolbar;
     private TextView mUserNameTextView;
     private TextView mUserEmailTextView;
     private TextView mBorrowDateTextView;
-    private GeneralUser currentBorrower;
     private List<BookInfoInList> mDataset = new Vector<BookInfoInList>();
-
-    public void setDatabase(DBHelper db) {
-        this.database = db;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    public void setCurrentBorrower(GeneralUser user) {
-        this.currentBorrower = user;
     }
 
     @Override
@@ -90,14 +76,6 @@ public class BorrowerInfoFragment extends Fragment {
     }
 
     public void loadBooks() {
-        try {
-            List<UserBook> allBorrowedBooks = database.queryEqual(UserBook.class, "user_id", currentBorrower);
-            for (UserBook b: allBorrowedBooks) {
-                //mDataset.add(new BookInfoInList(b.getBook()));
-            }
-        } catch (Exception e) {
-            Log.e("UserBook Exception",e.getMessage());
-        }
 
     }
 

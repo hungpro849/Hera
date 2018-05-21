@@ -1,6 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.Notification;
 import com.example.nqh.thuvienbachkhoa.R;
 
 import java.util.List;
@@ -22,30 +19,21 @@ import java.util.Vector;
 
 public class NotificationListFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Activity mCurrentActivity;
-    private DBHelper database;
+
     private Toolbar mToolbar;
     private FloatingActionButton mSwitchToComposBtn;
 
     public List<NotificationInfoInList> mDataset = new Vector<NotificationInfoInList>();
-    public List<Notification> mNotificationList = new Vector<Notification>();
-
-    public void setDatabase(DBHelper db) {
-        this.database = db;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_notification_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.notification_list_recycle_view);
-        mSwitchToComposBtn = (FloatingActionButton) view.findViewById(R.id.switch_to_compose_notification_btn);
+        mRecyclerView = view.findViewById(R.id.notification_list_recycle_view);
+        mSwitchToComposBtn = view.findViewById(R.id.switch_to_compose_notification_btn);
         mDataset.clear();
-        mNotificationList.clear();
 
-
-        mToolbar = (Toolbar) view.findViewById(R.id.notification_list_tool_bar);
+        mToolbar = view.findViewById(R.id.notification_list_tool_bar);
         setUpRecyclerView();
         setupSwitchToComposeButton();
         setupToolbar();
@@ -63,26 +51,13 @@ public class NotificationListFragment extends Fragment {
 
         loadData();
 
-        mAdapter = new NotificationListAdapter(mDataset, database);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mLayoutManager = new LinearLayoutManager(mCurrentActivity);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
 
 
     public void loadData() {
-        try {
-            mNotificationList = database.getAllOrdered(Notification.class, "create_date", true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        for (Notification b : mNotificationList) {
-            NotificationInfoInList newNoti = new NotificationInfoInList(b);
-            mDataset.add(newNoti);
-        }
     }
 
     public void setupSwitchToComposeButton() {

@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -29,7 +28,6 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -58,15 +56,6 @@ public class BookListFragment extends Fragment {
     Gson gson;
     SharedPreferences mPrefs;
     String token;
-
-    public void setCurrentActivity(Activity activity) {
-        this.mCurrentActivity = activity;
-    }
-
-
-    public void setDatabase(DBHelper db) {
-        //this.database = db;
-    }
 
     public void setDataset(List<Book> bookList) {
         mBookList = bookList;

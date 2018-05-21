@@ -1,6 +1,7 @@
 package com.example.nqh.thuvienbachkhoa.User;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +20,9 @@ import com.example.nqh.thuvienbachkhoa.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,32 +31,35 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class BookInfoActivity extends Activity {
+public class BookInfoActivity extends Activity{
 
     Button bookBorrowBtn;
     String email;
-    TextView title, author, subject, description, voters, remain;
+    TextView title, author, subject, description, voters, remain, score;
     ImageView image_book;
+    RatingBar mRatingBar;
     Intent mIntent;
     Bundle mBundle;
     Gson gson;
     CallAPI service;
-    AlertDialog.Builder borrowBookBuilder, alertBuilder, successAlert;
+    AlertDialog.Builder borrowBookBuilder, alertBuilder, successAlert, ratingAlert;
     ProgressDialog mProgress;
-
+    Dialog rankDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_infor_book);
         gson = new Gson();
         setUpDialog();
-        title = (TextView) findViewById(R.id.title);
-        author = (TextView) findViewById(R.id.author);
-        description = (TextView) findViewById(R.id.description);
-        voters = (TextView) findViewById(R.id.voters);
-        remain = (TextView) findViewById(R.id.remain);
-        image_book = (ImageView) findViewById(R.id.image_book) ;
-        subject = (TextView) findViewById(R.id.subject);
+        title = findViewById(R.id.title);
+        author = findViewById(R.id.author);
+        description = findViewById(R.id.description);
+        voters = findViewById(R.id.voters);
+        remain = findViewById(R.id.remain);
+        image_book = findViewById(R.id.image_book) ;
+        subject = findViewById(R.id.subject);
+        score = findViewById(R.id.score);
+        mRatingBar = findViewById(R.id.ratingBar);
         mIntent = getIntent();
         mBundle = mIntent.getExtras();
         Retrofit retrofit = new Retrofit.Builder()
@@ -64,8 +67,62 @@ public class BookInfoActivity extends Activity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         service =  retrofit.create(CallAPI.class);
+        mProgress = new ProgressDialog(this); // this = YourActivity
+        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgress.setMessage(getString(R.string.loading_book_info));
+        mProgress.setIndeterminate(true);
+        mProgress.setCanceledOnTouchOutside(false);
         bookBorrowBtn = (Button)findViewById(R.id.borrowBook);
         loadBookInformation();
+        mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, final float rating, boolean fromUser) {
+                if(fromUser) {
+                    rankDialog = new Dialog(BookInfoActivity.this, R.style.FullHeightDialog);
+                    rankDialog.setContentView(R.layout.rating_dialog);
+                    rankDialog.setCancelable(true);
+                    RatingBar dialogRatingBar = rankDialog.findViewById(R.id.dialog_ratingbar);
+                    final TextView comment = rankDialog.findViewById(R.id.dialog_rating_edt);
+                    dialogRatingBar.setRating(rating);
+                    Button updateButton = rankDialog.findViewById(R.id.rank_dialog_button);
+                    updateButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mProgress.show();
+                            Call<JsonObject> jsonObjectCall = service.rateBook("Bearer " + mBundle.getString("token"),
+                                    mBundle.getString("id"), rating, comment.getText().toString());
+                            jsonObjectCall.enqueue(new Callback<JsonObject>() {
+                                @Override
+                                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                    mProgress.dismiss();
+                                    if(response.isSuccessful()) {
+                                        ratingAlert.setMessage("Bạn đã gửi đánh giá thành công!");
+                                        ratingAlert.show();
+
+                                    } else {
+                                        try {
+                                            JSONObject jObjError = new JSONObject(response.errorBody().string());
+                                            Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                                        } catch (Exception e) {
+                                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonObject> call, Throwable t) {
+                                    mProgress.dismiss();
+                                    Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+                                }
+                            });
+                            rankDialog.dismiss();
+                        }
+                    });
+                    //now that the dialog is set up, it's time to show it
+                    rankDialog.show();
+                }
+            }
+        });
         bookBorrowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +152,14 @@ public class BookInfoActivity extends Activity {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         finish();
+                    }
+                });
+
+        ratingAlert  = new AlertDialog.Builder(this);
+        ratingAlert.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        loadBookInformation();
                     }
                 });
         borrowBookBuilder = new AlertDialog.Builder(this);
@@ -130,11 +195,6 @@ public class BookInfoActivity extends Activity {
 
     }
     public void loadBookInformation() {
-        mProgress = new ProgressDialog(this); // this = YourActivity
-        mProgress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgress.setMessage(getString(R.string.loading_book_info));
-        mProgress.setIndeterminate(true);
-        mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
         email = mBundle.getString("email");
         title.setText(mBundle.getString("title"));
@@ -180,6 +240,36 @@ public class BookInfoActivity extends Activity {
             }
         });
 
+        Call<JsonObject> scoreCall = service.getScore(mBundle.getString("id"));
+        scoreCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                mProgress.dismiss();
+                if(response.isSuccessful()) {
+                    JsonObject scoreResponse = response.body();
+                    String bookScore = scoreResponse.get("rating").toString();
+                    if(!bookScore.equals("null")) {
+                        score.setText(bookScore);
+                        mRatingBar.setRating(Float.parseFloat(bookScore));
+                    }
+                } else {
+                    try {
+                        JSONObject jObjError = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getApplicationContext(), jObjError.getString("message"), Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                mProgress.dismiss();
+                Toast.makeText(getApplicationContext(), R.string.connection_error, Toast.LENGTH_LONG).show();
+                bookBorrowBtn.setEnabled(false);
+            }
+        });
 
     }
 
@@ -231,6 +321,4 @@ public class BookInfoActivity extends Activity {
             }
         });
     }
-
-
 }

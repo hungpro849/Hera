@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -31,8 +31,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class EditUserFragment extends Fragment {
     public Toolbar mToolbar;
-    EditText mUserName;
-    EditText mUserEmail;
+    TextView mUserName;
+    TextView mUserEmail;
+    EditText mUserPass;
     EditText mUserAddress;
     EditText mUserPhone;
     EditText mUserFName;
@@ -48,8 +49,9 @@ public class EditUserFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_user, container, false);
         mToolbar = (Toolbar) view.findViewById(R.id.edit_book_tool_bar);
 
-        mUserName = (EditText) view.findViewById(R.id.edit_user_name);
-        mUserEmail = (EditText) view.findViewById(R.id.edit_user_email);
+        mUserName = (TextView) view.findViewById(R.id.edit_user_name);
+        mUserEmail = (TextView) view.findViewById(R.id.edit_user_email);
+        mUserPass = (EditText) view.findViewById(R.id.edit_user_pass);
         mUserAddress = (EditText) view.findViewById(R.id.edit_user_address);
         mUserPhone = (EditText) view.findViewById(R.id.edit_user_phone);
         mUserFName = (EditText) view.findViewById(R.id.edit_user_fname);
@@ -75,9 +77,7 @@ public class EditUserFragment extends Fragment {
         super.onStart();
         setupView();
     }
-    public void setDatabase(DBHelper db) {
-        //this.database = db;
-    }
+
     public void setupView()
     {
         mUserName.setText(UserListAdapter.currentUser.getUsername());
@@ -102,21 +102,21 @@ public class EditUserFragment extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 String uId=UserListAdapter.currentUser.getId();
-                String uUserName = mUserName.getText().toString().trim();
-                String uEmail = mUserEmail.getText().toString().trim();
+                String uPass = mUserPass.getText().toString().trim();
                 String uAddress = mUserAddress.getText().toString().trim();
                 String uPhone = mUserPhone.getText().toString().trim();
                 String uFName=mUserFName.getText().toString().trim();
 
-                if (!checkEditUserCondition(uUserName,uEmail,uAddress,uPhone,uFName)) {
+                if (!checkEditUserCondition(uPass,uAddress,uPhone,uFName)) {
                     try {
-                        Call<User> tokenResponseCall = editUser.editUser("Bearer " + token,uId,uUserName,uEmail,uAddress,uPhone,uFName);
+                        Call<User> tokenResponseCall = editUser.editUser("Bearer " + token,uId,uPass,uAddress,uPhone,uFName);
                         tokenResponseCall.enqueue(new Callback<User>() {
                             @Override
                             public void onResponse(Call<User> call, Response<User> response) {
                                 //mProgress.dismiss();
                                 if (response.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Chỉnh sửa user thành công", Toast.LENGTH_SHORT).show();
+                                    mUserPass.setText("");
                                     getActivity().onBackPressed();
 
                                 } else {
@@ -148,13 +148,12 @@ public class EditUserFragment extends Fragment {
         });
     }
 
-    public boolean checkEditUserCondition(String uUserName, String uEmail, String uAddress, String uPhone, String uFName) {
+    public boolean checkEditUserCondition(String uPass, String uAddress, String uPhone, String uFName) {
         //return true if strings are empty or null
-        boolean conditionName = TextUtils.isEmpty(uUserName);
-        boolean conditionEmail = TextUtils.isEmpty(uEmail);
+        boolean conditionPass = TextUtils.isEmpty(uPass);
         boolean conditionAddress = TextUtils.isEmpty(uAddress);
         boolean conditionPhone = TextUtils.isEmpty(uPhone);
         boolean conditionFName = TextUtils.isEmpty(uFName);
-        return conditionName || conditionEmail || conditionAddress || conditionPhone ||conditionFName;
+        return conditionPass || conditionAddress || conditionPhone ||conditionFName;
     }
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="2dip">
+
+    <TextView
+        android:text="Điểm"
+        android:id="@+id/rank_dialog_text1"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <RatingBar
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:id="@+id/dialog_ratingbar"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="0.5"
+        android:rating="2.5"
+        android:isIndicator="false"/>
+
+    <TextView
+        android:text="Nhận xét"
+        android:textSize="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/dialog_rating_edt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:lines="5"
+        android:minLines="1"
+        android:gravity="top|start"
+        android:maxLines="10"
+        android:scrollbars="none"
+        android:inputType="textMultiLine|textCapSentences"/>
+
+    <Button
+        android:id="@+id/rank_dialog_button"
+        android:layout_height="wrap_content"
+        android:text="Đánh giá"
+        android:focusable="false"
+        android:layout_margin="5dip"
+        android:textColor="#FFF8C6"
+        android:textSize="20dip"
+        android:layout_width="fill_parent" />
+
+</LinearLayout>
