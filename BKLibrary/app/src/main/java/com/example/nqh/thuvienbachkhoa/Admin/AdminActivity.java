@@ -21,14 +21,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nqh.thuvienbachkhoa.DangNhapActivity;
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.example.nqh.thuvienbachkhoa.Utils;
 import com.google.gson.Gson;
-
-import java.util.Collections;
-import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
     Bitmap download;
@@ -58,23 +54,11 @@ public class AdminActivity extends AppCompatActivity {
     Gson gson;
     SharedPreferences mPrefs;
 
-    /*
-     * setting up database
-     */
-
-    private DBHelper db;
-
-    //TODO: find a way to improve book search
-    private List<BookInfoInList> mBookDataset = Collections.emptyList();
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.e("Main Activity", "On Create");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_activity_main);
-
-        db = new DBHelper(this);
 
         setUpDrawer();
         setUpNavigationView();
@@ -96,34 +80,24 @@ public class AdminActivity extends AppCompatActivity {
 
         mBookMenuFragment = new BookMenuFragment();
         mBookListFragment = new BookListFragment();
-        mBookListFragment.setDatabase(db);
-
         mMainMenuFragment = new MainMenuFragment();
-
         mUserListFragment = new UserListFragment();
-        mUserListFragment.setDatabase(db);
-
         mEditUserFragment = new EditUserFragment();
 
         mReportFragment = new ReportFragment();
         mReportFragment.setCurrentActivity(AdminActivity.this);
 
         mNotificationFragment = new NotificationFragment();
-        mNotificationFragment.setDatabase(db);
 
         mNotificationListFragment = new NotificationListFragment();
-        mNotificationListFragment.setDatabase(db);
 
         mAddBookFragment = new AddBookFragment();
 
         mEditBookFragment = new EditBookFragment();
-        mEditBookFragment.setDatabase(db);
 
         mBorrowerListFragment = new BorrowerListFragment();
-        mBorrowerListFragment.setDatabase(db);
 
         mBorrowerInfoFragment = new BorrowerInfoFragment();
-        mBorrowerInfoFragment.setDatabase(db);
 
         mOverlayFrame = findViewById(R.id.overlay);
         mOverlayFrame.setOverlay(false);

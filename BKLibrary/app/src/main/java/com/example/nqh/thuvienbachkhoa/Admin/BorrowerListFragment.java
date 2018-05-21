@@ -15,14 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
-import com.example.nqh.thuvienbachkhoa.Database.models.GeneralUser;
-import com.example.nqh.thuvienbachkhoa.Database.models.User;
-import com.example.nqh.thuvienbachkhoa.Database.models.UserBook;
 import com.example.nqh.thuvienbachkhoa.R;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Vector;
 
@@ -30,16 +24,10 @@ public class BorrowerListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private DBHelper database;
     private Toolbar mToolbar;
     private android.support.v7.widget.SearchView mSearchView;
     private List<UserInfoInList> mDataset = new Vector<UserInfoInList>();
-    private List<UserBook> mBorrowerList = new Vector<UserBook>();
 
-
-    public void setDatabase(DBHelper db) {
-        this.database = db;
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,8 +38,8 @@ public class BorrowerListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_borrower_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.borrower_list_recycle_view);
-        mToolbar = (Toolbar) view.findViewById(R.id.borrower_list_tool_bar);
+        mRecyclerView = view.findViewById(R.id.borrower_list_recycle_view);
+        mToolbar = view.findViewById(R.id.borrower_list_tool_bar);
         mDataset.clear();
         setUpRecyclerView();
         setupToolbar();
@@ -67,11 +55,6 @@ public class BorrowerListFragment extends Fragment {
 
     public void setUpRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
-
-        loadAllBorrowers();
-
-        mAdapter = new BorrowerListAdapter(mDataset,database);
-        mRecyclerView.setAdapter(mAdapter);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -100,7 +83,6 @@ public class BorrowerListFragment extends Fragment {
         mSearchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                loadUserAfterQuery(userQuery(query));
                 return false;
             }
 
@@ -125,46 +107,4 @@ public class BorrowerListFragment extends Fragment {
         });
     }
 
-    public void getAllCurrentBorrowers() {
-        // pay date = 0 means that user has not returned the books
-        try {
-            mBorrowerList = database.queryZeroDistinct(UserBook.class, "pay_date","user_id");
-        } catch (Exception e) {
-            Log.e("UserBook exception", e.getMessage());
-        }
-    }
-
-    public void loadAllBorrowers() {
-        getAllCurrentBorrowers();
-        for (UserBook borrower: mBorrowerList) {
-            /*UserInfoInList newBorrower = new UserInfoInList(borrower.getUser());
-            mDataset.add(newBorrower);*/
-        }
-    }
-
-    public List<GeneralUser> userQuery(String query) {
-        List<GeneralUser> foundUser = Collections.emptyList();
-        try {
-            foundUser = database.queryLikeDistinct(GeneralUser.class, "name", query);
-        } catch (Exception e) {
-            Log.e("User Query Exception", e.getMessage());
-        }
-        return foundUser;
-    }
-
-    public void loadUserAfterQuery(List<GeneralUser> userList) {
-        mDataset.clear();
-        for (GeneralUser currentUser: userList) {
-            try {
-                List<UserBook> currentBorrowers = database.queryEqualDistinct(UserBook.class,
-                        "user_id","user_id", currentUser);
-                for (UserBook b: currentBorrowers) {
-                    //mDataset.add(new UserInfoInList(b.getUser()));
-                }
-            } catch (Exception e) {
-                Log.e("UserBook exception", e.getMessage());
-            }
-        }
-        mAdapter.notifyDataSetChanged();
-    }
 }

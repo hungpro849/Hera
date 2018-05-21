@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -78,9 +77,7 @@ public class EditUserFragment extends Fragment {
         super.onStart();
         setupView();
     }
-    public void setDatabase(DBHelper db) {
-        //this.database = db;
-    }
+
     public void setupView()
     {
         mUserName.setText(UserListAdapter.currentUser.getUsername());

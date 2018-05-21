@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.R;
@@ -77,9 +76,7 @@ public class EditBookFragment extends Fragment {
         super.onStart();
         setupView();
     }
-    public void setDatabase(DBHelper db) {
-        //this.database = db;
-    }
+
     public void setupView()
     {
         mBookName.setText(BookListAdapter.currentBook.getName());

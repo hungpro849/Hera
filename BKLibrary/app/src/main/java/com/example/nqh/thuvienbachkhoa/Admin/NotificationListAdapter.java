@@ -7,15 +7,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.nqh.thuvienbachkhoa.Database.db.DBHelper;
 import com.example.nqh.thuvienbachkhoa.R;
 
-import java.util.Collections;
-import java.util.List;
-
 public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.ViewHolder> {
-    private List<NotificationInfoInList> mDataset = Collections.emptyList();
-    private DBHelper database;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -24,17 +18,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTopic = (TextView) itemView.findViewById(R.id.notification_topic);
-            mCreateDate = (TextView) itemView.findViewById(R.id.notification_date);
+            mTopic = itemView.findViewById(R.id.notification_topic);
+            mCreateDate = itemView.findViewById(R.id.notification_date);
         }
 
     }
-
-    public NotificationListAdapter(List<NotificationInfoInList> myDataset, DBHelper db) {
-        mDataset = myDataset;
-        database = db;
-    }
-
 
     @Override
     public NotificationListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -50,16 +38,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(NotificationListAdapter.ViewHolder holder, final int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.mTextView.setText(mDataset.get(position));
-        holder.mTopic.setText(mDataset.get(position).mTopic);
-        holder.mCreateDate.setText(mDataset.get(position).mDate);
+
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return 0;
     }
 }
