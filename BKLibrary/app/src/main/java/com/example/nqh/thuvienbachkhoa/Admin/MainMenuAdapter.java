@@ -28,9 +28,9 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
 
         public ViewHolder(View v) {
             super(v);
-            mTitle = (TextView) v.findViewById(R.id.task_name);
-            mImage = (ImageView) v.findViewById(R.id.task_icon);
-            mLayout = (LinearLayout) v.findViewById(R.id.task_layout);
+            mTitle = v.findViewById(R.id.task_name);
+            mImage = v.findViewById(R.id.task_icon);
+            mLayout = v.findViewById(R.id.task_layout);
             mImage.setOnClickListener(this);
             mLayout.setOnClickListener(this);
             mTitle.setOnClickListener(this);
@@ -98,6 +98,10 @@ public class MainMenuAdapter extends RecyclerView.Adapter<MainMenuAdapter.ViewHo
                     case 4:
                         fragmentTransaction.replace(R.id.main_view, AdminActivity.mBorrowerListFragment)
                                 .addToBackStack("Borrower list fragment").commit();
+                        break;
+                    case 5:
+                        fragmentTransaction.replace(R.id.main_view, AdminActivity.mBarcodeFragment)
+                                .addToBackStack("Return book fragment").commit();
                 }
             }
         });

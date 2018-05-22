@@ -33,7 +33,6 @@ public class AdminActivity extends AppCompatActivity {
     public static Toolbar mToolbar;
     public static ActionBar mActionBar;
     private SearchView mSearchView;
-    public static BookMenuFragment mBookMenuFragment;
     public static BookListFragment mBookListFragment;
     public static MainMenuFragment mMainMenuFragment;
     public static UserListFragment mUserListFragment;
@@ -46,6 +45,7 @@ public class AdminActivity extends AppCompatActivity {
     public static EditUserFragment mEditUserFragment;
     public static BorrowerListFragment mBorrowerListFragment;
     public static BorrowerInfoFragment mBorrowerInfoFragment;
+    public static BarcodeFragment mBarcodeFragment;
 
     public static FragmentManager mFragmentManager;
 
@@ -78,11 +78,11 @@ public class AdminActivity extends AppCompatActivity {
 
         mCurrentUsername.setText(user.getUsername());
 
-        mBookMenuFragment = new BookMenuFragment();
         mBookListFragment = new BookListFragment();
         mMainMenuFragment = new MainMenuFragment();
         mUserListFragment = new UserListFragment();
         mEditUserFragment = new EditUserFragment();
+        mBarcodeFragment = new BarcodeFragment();
 
         mReportFragment = new ReportFragment();
         mReportFragment.setCurrentActivity(AdminActivity.this);
