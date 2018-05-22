@@ -13,16 +13,16 @@
         android:id="@+id/reveal_layout"
         android:layout_width="70dp"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="#ffcc0000">
+        android:background="@android:color/transparent"
+        android:gravity="center">
 
         <TextView
-            android:layout_width="70dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"
             android:gravity="center"
-            android:background="@android:color/holo_red_dark"
-            android:textColor="@android:color/white"
-            android:text="Trả sách"/>
+            android:text="Trả sách"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -68,6 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_weight="1"
                 android:text="2015" />
 
         </LinearLayout>

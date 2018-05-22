@@ -3,6 +3,7 @@ package com.example.nqh.thuvienbachkhoa.User;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +21,6 @@ import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.BorrowTransaction;
 import com.example.nqh.thuvienbachkhoa.R;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -115,8 +114,13 @@ public class BorrowBookAdapter extends RecyclerView.Adapter {
                     alertBuilder.setCancelable(false)
                             .setPositiveButton("Có", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    mDataSet.remove(getAdapterPosition());
-                                    notifyItemRemoved(getAdapterPosition());
+
+                                    Intent QRActivity = new Intent(mContext, QRScanActivity.class);
+                                    QRActivity.putExtra("transaction_id", data.getId());
+                                    mContext.startActivity(QRActivity);
+
+                                    //mDataSet.remove(getAdapterPosition());
+                                    //notifyItemRemoved(getAdapterPosition());
 
                                 }
                             })
@@ -147,7 +151,31 @@ public class BorrowBookAdapter extends RecyclerView.Adapter {
             frontLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("click", "click");
+
+                    alertBuilder = new AlertDialog.Builder(mContext);
+                    alertBuilder.setCancelable(false)
+                            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                    Intent QRActivity = new Intent(mContext, QRScanActivity.class);
+                                    QRActivity.putExtra("transaction_id", data.getId());
+                                    mContext.startActivity(QRActivity);
+
+                                    //mDataSet.remove(getAdapterPosition());
+                                    //notifyItemRemoved(getAdapterPosition());
+
+                                }
+                            })
+                            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    //  Action for 'NO' Button
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.setTitle("Trả sách");
+                    alert.setMessage("Bạn có muốn trả sách?");
+                    alert.show();
 
                 }
             });

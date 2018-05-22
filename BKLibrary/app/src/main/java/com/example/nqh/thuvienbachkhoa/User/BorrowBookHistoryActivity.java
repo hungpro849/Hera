@@ -140,16 +140,8 @@ public class BorrowBookHistoryActivity extends AppCompatActivity {
             }
         });
     }
-    void Load() {
-        for(int i = 0; i < 10; i++) {
-            BorrowTransaction mTr = new BorrowTransaction();
-            mTr.setId(i +"");
-            mDataset.add(mTr);
 
-        }
-    }
     private void setupRecyclerView() {
-        //Load();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
