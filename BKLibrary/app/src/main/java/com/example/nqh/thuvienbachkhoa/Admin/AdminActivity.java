@@ -53,6 +53,7 @@ public class AdminActivity extends AppCompatActivity {
     TextView mCurrentUsername;
     Gson gson;
     SharedPreferences mPrefs;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class AdminActivity extends AppCompatActivity {
 
         // Check for illegal entrance
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
-        String token = mPrefs.getString("UserToken", null);
+        token = mPrefs.getString("UserToken", null);
         String userData = mPrefs.getString("UserData", null);
         if(token == null || userData == null) {
             Toast.makeText(this, "Vui lòng đăng nhập trước khi sử dụng ứng dụng", Toast.LENGTH_LONG).show();
@@ -189,5 +190,9 @@ public class AdminActivity extends AppCompatActivity {
         }
         // Close all keyboard
         Utils.hideKeyboard(this);
+    }
+
+    public String getToken() {
+        return token;
     }
 }

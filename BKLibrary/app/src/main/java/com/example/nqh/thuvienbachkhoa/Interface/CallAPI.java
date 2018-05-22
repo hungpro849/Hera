@@ -99,4 +99,12 @@ public interface CallAPI {
     @FormUrlEncoded
     @POST("rating/me")
     Call<JsonObject> rateBook(@Header("Authorization") String authHeader, @Field("book") String bookID, @Field("score") Float score, @Field("comment") String comment);
+
+    // Check transaction
+    @GET("transaction/{id}")
+    Call<BorrowTransaction> getTransactionByID(@Header("Authorization") String authHeader, @Path("id") String id);
+
+    // Return book
+    @DELETE("transaction/{id}")
+    Call<JsonObject> returnBook(@Header("Authorization") String authHeader, @Path("id") String id);
 }

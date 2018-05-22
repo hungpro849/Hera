@@ -1,6 +1,7 @@
 package com.example.nqh.thuvienbachkhoa.User;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -97,13 +98,13 @@ public class BorrowBookAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View itemView) {
             super(itemView);
-            swipeLayout = (SwipeRevealLayout) itemView.findViewById(R.id.swipe_layout);
+            swipeLayout = itemView.findViewById(R.id.swipe_layout);
             frontLayout = itemView.findViewById(R.id.front_layout);
             deleteLayout = itemView.findViewById(R.id.reveal_layout);
-            title = (TextView) itemView.findViewById(R.id.main_name_book);
-            image = (ImageView) itemView.findViewById(R.id.main_line_img);
-            author = (TextView) itemView.findViewById(R.id.main_author_book);
-            subject = (TextView) itemView.findViewById(R.id.main_subject_book);
+            title = itemView.findViewById(R.id.main_name_book);
+            image = itemView.findViewById(R.id.main_line_img);
+            author = itemView.findViewById(R.id.main_author_book);
+            subject = itemView.findViewById(R.id.main_subject_book);
         }
 
         public void bind(final BorrowTransaction data) {
@@ -118,7 +119,7 @@ public class BorrowBookAdapter extends RecyclerView.Adapter {
                                     Intent QRActivity = new Intent(mContext, QRScanActivity.class);
                                     QRActivity.putExtra("transaction_id", data.getId());
                                     mContext.startActivity(QRActivity);
-
+                                    ((Activity)mContext).finish();
                                     //mDataSet.remove(getAdapterPosition());
                                     //notifyItemRemoved(getAdapterPosition());
 
@@ -160,7 +161,7 @@ public class BorrowBookAdapter extends RecyclerView.Adapter {
                                     Intent QRActivity = new Intent(mContext, QRScanActivity.class);
                                     QRActivity.putExtra("transaction_id", data.getId());
                                     mContext.startActivity(QRActivity);
-
+                                    ((Activity)mContext).finish();
                                     //mDataSet.remove(getAdapterPosition());
                                     //notifyItemRemoved(getAdapterPosition());
 

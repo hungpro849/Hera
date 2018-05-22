@@ -23,14 +23,13 @@ public class  QRScanActivity extends Activity {
     Bundle mBundle;
     Intent mIntent;
     String transaction_id;
-    Button mCheckQR, mBack;
+    Button mBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscan);
-        qr_img = (ImageView) findViewById(R.id.qr_code_img);
-        mCheckQR = (Button) findViewById(R.id.btn_check_qr);
-        mBack = (Button) findViewById(R.id.btn_back);
+        qr_img = findViewById(R.id.qr_code_img);
+        mBack = findViewById(R.id.btn_back);
 
         mIntent = getIntent();
         mBundle = mIntent.getExtras();
@@ -51,16 +50,12 @@ public class  QRScanActivity extends Activity {
                 e.printStackTrace();
             }
         }
-        mCheckQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //onBackPressed();
-            }
-        });
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               onBackPressed();
+               Intent intent = new Intent(QRScanActivity.this, BorrowBookHistoryActivity.class);
+               startActivity(intent);
+               finish();
             }
         });
     }

@@ -37,10 +37,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.main_name_book);
-            image = (ImageView) view.findViewById(R.id.main_line_img);
-            author = (TextView) view.findViewById(R.id.main_author_book);
-            subject = (TextView) view.findViewById(R.id.main_subject_book);
+            title = view.findViewById(R.id.main_name_book);
+            image = view.findViewById(R.id.main_line_img);
+            author = view.findViewById(R.id.main_author_book);
+            subject = view.findViewById(R.id.main_subject_book);
         }
 
     }

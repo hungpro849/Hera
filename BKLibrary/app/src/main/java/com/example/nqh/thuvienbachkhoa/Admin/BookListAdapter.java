@@ -60,8 +60,9 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
     public BookListAdapter(Context context) {
         mDataset = Collections.emptyList();
-        this.context=context;
+        this.context = context;
     }
+
     public BookListAdapter(List<BookInfoInList> myDataset) {
         mDataset = myDataset;
     }

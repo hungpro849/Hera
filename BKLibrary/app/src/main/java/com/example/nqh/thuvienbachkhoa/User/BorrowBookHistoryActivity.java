@@ -48,7 +48,7 @@ public class BorrowBookHistoryActivity extends AppCompatActivity {
         gson = new Gson();
         mPrefs = getSharedPreferences("mPrefs",MODE_PRIVATE);
         token = mPrefs.getString("UserToken", null);
-        mRecyclerView = (RecyclerView) findViewById(R.id.history_recycler_view);
+        mRecyclerView = findViewById(R.id.history_recycler_view);
         getTransactionFromAPI();
         setupRecyclerView();
     }
