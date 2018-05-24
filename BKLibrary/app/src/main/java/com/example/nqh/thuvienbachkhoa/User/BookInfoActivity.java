@@ -81,7 +81,7 @@ public class BookInfoActivity extends Activity{
                     rankDialog = new Dialog(BookInfoActivity.this, R.style.FullHeightDialog);
                     rankDialog.setContentView(R.layout.rating_dialog);
                     rankDialog.setCancelable(true);
-                    RatingBar dialogRatingBar = rankDialog.findViewById(R.id.dialog_ratingbar);
+                    final RatingBar dialogRatingBar = rankDialog.findViewById(R.id.dialog_ratingbar);
                     final TextView comment = rankDialog.findViewById(R.id.dialog_rating_edt);
                     dialogRatingBar.setRating(rating);
                     Button updateButton = rankDialog.findViewById(R.id.rank_dialog_button);
@@ -90,7 +90,7 @@ public class BookInfoActivity extends Activity{
                         public void onClick(View v) {
                             mProgress.show();
                             Call<JsonObject> jsonObjectCall = service.rateBook("Bearer " + mBundle.getString("token"),
-                                    mBundle.getString("id"), rating, comment.getText().toString());
+                                    mBundle.getString("id"), dialogRatingBar.getRating(), comment.getText().toString());
                             jsonObjectCall.enqueue(new Callback<JsonObject>() {
                                 @Override
                                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
