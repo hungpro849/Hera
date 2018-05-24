@@ -1,15 +1,21 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +31,7 @@ import com.example.nqh.thuvienbachkhoa.Interface.CallAPI;
 import com.example.nqh.thuvienbachkhoa.Model.Book;
 import com.example.nqh.thuvienbachkhoa.Model.User;
 import com.example.nqh.thuvienbachkhoa.R;
+import com.example.nqh.thuvienbachkhoa.Utils;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -35,6 +42,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,6 +58,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ReportFragment extends Fragment{
+    private static final int REQUEST_PERMISSIONS_CODE_WRITE_STORAGE = 123;
     Button startDateBtn, endDateBtn,createReportBtn;
     TextView startDateTextView, endDateTextView;
     Spinner mReportTypeSpinner;
@@ -157,6 +166,12 @@ public class ReportFragment extends Fragment{
         createReportBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions( //Method of Fragment
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            REQUEST_PERMISSIONS_CODE_WRITE_STORAGE
+                    );
+                }
                 int pos=mReportTypeSpinner.getSelectedItemPosition();
                 switch (pos){
                     case 0:
@@ -256,94 +271,100 @@ public class ReportFragment extends Fragment{
             }
         });
     }
-    public void exportBookCSV(final List<Book> response) throws IOException {
-        {
+    public void exportBookCSV(final List<Book> response) throws IOException { {
+        File folder;
 
-            File folder = new File(getContext().getFilesDir()
+        if(Utils.isExternalStorageWritable()){
+            // Get the directory for the app's private pictures directory.
+            folder = new File(getContext().getExternalFilesDir("bklibrary"), "Report");
+            if (!folder.mkdirs()) {
+                Log.e("Report", "Directory not created");
+            }
+        } else {
+            folder = new File(getContext().getFilesDir()
                     + "/Report");
-
             boolean var = false;
             if (!folder.exists())
                 var = folder.mkdir();
+        }
+        //System.out.println("" + var);
 
-            //System.out.println("" + var);
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+        String date = df.format(Calendar.getInstance().getTime());
+        final String filename = folder.toString() + "/" + "BookReport_"+date+".csv";
+        @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what==0)
+                    Toast.makeText(getActivity().getApplicationContext(), "Tạo báo cáo sách thành công tại "+filename, Toast.LENGTH_LONG).show();
+            }
+        };
 
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
-            String date = df.format(Calendar.getInstance().getTime());
-            final String filename = folder.toString() + "/" + "BookReport_"+date+".csv";
-            @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if(msg.what==0)
-                        Toast.makeText(getActivity().getApplicationContext(), "Tạo báo cáo sách thành công tại "+filename, Toast.LENGTH_LONG).show();
-                }
-            };
+        new Thread() {
+            public void run() {
+                try {
 
-            new Thread() {
-                public void run() {
-                    try {
+                    Writer fw = new OutputStreamWriter(
+                            new FileOutputStream(filename),
+                            Charset.forName("UTF-8").newEncoder()
+                    );
+                    fw.append("Id");
+                    fw.append(',');
 
-                        Writer fw = new OutputStreamWriter(
-                                new FileOutputStream(filename),
-                                Charset.forName("UTF-8").newEncoder()
-                        );
-                        fw.append("Id");
+                    fw.append("Name");
+                    fw.append(',');
+
+                    fw.append("Author");
+                    fw.append(',');
+
+                    fw.append("Subject");
+                    fw.append(',');
+
+                    fw.append("Description");
+                    fw.append(',');
+
+                    fw.append("Image_link");
+                    fw.append(',');
+
+                    fw.append("Stock");
+
+                    fw.append('\n');
+
+                    for (Book book_rep : response) {
+                        fw.append(csvFormat(book_rep.getId()));
                         fw.append(',');
 
-                        fw.append("Name");
+                        fw.append(csvFormat(book_rep.getName()));
                         fw.append(',');
 
-                        fw.append("Author");
+                        fw.append(csvFormat(book_rep.getAuthor()));
                         fw.append(',');
 
-                        fw.append("Subject");
+                        fw.append(csvFormat(book_rep.getSubject()));
                         fw.append(',');
 
-                        fw.append("Description");
+                        fw.append(csvFormat(book_rep.getDescription()));
                         fw.append(',');
 
-                        fw.append("Image_link");
+                        fw.append(csvFormat(book_rep.getImageLink()));
                         fw.append(',');
 
-                        fw.append("Stock");
+                        fw.append(csvFormat(book_rep.getStock().toString()));
 
                         fw.append('\n');
-
-                        for (Book book_rep : response) {
-                            fw.append(csvFormat(book_rep.getId()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getName()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getAuthor()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getSubject()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getDescription()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getImageLink()));
-                            fw.append(',');
-
-                            fw.append(csvFormat(book_rep.getStock().toString()));
-
-                            fw.append('\n');
-                        }
-                        // fw.flush();
-                        fw.close();
-
-                    } catch (Exception e) {
                     }
-                    Message message = handler.obtainMessage(0);
-                    message.sendToTarget();
-                }
-            }.start();
+                    // fw.flush();
+                    fw.close();
 
-        }
+                } catch (Exception e) {
+                }
+                Message message = handler.obtainMessage(0);
+                message.sendToTarget();
+            }
+        }.start();
+
+    }
 
     }
     private void getUserReport()
@@ -382,13 +403,21 @@ public class ReportFragment extends Fragment{
     }
     public void exportUserCSV(final List<User> response) throws IOException {
         {
+            File folder;
 
-            File folder = new File(getContext().getFilesDir()
-                    + "/Report");
-
-            boolean var = false;
-            if (!folder.exists())
-                var = folder.mkdir();
+            if(Utils.isExternalStorageWritable()){
+                // Get the directory for the app's private pictures directory.
+                folder = new File(getContext().getExternalFilesDir("bklibrary"), "Report");
+                if (!folder.mkdirs()) {
+                    Log.e("Report", "Directory not created");
+                }
+            } else {
+                folder = new File(getContext().getFilesDir()
+                        + "/Report");
+                boolean var = false;
+                if (!folder.exists())
+                    var = folder.mkdir();
+            }
 
             //System.out.println("" + var);
 
