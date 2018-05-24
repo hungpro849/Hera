@@ -50,10 +50,10 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTitle = (TextView) itemView.findViewById(R.id.book_list_title);
-            mAuthor = (TextView) itemView.findViewById(R.id.book_list_author);
-            mDeleteButton = (Button) itemView.findViewById(R.id.delete_book_button);
-            mEditButton = (Button) itemView.findViewById(R.id.edit_book_button);
+            mTitle = itemView.findViewById(R.id.book_list_title);
+            mAuthor = itemView.findViewById(R.id.book_list_author);
+            mDeleteButton = itemView.findViewById(R.id.delete_book_button);
+            mEditButton = itemView.findViewById(R.id.edit_book_button);
 
         }
     }
@@ -62,12 +62,6 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
         mDataset = Collections.emptyList();
         this.context = context;
     }
-
-    public BookListAdapter(List<BookInfoInList> myDataset) {
-        mDataset = myDataset;
-    }
-
-
 
     @Override
     public BookListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -165,7 +159,7 @@ public class BookListAdapter extends RecyclerView.Adapter<BookListAdapter.ViewHo
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mDataset == null ? 0 : mDataset.size();
     }
 
     public Book getbookInfo(BookInfoInList book) {

@@ -107,4 +107,8 @@ public interface CallAPI {
     // Return book
     @DELETE("transaction/{id}")
     Call<JsonObject> returnBook(@Header("Authorization") String authHeader, @Path("id") String id);
+
+    // Check transaction
+    @GET("transaction")
+    Call<List<BorrowTransaction>> getTransaction(@Header("Authorization") String authHeader);
 }

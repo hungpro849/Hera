@@ -1,6 +1,5 @@
 package com.example.nqh.thuvienbachkhoa.Admin;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,8 +42,6 @@ public class BookListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private Activity mCurrentActivity;
-    private BookListAdapter mBookListAdapter;
     private Toolbar mToolbar;
     ProgressDialog mProgress;
     private SearchView mSearchView;
@@ -57,22 +53,12 @@ public class BookListFragment extends Fragment {
     SharedPreferences mPrefs;
     String token;
 
-    public void setDataset(List<Book> bookList) {
-        mBookList = bookList;
-        mDataset.removeAll(mDataset);
-        for (Book b : mBookList) {
-            BookInfoInList newBook = new BookInfoInList(b);
-            mDataset.add(newBook);
-        }
-        mAdapter.notifyDataSetChanged();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_book_list, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.book_list_recycle_view);
-        mToolbar = (Toolbar) view.findViewById(R.id.book_list_tool_bar);
-        mAddBookBtn = (FloatingActionButton) view.findViewById(R.id.add_book_btn);
+        mRecyclerView = view.findViewById(R.id.book_list_recycle_view);
+        mToolbar = view.findViewById(R.id.book_list_tool_bar);
+        mAddBookBtn = view.findViewById(R.id.add_book_btn);
         mDataset.clear();
         mBookList.clear();
 
@@ -102,7 +88,7 @@ public class BookListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new BookListAdapter(getContext());
         mRecyclerView.setAdapter(mAdapter);
-        mLayoutManager = new LinearLayoutManager(mCurrentActivity);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         loadData();
 

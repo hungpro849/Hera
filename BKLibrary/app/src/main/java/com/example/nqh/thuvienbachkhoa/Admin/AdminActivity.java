@@ -44,7 +44,6 @@ public class AdminActivity extends AppCompatActivity {
     public static EditBookFragment mEditBookFragment;
     public static EditUserFragment mEditUserFragment;
     public static BorrowerListFragment mBorrowerListFragment;
-    public static BorrowerInfoFragment mBorrowerInfoFragment;
     public static BarcodeFragment mBarcodeFragment;
 
     public static FragmentManager mFragmentManager;
@@ -97,8 +96,6 @@ public class AdminActivity extends AppCompatActivity {
         mEditBookFragment = new EditBookFragment();
 
         mBorrowerListFragment = new BorrowerListFragment();
-
-        mBorrowerInfoFragment = new BorrowerInfoFragment();
 
         mOverlayFrame = findViewById(R.id.overlay);
         mOverlayFrame.setOverlay(false);

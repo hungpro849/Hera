@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/itemView_borrower"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_weight="1"
@@ -27,7 +28,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/borrower_name"
+                android:id="@+id/book_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,7 +36,7 @@
                 android:text="User name"
                 android:textSize="24dp" />
             <TextView
-                android:id="@+id/borrower_email"
+                android:id="@+id/borrower_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
