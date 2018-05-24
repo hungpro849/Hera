@@ -156,10 +156,7 @@ public class AdminActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
-                    case R.id.drawer_book_genre:
-                        break;
-                    case R.id.drawer_cart:
-                        break;
+
                     case R.id.drawer_update:
                         break;
                     case R.id.drawer_settings:

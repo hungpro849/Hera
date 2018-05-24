@@ -11,14 +11,6 @@
 
     <group android:id = "@+id/drawer_section_book"
         android:checkableBehavior="single">
-        <item
-            android:id="@+id/user_drawer_cart"
-            android:icon="@drawable/book_cart"
-            android:title="Giỏ sách" />
-        <item
-            android:id="@+id/user_drawer_return_book"
-            android:icon="@drawable/book_genre"
-            android:title="Trả sách"/>
 
         <item
             android:id="@+id/user_drawer_borrow_history"

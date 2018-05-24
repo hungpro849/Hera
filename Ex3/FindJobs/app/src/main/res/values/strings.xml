@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">FindJobs</string>
+    <string-array name="OptionSelect">
+        <item>Tên công việc</item>
+        <item>Tên công ty</item>
+        <item>Vị trí</item>
+
+
+    </string-array>
+</resources>
