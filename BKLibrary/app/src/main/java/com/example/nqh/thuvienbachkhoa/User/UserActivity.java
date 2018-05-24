@@ -319,10 +319,7 @@ public class UserActivity extends AppCompatActivity {
                         Intent userInfo = new Intent(UserActivity.this,UserInfoActivity.class);
                         startActivity(userInfo);
                         break;
-                    case R.id.user_drawer_return_book:
-//                        Intent returnBook = new Intent(UserActivity.this,BookReturnActivity.class);
-//                        startActivity(returnBook);
-                        break;
+
                     case R.id.user_drawer_borrow_history:
                         Intent borrowHistory = new Intent(UserActivity.this,BorrowBookHistoryActivity.class);
                         startActivity(borrowHistory);
