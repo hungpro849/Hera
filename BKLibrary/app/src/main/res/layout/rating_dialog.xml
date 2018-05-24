@@ -15,6 +15,8 @@
         android:layout_gravity="center"/>
 
     <RatingBar
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:theme="@style/CustomRatingBar"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
@@ -49,11 +51,12 @@
     <Button
         android:id="@+id/rank_dialog_button"
         android:layout_height="wrap_content"
+        android:background="@drawable/custom_circle"
         android:text="Đánh giá"
         android:focusable="false"
         android:layout_margin="5dip"
-        android:textColor="#FFF8C6"
-        android:textSize="20dip"
+        android:textSize="14dip"
+        android:textColor="#fff"
         android:layout_width="fill_parent" />
 
 </LinearLayout>
